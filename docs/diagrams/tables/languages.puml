@@ -1,0 +1,13 @@
+@startuml languages
+
+!include ../styles.puml
+
+' Таблица языков
+entity languages {
+    + id: SERIAL [PK]
+    --
+    name: VARCHAR(50) [NOT NULL]
+    language_code: VARCHAR(2) [NOT NULL, UNIQUE]
+}
+
+@enduml

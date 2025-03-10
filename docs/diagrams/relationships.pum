@@ -1,0 +1,43 @@
+@startuml Database Relationships
+
+!include styles.puml
+
+!include tables/accounts.puml
+!include tables/user_profiles.puml
+!include tables/family_status.puml
+!include tables/countries.puml
+!include tables/cities.puml
+!include tables/posts.puml
+!include tables/post_likes.puml
+!include tables/user_interests.puml
+!include tables/friend_requests.puml
+!include tables/friends.puml
+!include tables/languages.puml
+!include tables/user_languages.puml
+
+accounts "1" --> "1" user_profiles : account_id
+
+family_status "1" --> "*" user_profiles : family_status_id
+
+countries "1" --> "*" cities : country_id
+
+cities "1" --> "*" user_profiles : cities_id
+
+user_profiles "1" --> "0..1" user_interests : account_id/user_id
+
+user_profiles "1" --> "*" posts : account_id/user_id
+
+user_profiles "1" --> "*" post_likes : account_id/user_id
+
+posts "1" --> "*" post_likes : id/post_id
+
+user_profiles "1" --> "*" friend_requests : from_user_id
+user_profiles "1" --> "*" friend_requests : to_user_id
+
+user_profiles "1" --> "*" friends : user_id
+user_profiles "1" --> "*" friends : friend_id
+
+user_profiles "1" --> "*" user_languages : account_id/user_id
+languages "1" --> "*" user_languages : id/language_id
+
+@enduml

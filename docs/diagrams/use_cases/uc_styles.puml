@@ -1,0 +1,45 @@
+@startuml uc_styles
+
+skinparam {
+    BackgroundColor transparent
+
+    ActorBackgroundColor #E8E8E8
+    ActorBorderColor #2C3E50
+
+    UsecaseBackgroundColor #ECF0F1
+    UsecaseBorderColor #2980B9
+
+    ArrowColor #2C3E50
+
+    PackageBackgroundColor transparent
+    PackageBorderColor #95A5A6
+}
+
+skinparam {
+    FontName "Helvetica"
+    FontSize 14
+
+    ActorFontSize 16
+    ActorFontColor #2C3E50
+
+    UsecaseFontSize 14
+    UsecaseFontColor #2C3E50
+
+    PackageFontSize 16
+    PackageFontColor #34495E
+}
+
+skinparam note {
+    BackgroundColor #F1C40F
+    BorderColor #F39C12
+    FontSize 12
+    FontColor #34495E
+}
+
+skinparam arrow {
+    Thickness 1.5
+    FontSize 12
+    FontColor #2C3E50
+}
+
+@enduml

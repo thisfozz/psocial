@@ -1,0 +1,97 @@
+@startuml FriendManagement
+
+!include uc_styles.puml
+
+left to right direction
+
+actor "Отправитель" as sender
+actor "Получатель" as receiver
+rectangle "Система" as system
+database "База данных" as db
+
+rectangle "Управление друзьями" {
+    ' Действия отправителя
+    usecase "Найти пользователя" as UC1
+    usecase "Отправить запрос\nв друзья" as UC2
+    usecase "Просмотр исходящих\nзапросов" as UC3
+    usecase "Отменить запрос" as UC4
+    usecase "Просмотр списка\nдрузей" as UC5
+    usecase "Удалить из друзей" as UC6
+    usecase "Найти пользователя" as UC10
+
+    ' Действия получателя
+    usecase "Просмотр входящих\nзапросов" as UC7
+    usecase "Принять запрос" as UC8
+    usecase "Отклонить запрос" as UC9
+
+    ' Действия с БД
+    usecase "Создать запись\nв friend_requests" as DB1
+    usecase "Создать запись\nв friends" as DB2
+    usecase "Удалить запись \nиз friends" as DB4
+    usecase "Удалить запись\nиз friend_requests" as DB3
+    usecase "Создать запись\nв friend_requests" as DB5
+
+    sender --> UC1 : <<include>>
+    UC1 ---> UC2 : <<include>>
+    sender --> UC3 : <<include>>
+    UC3 --> UC4
+    sender --> UC5 : <<include>>
+    UC5 --> UC10 : <<include>>
+    UC10 --> UC6
+
+    receiver --> UC7 : <<include>>
+    UC7 --> UC8
+    UC7 --> UC9
+    receiver --> UC5 : <<include>>
+    UC5 --> UC10 : <<include>>
+    UC10 --> UC6
+
+    UC2 --> DB1
+    DB1 --> system
+
+    UC8 --> DB2
+    DB2 --> system
+
+    UC4 --> DB3
+    UC8 --> DB3
+    UC9 --> DB3
+    UC6 --> DB4
+    DB4 --> DB5
+    DB5 --> system
+    DB4 --> system
+    DB3 --> system
+
+    system --> db
+
+    note right of UC1
+        Сначала нужно найти пользователя
+        и только потом отправить запрос в друзья
+    end note
+
+    note right of DB1
+        Создается запись:
+        status = "в ожидании"
+    end note
+
+    note right of DB2
+        При принятии запроса
+        создается запись в friends
+    end note
+
+    note right of DB3
+        Удаление записи из friend_requests
+        происходит при:
+        - Принятии запроса получателем
+        - Отклонении запроса получателем
+        - Отмене запроса отправителем
+    end note
+
+    note right of DB5
+        Удаление из друзей должно вызывать
+        добавление записи в friend_requests
+        id человека, которого удалили становится подписанным
+        на удалившего
+    end note
+}
+
+@enduml

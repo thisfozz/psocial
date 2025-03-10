@@ -1,0 +1,78 @@
+@startuml post_management
+
+!include uc_styles.puml
+
+left to right direction
+
+actor "Пользователь" as user
+rectangle "Система" as system
+database "База данных" as db
+
+rectangle "Управление постами" {
+    ' Действия пользователя
+    usecase "Просмотр списка постов" as UC1
+    usecase "Написать пост" as UC2
+    usecase "Отправить пост" as UC3
+    usecase "Редактировать пост" as UC4
+    usecase "Удалить пост" as UC5
+    usecase "Поставить лайк" as UC6
+    usecase "Удалить лайк" as UC7
+
+    ' Действия системы
+    usecase "Проверить данные" as S1
+    usecase "Показать ошибку" as S2
+
+    user --> UC1
+    user --> UC2
+    UC2 --> UC3 : <<include>>
+    user --> UC4
+    user --> UC5
+    user --> UC6
+    user --> UC7
+
+    UC1 --> system
+    UC3 --> system
+    UC4 --> UC3
+    UC4 --> system
+    UC5 --> system
+    UC6 --> system
+    UC7 --> system
+
+    system --> S1
+    S1 --> system
+    system --> S2
+    S2 --> system
+
+    system --> db
+
+    note right of UC2
+        Пост может оставить только
+        авторизованный пользователь.
+        Пост не может быть пустым.
+    end note
+
+    note right of UC4
+        Пользователь может
+        редактировать только
+        свой пост
+    end note
+
+    note right of UC5
+        Пользователь может
+        удалить только
+        свой пост
+    end note
+
+    note right of UC6
+        Пользователь может поставить
+        только один лайк на пост
+    end note
+
+    note right of UC7
+        Пользователь может
+        удалить только
+        свой лайк
+    end note
+}
+
+@enduml

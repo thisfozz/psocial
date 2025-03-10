@@ -1,0 +1,45 @@
+@startuml styles
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define entity_table(x) class x << (E,#AAFFAA) >>
+!define join_table(x) class x << (J,#AAAAFF) >>
+!define ref_table(x) class x << (R,#FFFFAA) >>
+!define primary_key(x) <b><color:red>x</color></b>
+!define foreign_key(x) <u><color:blue>x</color></u>
+!define unique(x) <i><color:orange>x</color></i>
+!define not_null(x) <b><i><color:black>x</color></i></b>
+!define default_value(x,y) x <color:gray>[=y]</color>
+
+skinparam class {
+    BackgroundColor PaleGreen
+    ArrowColor SeaGreen
+    BorderColor SpringGreen
+    BorderThickness 2
+    AttributeFontColor black
+    AttributeFontSize 14
+    FontSize 16
+}
+
+skinparam Arrow {
+    Color DarkGreen
+    Thickness 1.5
+    FontColor DarkBlue
+    FontSize 12
+    FontStyle bold
+}
+
+
+skinparam {
+    Padding 4
+    Shadowing true
+    RoundCorner 5
+    TitleFontSize 22
+    TitleFontColor DarkGreen
+    FooterFontSize 12
+    FooterFontColor Gray
+    NoteFontSize 14
+    NoteBorderColor Gray
+    NoteBackgroundColor lightyellow
+}
+
+@enduml

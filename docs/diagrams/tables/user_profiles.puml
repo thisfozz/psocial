@@ -1,0 +1,20 @@
+@startuml user_profiles
+
+!include ../styles.puml
+
+' Таблица профилей пользователей
+entity user_profiles {
+    + account_id: BIGINT [PK, FK -> accounts.id]
+    --
+    first_name: VARCHAR(50) [NOT NULL]
+    last_name: VARCHAR(50) [NOT NULL]
+    nickname: VARCHAR(15) [UNIQUE]
+    avatar: VARCHAR(255)
+    family_status_id: BIGINT [FK -> family_status.id, ON DELETE SET NULL]
+    cities_id: BIGINT [FK -> cities.id, ON DELETE SET NULL]
+    date_of_birth: DATE
+    about_me: TEXT
+    status: VARCHAR(50)
+}
+
+@enduml

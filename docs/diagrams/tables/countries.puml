@@ -1,0 +1,12 @@
+@startuml countries
+
+!include ../styles.puml
+
+' Таблица стран
+entity countries {
+    + id: SERIAL [PK]
+    --
+    name: VARCHAR(50) [UNIQUE, NOT NULL]
+}
+
+@enduml

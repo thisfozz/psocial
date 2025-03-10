@@ -1,0 +1,15 @@
+@startuml posts
+
+!include ../styles.puml
+
+' Таблица постов
+entity posts {
+    + id: SERIAL [PK]
+    --
+    user_id: BIGINT [NOT NULL, FK -> user_profiles.account_id]
+    content: TEXT [NOT NULL]
+    created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
+    updated_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
+}
+
+@enduml

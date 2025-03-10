@@ -1,0 +1,17 @@
+@startuml accounts
+
+!include ../styles.puml
+
+' Таблица аккаунтов
+entity accounts {
+    + id: SERIAL [PK]
+    --
+    username: VARCHAR(50) [UNIQUE, NOT NULL]
+    email: VARCHAR(50) [UNIQUE, NOT NULL]
+    phone_number: VARCHAR(15) [UNIQUE]
+    password: VARCHAR(255) [NOT NULL]
+    created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
+    last_login: TIMESTAMP
+}
+
+@enduml

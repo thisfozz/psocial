@@ -1,0 +1,13 @@
+@startuml post_likes
+
+!include ../styles.puml
+
+' Таблица лайков к постам
+entity post_likes {
+    + post_id: BIGINT [PK, FK -> posts.id]
+    + user_id: BIGINT [PK, FK -> user_profiles.account_id]
+    --
+    created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
+}
+
+@enduml

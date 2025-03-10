@@ -1,0 +1,93 @@
+@startuml Authorization
+
+!include uc_styles.puml
+
+left to right direction
+
+actor "Пользователь" as user
+rectangle "Система" as system
+database "База данных" as db
+
+rectangle "Авторизация" {
+    ' Действия пользователя
+    usecase "Ввести Email" as UC1
+    usecase "Ввести телефон" as UC2
+    usecase "Ввести пароль" as UC3
+    usecase "Проверить данные" as UC4
+
+    ' Действия системы
+    usecase "Проверить существование пользователя" as S1
+    usecase "Проверить правильность пароля" as S2
+    usecase "Создать сессию" as S3
+    usecase "Показать ошибку" as S4
+
+    ' Действия с БД
+    usecase "Получить данные пользователя" as DB1
+    usecase "Сохранить сессию" as DB3
+
+    user ..> UC1 : <<alt>>
+    user ..> UC2 : <<alt>>
+    user --> UC3
+
+    UC1 --> UC4
+    UC2 --> UC4
+    UC3 --> UC4
+
+    system --> DB1
+
+    UC4 --> S1
+    S1 --> S2
+
+    S1 --> system
+    S2 --> system
+
+    system --> S3
+    S3 --> DB3
+    system --> S4
+
+    system --> db
+
+    note right of UC1
+        Пользователь может войти
+        используя Email или телефон
+    end note
+
+    note right of UC4
+        Проверка на корректность
+        введенных данных
+        (валидация формата)
+    end note
+
+    note right of S1
+        Проверка существования
+        пользователя в системе
+    end note
+
+    note right of S2
+        Проверка соответствия
+        введенного пароля
+        хешу в базе данных
+    end note
+
+    note right of S3
+        Создание сессии для
+        авторизованного пользователя
+    end note
+
+    note right of S4
+        Вывод сообщения об ошибке
+        если проверка не пройдена
+    end note
+
+    note right of DB1
+        Получение информации
+        о пользователе из БД
+    end note
+
+    note right of DB3
+        Сохранение данных
+        сессии в БД
+    end note
+}
+
+@enduml

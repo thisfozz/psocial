@@ -1,0 +1,13 @@
+@startuml friends
+
+!include ../styles.puml
+
+' Таблица друзей
+entity friends {
+    + user_id: BIGINT [PK, FK -> user_profiles.account_id]
+    + friend_id: BIGINT [PK, FK -> user_profiles.account_id]
+    --
+    created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
+}
+
+@enduml
