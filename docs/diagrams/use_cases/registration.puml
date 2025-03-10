@@ -1,0 +1,104 @@
+@startuml Registration
+
+!include uc_styles.puml
+
+left to right direction
+
+actor "Гость" as guest
+rectangle "Система" as system
+database "База данных" as db
+
+rectangle "Регистрация" {
+    ' Действия гостя
+    usecase "Заполнить обязательные\nданные" as UC1
+    usecase "Ввести username" as UC2
+    usecase "Ввести email" as UC3
+    usecase "Ввести пароль" as UC4
+    usecase "Ввести имя" as UC5
+    usecase "Ввести фамилию" as UC6
+    usecase "Проверить данные" as UC7
+
+    ' Действия системы
+    usecase "Проверить уникальность email" as S1
+    usecase "Проверить уникальность username" as S2
+    usecase "Создать аккаунт" as S3
+    usecase "Сохранить аккаунт" as S4
+    usecase "Создать профиль" as S5
+    usecase "Сохранить профиль" as S6
+    usecase "Показать ошибку" as S7
+
+    guest --> UC1
+
+    UC1 ..> UC2 : <<include>>
+    UC1 ..> UC3 : <<include>>
+    UC1 ..> UC4 : <<include>>
+    UC1 ..> UC5 : <<include>>
+    UC1 ..> UC6 : <<include>>
+
+    UC2 --> UC7
+    UC3 --> UC7
+    UC4 --> UC7
+    UC5 --> UC7
+    UC6 --> UC7
+
+    UC7 --> S1
+    UC7 --> S2
+
+    S1 --> system
+    S2 --> system
+
+    system --> S3
+    S3 ..> S4 : <<include>>
+    S4 ..> S5 : <<include>>
+    S5 ..> S6 : <<include>>
+
+    system --> S7
+
+    system --> db
+
+    note right of UC7
+        Проверка формата данных
+        и уникальности:
+        - Формат и уникальность email
+        - Формат и уникальность username
+        - Сложность пароля
+        - Наличие имени и фамилии
+    end note
+
+    note right of S1
+        Проверка уникальности
+        email в системе
+    end note
+
+    note right of S2
+        Проверка уникальности
+        username в системе
+    end note
+
+    note right of S3
+        Создание записи
+        в таблице accounts
+    end note
+
+    note right of S4
+        Сохранение данных
+        аккаунта в БД
+    end note
+
+    note right of S5
+        Создание записи
+        в таблице profiles
+    end note
+
+    note right of S6
+        Сохранение данных
+        профиля в БД
+    end note
+
+    note right of S7
+        Вывод сообщения об ошибке
+        если проверка не пройдена
+    end note
+}
+
+@enduml

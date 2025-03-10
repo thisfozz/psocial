@@ -1,0 +1,44 @@
+@startuml language_management
+
+' на доработку
+
+!include uc_styles.puml
+
+left to right direction
+
+actor "Пользователь" as user
+rectangle "Система" as system
+database "База данных" as db
+
+rectangle "Управление языками" {
+    usecase "Открыть редактирование профиля" as UC1
+    usecase "Выбрать язык" as UC2
+    usecase "Удалить язык" as UC4
+    usecase "Просмотреть список языков" as UC5
+    usecase "Сохранить изменения" as UC6
+
+    user --> UC1
+    UC1 --> UC5
+    UC5 --> UC2
+
+    UC5 --> UC4
+    UC2 --> UC6
+    UC4 --> UC6
+
+    UC6 --> system
+
+    system --> db
+
+    note right of UC2
+        Пользователь может
+        выбрать язык из
+        существующего списка
+    end note
+
+    note right of UC4
+        Пользователь может удалить
+        один из ранее добавленных языков
+    end note
+}
+
+@enduml

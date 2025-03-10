@@ -1,0 +1,113 @@
+@startuml ProfileManagement
+
+!include uc_styles.puml
+
+left to right direction
+
+actor "Пользователь" as user
+rectangle "Система" as system
+database "База данных" as db
+
+rectangle "Управление профилем" {
+    ' Действия пользователя
+    usecase "Отобразить профиль" as UC1
+    usecase "Открыть редактирование\nпрофиля" as UC2
+    usecase "Загрузить текущие\nданные" as UC3
+    usecase "Сохранить изменения" as UC4
+    usecase "Проверить данные" as UC5
+
+    ' Критические поля (отдельное редактирование в отдельных формах)
+    usecase "Изменить email" as CR1
+    usecase "Изменить никнейм" as CR2
+    usecase "Проверить данные" as CR3
+
+    ' Действия системы
+    usecase "Обновить профиль" as S2
+    usecase "Показать ошибку" as S3
+
+    ' Действия с БД
+    usecase "Получить текущие данные" as DB1
+    usecase "Сохранить изменения" as DB2
+
+    ' Обычные поля для редактирования
+    usecase "Изменить пароль" as F1
+    usecase "Изменить телефон" as F2
+    usecase "Изменить имя" as F3
+    usecase "Изменить фамилию" as F4
+    usecase "Изменить семейное\nположение" as F5
+    usecase "Изменить город" as F6
+    usecase "Изменить дату\nрождения" as F7
+    usecase "Изменить о себе" as F8
+
+    user --> UC1
+    UC1 ..> UC2 : <<include>>
+    UC2 --> UC3
+
+    system --> DB1
+    DB1 --> system
+
+    ' Критические поля
+    UC3 ..> CR1 : <<extend>>
+    UC3 ..> CR2 : <<extend>>
+    CR1 --> CR3
+    CR2 --> CR3
+    CR3 --> system
+    system --> S2
+    S2 --> DB2
+
+    ' Обычные поля
+    UC3 ..> F1 : <<extend>>
+    UC3 ..> F2 : <<extend>>
+    UC3 ..> F3 : <<extend>>
+    UC3 ..> F4 : <<extend>>
+    UC3 ..> F5 : <<extend>>
+    UC3 ..> F6 : <<extend>>
+    UC3 ..> F7 : <<extend>>
+    UC3 ..> F8 : <<extend>>
+
+    F1 ..> UC4 : <<alt>>
+    F2 ..> UC4 : <<alt>>
+    F3 ..> UC4 : <<alt>>
+    F4 ..> UC4 : <<alt>>
+    F5 ..> UC4 : <<alt>>
+    F6 ..> UC4 : <<alt>>
+    F7 ..> UC4 : <<alt>>
+    F8 ..> UC4 : <<alt>>
+
+    UC4 --> UC5
+    UC5 --> system
+
+    system --> S3
+
+    system --> db
+
+    note right of CR3
+        Проверка критических полей:
+        1. Валидация формата:
+           - Формат email
+           - Формат никнейма
+        2. Проверка уникальности:
+           - Уникальность email
+           - Уникальность никнейма
+    end note
+
+    note right of UC5
+        Проверка формата данных:
+        - Валидность телефона
+        - Валидность имени
+        - Валидность даты
+        и т.д.
+    end note
+
+    note right of DB1
+        SELECT данных
+        пользователя из БД
+    end note
+
+    note right of DB2
+        UPDATE данных
+        профиля в БД
+    end note
+}
+
+@enduml

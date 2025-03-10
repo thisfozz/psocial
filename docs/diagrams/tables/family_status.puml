@@ -1,0 +1,12 @@
+@startuml family_status
+
+!include ../styles.puml
+
+' Таблица семейных статусов
+entity family_status {
+    + id: SERIAL [PK]
+    --
+    status: VARCHAR(50) [NOT NULL]
+}
+
+@enduml

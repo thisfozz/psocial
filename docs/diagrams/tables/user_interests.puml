@@ -1,0 +1,17 @@
+@startuml user_interests
+
+!include ../styles.puml
+
+' Таблица интересов
+entity user_interests {
+    + id: SERIAL [PK]
+    --
+    user_id: BIGINT [NOT NULL, FK -> user_profiles.account_id]
+    quotes: TEXT
+    activity: TEXT
+    favorite_music: TEXT
+    favorite_books: TEXT
+    favorite_games: TEXT
+}
+
+@enduml

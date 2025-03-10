@@ -1,0 +1,11 @@
+@startuml user_languages
+
+!include ../styles.puml
+
+' Таблица связи пользователей и языков
+entity user_languages {
+    + user_id: BIGINT [PK, FK -> user_profiles.account_id]
+    + language_id: INT [PK, FK -> languages.id]
+}
+
+@enduml

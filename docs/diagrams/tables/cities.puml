@@ -1,0 +1,13 @@
+@startuml cities
+
+!include ../styles.puml
+
+' Таблица городов
+entity cities {
+    + id: SERIAL [PK]
+    --
+    name: VARCHAR(50) [NOT NULL]
+    country_id: INT [NOT NULL, FK -> countries.id]
+}
+
+@enduml

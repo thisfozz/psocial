@@ -1,0 +1,15 @@
+@startuml friend_requests
+
+!include ../styles.puml
+
+' Таблица запросов в друзья
+entity friend_requests {
+    + id: SERIAL [PK]
+    --
+    from_user_id: BIGINT [NOT NULL, FK -> user_profiles.account_id]
+    to_user_id: BIGINT [NOT NULL, FK -> user_profiles.account_id]
+    status: VARCHAR(20) [DEFAULT 'в ожидании', NOT NULL]
+    created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
+}
+
+@enduml
