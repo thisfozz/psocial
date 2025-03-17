@@ -1,0 +1,29 @@
+@startuml Security Overview
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+title "Обзор системы PSocial (Laravel)"
+
+Person(User, "Пользователь", "Обычный пользователь системы")
+
+System_Boundary(PSocial, "PSocial") {
+    Container(WebApp, "Веб-приложение", "HTML, CSS, JavaScript", "Пользовательский интерфейс")
+    Container(Laravel, "Laravel приложение", "PHP, Laravel", "Серверная часть, бизнес-логика")
+    Container(Database, "База данных", "PostgreSQL", "Хранит данные пользователей, посты и т.д.")
+}
+
+System_Ext(EmailService, "EmailSendService", "Отправляет email пользователям")
+
+' Связи с пользователями
+Rel(User, WebApp, "Использует", "HTTPS")
+
+Rel(WebApp, Laravel, "Отправляет запросы", "JSON/HTTPS")
+Rel(Laravel, Database, "Читает/записывает данные", "SQL")
+Rel(Laravel, EmailService, "Отправляет письма", "SMTP")
+
+Rel(Laravel, WebApp, "Возвращает данные", "JSON/HTTPS")
+Rel(Database, Laravel, "Возвращает результаты запросов", "SQL")
+Rel(EmailService, Laravel, "Подтверждает отправку", "SMTP")
+
+SHOW_LEGEND()
+@enduml

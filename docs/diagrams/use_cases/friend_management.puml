@@ -2,96 +2,141 @@
 
 !include uc_styles.puml
 
-left to right direction
-
 actor "Отправитель" as sender
 actor "Получатель" as receiver
 rectangle "Система" as system
 database "База данных" as db
 
 rectangle "Управление друзьями" {
-    ' Действия отправителя
-    usecase "Найти пользователя" as UC1
-    usecase "Отправить запрос\nв друзья" as UC2
-    usecase "Просмотр исходящих\nзапросов" as UC3
-    usecase "Отменить запрос" as UC4
-    usecase "Просмотр списка\nдрузей" as UC5
-    usecase "Удалить из друзей" as UC6
-    usecase "Найти пользователя" as UC10
+    usecase "Найти пользователя" as UC1 #BBDEFB
+    usecase "Отправить запрос\nв друзья" as UC2 #BBDEFB
+    usecase "Просмотр исходящих\nзапросов" as UC3 #BBDEFB
+    usecase "Отменить запрос" as UC4 #BBDEFB
+    usecase "Просмотр списка\nдрузей" as UC5 #BBDEFB
+    usecase "Удалить из друзей" as UC6 #BBDEFB
 
-    ' Действия получателя
-    usecase "Просмотр входящих\nзапросов" as UC7
-    usecase "Принять запрос" as UC8
-    usecase "Отклонить запрос" as UC9
+    usecase "Просмотр входящих\nзапросов" as UC7 #D1C4E9
+    usecase "Принять запрос" as UC8 #D1C4E9
+    usecase "Отклонить запрос" as UC9 #D1C4E9
+    usecase "Найти пользователя" as UC10 #D1C4E9
 
-    ' Действия с БД
-    usecase "Создать запись\nв friend_requests" as DB1
-    usecase "Создать запись\nв friends" as DB2
-    usecase "Удалить запись \nиз friends" as DB4
-    usecase "Удалить запись\nиз friend_requests" as DB3
-    usecase "Создать запись\nв friend_requests" as DB5
+    usecase "Создать запись\nв friend_requests" as DB1 #C8E6C9
+    usecase "Создать запись\nв friends" as DB2 #C8E6C9
+    usecase "Удалить запись\nиз friend_requests" as DB3 #C8E6C9
+    usecase "Удалить запись\nиз friends" as DB4 #C8E6C9
+    usecase "Создать запись\nв friend_requests\n(подписка)" as DB5 #C8E6C9
 
-    sender --> UC1 : <<include>>
-    UC1 ---> UC2 : <<include>>
-    sender --> UC3 : <<include>>
-    UC3 --> UC4
-    sender --> UC5 : <<include>>
-    UC5 --> UC10 : <<include>>
-    UC10 --> UC6
+    sender -[#1976D2]-> UC1 : Шаг 1A
+    UC1 -[#1976D2]-> UC2 : Шаг 2A
+    sender -[#1976D2]-> UC3 : Шаг 1B
+    UC3 -[#1976D2]-> UC4 : Шаг 2B
+    sender -[#1976D2]-> UC5 : Шаг 1C
+    UC5 -[#1976D2]-> UC6 : Шаг 2C
 
-    receiver --> UC7 : <<include>>
-    UC7 --> UC8
-    UC7 --> UC9
-    receiver --> UC5 : <<include>>
-    UC5 --> UC10 : <<include>>
-    UC10 --> UC6
+    receiver -[#673AB7]-> UC7 : Шаг 1D
+    UC7 -[#673AB7]-> UC8 : Шаг 2D (принять)
+    UC7 -[#673AB7]-> UC9 : Шаг 2E (отклонить)
+    receiver -[#673AB7]-> UC5 : Шаг 1E
+    UC5 -[#673AB7]-> UC10 : поиск
+    UC10 -[#673AB7]-> UC6 : Шаг 2F
 
-    UC2 --> DB1
-    DB1 --> system
+    UC2 -[#388E3C]-> DB1 : Шаг 3A
+    DB1 -[#388E3C]-> system : Шаг 4A
 
-    UC8 --> DB2
-    DB2 --> system
+    UC8 -[#388E3C]-> DB2 : Шаг 3B
+    DB2 -[#388E3C]-> system : Шаг 4B
 
-    UC4 --> DB3
-    UC8 --> DB3
-    UC9 --> DB3
-    UC6 --> DB4
-    DB4 --> DB5
-    DB5 --> system
-    DB4 --> system
-    DB3 --> system
+    UC4 -[#388E3C]-> DB3 : Шаг 3C
+    UC8 -[#388E3C]-> DB3 : Шаг 3D
+    UC9 -[#388E3C]-> DB3 : Шаг 3E
 
-    system --> db
+    UC6 -[#388E3C]-> DB4 : Шаг 3F
+    DB4 -[#388E3C]-> DB5 : Шаг 4C
 
-    note right of UC1
-        Сначала нужно найти пользователя
-        и только потом отправить запрос в друзья
+    DB3 -[#388E3C]-> system
+    DB5 -[#388E3C]-> system
+    system -[#388E3C]-> db
+
+    note right of UC1 #FFF8E1
+        <b>Сценарий A: Добавление в друзья</b>
+        <b>Шаг 1A:</b> Отправитель ищет пользователя
+        по имени, email или другим параметрам
     end note
 
-    note right of DB1
-        Создается запись:
-        status = "в ожидании"
+    note right of UC2 #FFF8E1
+        <b>Шаг 2A:</b> Отправитель отправляет
+        запрос в друзья найденному пользователю
     end note
 
-    note right of DB2
-        При принятии запроса
-        создается запись в friends
+    note right of UC3 #FFF8E1
+        <b>Сценарий B: Управление запросами</b>
+        <b>Шаг 1B:</b> Отправитель просматривает
+        список своих исходящих запросов в друзья
     end note
 
-    note right of DB3
-        Удаление записи из friend_requests
+    note right of UC4 #FFF8E1
+        <b>Шаг 2B:</b> Отправитель может отменить
+        ранее отправленный запрос в друзья
+    end note
+
+    note left of UC7 #FFF8E1
+        <b>Сценарий D: Обработка запросов</b>
+        <b>Шаг 1D:</b> Получатель просматривает
+        список входящих запросов в друзья
+    end note
+
+    note left of UC8 #FFF8E1
+        <b>Шаг 2D:</b> Получатель принимает
+        запрос в друзья, создавая
+        двустороннюю связь
+    end note
+
+    note left of UC9 #FFF8E1
+        <b>Шаг 2E:</b> Получатель отклоняет
+        запрос в друзья без создания связи
+    end note
+
+    ' Заметки для действий с БД
+    note bottom of DB1 #FFF8E1
+        <b>Шаг 3A-4A:</b> Создается запись в таблице
+        friend_requests со статусом "в ожидании"
+    end note
+
+    note bottom of DB2 #FFF8E1
+        <b>Шаг 3B-4B:</b> При принятии запроса
+        создается запись в таблице friends,
+        устанавливая двустороннюю связь
+    end note
+
+    note bottom of DB3 #FFF8E1
+        <b>Шаг 3C-E:</b> Удаление записи из friend_requests
         происходит при:
-        - Принятии запроса получателем
-        - Отклонении запроса получателем
-        - Отмене запроса отправителем
+        • Принятии запроса получателем
+        • Отклонении запроса получателем
+        • Отмене запроса отправителем
     end note
 
-    note right of DB5
-        Удаление из друзей должно вызывать
-        добавление записи в friend_requests
-        id человека, которого удалили становится подписанным
-        на удалившего
+    note bottom of DB5 #FFF8E1
+        <b>Шаг 4C:</b> При удалении из друзей
+        создается запись в friend_requests,
+        где удаленный пользователь становится
+        подписчиком (односторонняя связь)
+    end note
+
+    ' Заметки для общих сценариев
+    note right of UC5 #FFF8E1
+        <b>Сценарий C/E: Управление друзьями</b>
+        <b>Шаг 1C/E:</b> Пользователь просматривает
+        список своих друзей
+    end note
+
+    note right of UC6 #FFF8E1
+        <b>Шаг 2C/F:</b> Пользователь может
+        удалить другого пользователя из друзей,
+        разрывая двустороннюю связь
     end note
 }
+
+caption "Диаграмма процесса управления друзьями в системе PSocial"
 
 @enduml

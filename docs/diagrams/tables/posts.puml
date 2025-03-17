@@ -7,6 +7,7 @@ entity posts {
     + id: SERIAL [PK]
     --
     user_id: BIGINT [NOT NULL, FK -> user_profiles.account_id]
+    parent_id: BIGINT [NULL, FK -> posts.id]
     content: TEXT [NOT NULL]
     created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
     updated_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]

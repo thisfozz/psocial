@@ -1,45 +1,128 @@
 @startuml styles
 
-!define table(x) class x << (T,#FFAAAA) >>
-!define entity_table(x) class x << (E,#AAFFAA) >>
-!define join_table(x) class x << (J,#AAAAFF) >>
-!define ref_table(x) class x << (R,#FFFFAA) >>
-!define primary_key(x) <b><color:red>x</color></b>
-!define foreign_key(x) <u><color:blue>x</color></u>
-!define unique(x) <i><color:orange>x</color></i>
-!define not_null(x) <b><i><color:black>x</color></i></b>
-!define default_value(x,y) x <color:gray>[=y]</color>
+!define table(x) class x << (T,#E91E63) >>
+!define entity_table(x) class x << (E,#4CAF50) >>
+!define join_table(x) class x << (J,#2196F3) >>
+!define ref_table(x) class x << (R,#FFC107) >>
+!define primary_key(x) <b><color:#F44336>x</color></b>
+!define foreign_key(x) <u><color:#2196F3>x</color></u>
+!define unique(x) <i><color:#FF9800>x</color></i>
+!define not_null(x) <b><i><color:#212121>x</color></i></b>
+!define default_value(x,y) x <color:#757575>[=y]</color>
 
 skinparam class {
-    BackgroundColor PaleGreen
-    ArrowColor SeaGreen
-    BorderColor SpringGreen
+    BackgroundColor #FAFAFA
+    ArrowColor #546E7A
+    BorderColor #2196F3
     BorderThickness 2
-    AttributeFontColor black
+    AttributeFontColor #212121
     AttributeFontSize 14
     FontSize 16
+    FontStyle bold
+    Shadowing false
+    StereotypeFontSize 12
+    StereotypeFontColor #757575
+    AttributeIconSize 0
 }
 
 skinparam Arrow {
-    Color DarkGreen
+    Color #546E7A
     Thickness 1.5
-    FontColor DarkBlue
+    FontColor #37474F
     FontSize 12
+    FontStyle normal
+}
+
+skinparam usecase {
+    BackgroundColor #FAFAFA
+    BorderColor #2196F3
+    BorderThickness 1.5
+    FontColor #212121
+    FontSize 14
+    FontStyle bold
+    ArrowColor #546E7A
+    Shadowing false
+}
+
+skinparam actor {
+    BackgroundColor #FAFAFA
+    BorderColor #37474F
+    FontColor #212121
+    FontSize 16
     FontStyle bold
 }
 
-
-skinparam {
-    Padding 4
-    Shadowing true
-    RoundCorner 5
-    TitleFontSize 22
-    TitleFontColor DarkGreen
-    FooterFontSize 12
-    FooterFontColor Gray
-    NoteFontSize 14
-    NoteBorderColor Gray
-    NoteBackgroundColor lightyellow
+skinparam note {
+    BackgroundColor #FFF9C4
+    BorderColor #FFC107
+    FontColor #212121
+    FontSize 13
+    FontStyle italic
+    BorderThickness 1
+    Shadowing false
 }
+
+skinparam component {
+    BackgroundColor #FAFAFA
+    BorderColor #4CAF50
+    FontColor #212121
+    FontSize 14
+    FontStyle bold
+    BorderThickness 2
+}
+
+skinparam database {
+    BackgroundColor #FAFAFA
+    BorderColor #009688
+    FontColor #212121
+    FontSize 16
+    FontStyle bold
+    BorderThickness 2
+}
+
+skinparam rectangle {
+    BackgroundColor transparent
+    BorderColor #9E9E9E
+    FontColor #212121
+    FontSize 16
+    FontStyle bold
+    BorderThickness 1
+}
+
+' Общие стили
+skinparam {
+    Padding 5
+    Margin 10
+    Shadowing false
+    RoundCorner 8
+    TitleFontSize 24
+    TitleFontColor #2196F3
+    TitleFontStyle bold
+    FooterFontSize 12
+    FooterFontColor #757575
+    HeaderFontSize 16
+    HeaderFontColor #2196F3
+    LegendFontSize 14
+    LegendFontColor #212121
+    LegendBackgroundColor #FAFAFA
+    LegendBorderColor #9E9E9E
+    NoteFontSize 14
+    NoteBorderColor #FFC107
+    NoteBackgroundColor #FFF9C4
+    DefaultFontSize 14
+    DefaultFontColor #212121
+    BackgroundColor transparent
+
+    PackageBackgroundColor transparent
+    PackageBorderColor #9E9E9E
+    PackageFontColor #212121
+    PackageFontSize 16
+    PackageFontStyle bold
+}
+
+skinparam linetype ortho
+skinparam ranksep 50
+skinparam nodesep 50
+skinparam padding 5
 
 @enduml

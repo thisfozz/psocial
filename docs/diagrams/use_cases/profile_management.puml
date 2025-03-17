@@ -2,112 +2,128 @@
 
 !include uc_styles.puml
 
-left to right direction
-
 actor "Пользователь" as user
 rectangle "Система" as system
 database "База данных" as db
 
 rectangle "Управление профилем" {
-    ' Действия пользователя
-    usecase "Отобразить профиль" as UC1
-    usecase "Открыть редактирование\nпрофиля" as UC2
-    usecase "Загрузить текущие\nданные" as UC3
-    usecase "Сохранить изменения" as UC4
-    usecase "Проверить данные" as UC5
+    usecase "Отобразить профиль" as UC1 #BBDEFB
+    usecase "Открыть редактирование\n профиля" as UC2 #BBDEFB
+    usecase "Загрузить текущие\n данные" as UC3 #BBDEFB
+    usecase "Сохранить изменения" as UC4 #BBDEFB
+    usecase "Проверить данные" as UC5 #BBDEFB
 
-    ' Критические поля (отдельное редактирование в отдельных формах)
-    usecase "Изменить email" as CR1
-    usecase "Изменить никнейм" as CR2
-    usecase "Проверить данные" as CR3
+    usecase "Изменить email" as CR1 #D1C4E9
+    usecase "Изменить никнейм" as CR2 #D1C4E9
+    usecase "Проверить данные" as CR3 #D1C4E9
 
-    ' Действия системы
-    usecase "Обновить профиль" as S2
-    usecase "Показать ошибку" as S3
+    usecase "Обновить профиль" as S2 #C8E6C9
+    usecase "Показать ошибку" as S3 #FFCDD2
 
-    ' Действия с БД
-    usecase "Получить текущие данные" as DB1
-    usecase "Сохранить изменения" as DB2
+    usecase "Изменить пароль" as F1 #E1F5FE
+    usecase "Изменить телефон" as F2 #E1F5FE
+    usecase "Изменить имя" as F3 #E1F5FE
+    usecase "Изменить фамилию" as F4 #E1F5FE
+    usecase "Изменить семейное\nположение" as F5 #E1F5FE
+    usecase "Изменить город" as F6 #E1F5FE
+    usecase "Изменить дату\nрождения" as F7 #E1F5FE
+    usecase "Изменить о себе" as F8 #E1F5FE
 
-    ' Обычные поля для редактирования
-    usecase "Изменить пароль" as F1
-    usecase "Изменить телефон" as F2
-    usecase "Изменить имя" as F3
-    usecase "Изменить фамилию" as F4
-    usecase "Изменить семейное\nположение" as F5
-    usecase "Изменить город" as F6
-    usecase "Изменить дату\nрождения" as F7
-    usecase "Изменить о себе" as F8
+    user -[#1976D2]-> UC1 : Шаг 1A
+    UC1 -[#1976D2]..> UC2 : <<include>> Шаг 2A
 
-    user --> UC1
-    UC1 ..> UC2 : <<include>>
-    UC2 --> UC3
+    UC2 -[#1976D2]-> UC3 : Шаг 1B
+    UC3 -[#1976D2]-> system : запрос данных
+    system -[#388E3C]-> user : отображение формы
 
-    system --> DB1
-    DB1 --> system
+    UC3 -[#673AB7]..> CR1 : <<extend>> Шаг 1C
+    UC3 -[#673AB7]..> CR2 : <<extend>> Шаг 1C
+    CR1 -[#673AB7]-> CR3 : Шаг 2C
+    CR2 -[#673AB7]-> CR3 : Шаг 2C
+    CR3 -[#673AB7]-> system : отправка изменений
 
-    ' Критические поля
-    UC3 ..> CR1 : <<extend>>
-    UC3 ..> CR2 : <<extend>>
-    CR1 --> CR3
-    CR2 --> CR3
-    CR3 --> system
-    system --> S2
-    S2 --> DB2
+    UC3 -[#1976D2]..> F1 : <<extend>> Шаг 1D
+    UC3 -[#1976D2]..> F2 : <<extend>> Шаг 1D
+    UC3 -[#1976D2]..> F3 : <<extend>> Шаг 1D
+    UC3 -[#1976D2]..> F4 : <<extend>> Шаг 1D
+    UC3 -[#1976D2]..> F5 : <<extend>> Шаг 1D
+    UC3 -[#1976D2]..> F6 : <<extend>> Шаг 1D
+    UC3 -[#1976D2]..> F7 : <<extend>> Шаг 1D
+    UC3 -[#1976D2]..> F8 : <<extend>> Шаг 1D
 
-    ' Обычные поля
-    UC3 ..> F1 : <<extend>>
-    UC3 ..> F2 : <<extend>>
-    UC3 ..> F3 : <<extend>>
-    UC3 ..> F4 : <<extend>>
-    UC3 ..> F5 : <<extend>>
-    UC3 ..> F6 : <<extend>>
-    UC3 ..> F7 : <<extend>>
-    UC3 ..> F8 : <<extend>>
+    F1 -[#1976D2]..> UC4 : <<alt>> Шаг 2D
+    F2 -[#1976D2]..> UC4 : <<alt>> Шаг 2D
+    F3 -[#1976D2]..> UC4 : <<alt>> Шаг 2D
+    F4 -[#1976D2]..> UC4 : <<alt>> Шаг 2D
+    F5 -[#1976D2]..> UC4 : <<alt>> Шаг 2D
+    F6 -[#1976D2]..> UC4 : <<alt>> Шаг 2D
+    F7 -[#1976D2]..> UC4 : <<alt>> Шаг 2D
+    F8 -[#1976D2]..> UC4 : <<alt>> Шаг 2D
 
-    F1 ..> UC4 : <<alt>>
-    F2 ..> UC4 : <<alt>>
-    F3 ..> UC4 : <<alt>>
-    F4 ..> UC4 : <<alt>>
-    F5 ..> UC4 : <<alt>>
-    F6 ..> UC4 : <<alt>>
-    F7 ..> UC4 : <<alt>>
-    F8 ..> UC4 : <<alt>>
+    UC4 -[#1976D2]-> UC5 : Шаг 3D
+    UC5 -[#1976D2]-> system : отправка изменений
 
-    UC4 --> UC5
-    UC5 --> system
+    system -[#388E3C]-> S2 : Шаг 1E (успех)
+    system -[#D32F2F]-> S3 : Шаг 1E (ошибка)
+    S3 -[#D32F2F]-> user : сообщение об ошибке
 
-    system --> S3
+    system -[#388E3C]-> db : взаимодействие с БД
 
-    system --> db
-
-    note right of CR3
-        Проверка критических полей:
-        1. Валидация формата:
-           - Формат email
-           - Формат никнейма
-        2. Проверка уникальности:
-           - Уникальность email
-           - Уникальность никнейма
+    ' Заметки для сценариев
+    note right of UC1 #FFF8E1
+        <b>Сценарий A: Просмотр профиля</b>
+        <b>Шаг 1A:</b> Пользователь открывает
+        страницу своего профиля
     end note
 
-    note right of UC5
-        Проверка формата данных:
-        - Валидность телефона
-        - Валидность имени
-        - Валидность даты
+    note right of UC3 #FFF8E1
+        <b>Сценарий B: Загрузка данных</b>
+        <b>Шаг 1B:</b> Система загружает
+        текущие данные пользователя
+        для отображения в форме
+        редактирования
+    end note
+
+    note right of CR1 #FFF8E1
+        <b>Сценарий C: Критические поля</b>
+        <b>Шаг 1C:</b> Редактирование критических
+        полей происходит в отдельных формах
+        с дополнительной проверкой
+    end note
+
+    note right of F1 #FFF8E1
+        <b>Сценарий D: Обычные поля</b>
+        <b>Шаг 1D-3D:</b> Пользователь может
+        редактировать различные поля
+        профиля и сохранять изменения
+    end note
+
+    note right of CR3 #FFF8E1
+        <b>Проверка критических полей:</b>
+        1. Валидация формата:
+           • Формат email
+           • Формат никнейма
+        2. Проверка уникальности:
+           • Уникальность email
+           • Уникальность никнейма
+    end note
+
+    note right of UC5 #FFF8E1
+        <b>Проверка формата данных:</b>
+        • Валидность телефона
+        • Валидность имени
+        • Валидность даты
         и т.д.
     end note
 
-    note right of DB1
-        SELECT данных
-        пользователя из БД
-    end note
-
-    note right of DB2
-        UPDATE данных
-        профиля в БД
+    note bottom of db #FFF8E1
+        <b>Операции с базой данных:</b>
+        • SELECT данных пользователя из БД
+        • UPDATE данных профиля в БД
+        • Проверка уникальности полей
     end note
 }
+
+caption "Диаграмма процесса управления профилем в системе PSocial"
 
 @enduml

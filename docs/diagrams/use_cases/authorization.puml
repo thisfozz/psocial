@@ -2,92 +2,112 @@
 
 !include uc_styles.puml
 
-left to right direction
-
 actor "Пользователь" as user
-rectangle "Система" as system
+rectangle "Приложение" as system
 database "База данных" as db
 
 rectangle "Авторизация" {
-    ' Действия пользователя
-    usecase "Ввести Email" as UC1
-    usecase "Ввести телефон" as UC2
-    usecase "Ввести пароль" as UC3
-    usecase "Проверить данные" as UC4
+    usecase "Ввести Email" as UC1 #BBDEFB
+    usecase "Ввести телефон" as UC2 #BBDEFB
+    usecase "Ввести пароль" as UC3 #BBDEFB
+    usecase "Проверить данные" as UC4 #BBDEFB
 
-    ' Действия системы
-    usecase "Проверить существование пользователя" as S1
-    usecase "Проверить правильность пароля" as S2
-    usecase "Создать сессию" as S3
-    usecase "Показать ошибку" as S4
+    usecase "Проверить существование\n пользователя" as S1 #C8E6C9
+    usecase "Проверить правильность\n пароля" as S2 #C8E6C9
+    usecase "Создать сессию" as S3 #C8E6C9
 
-    ' Действия с БД
-    usecase "Получить данные пользователя" as DB1
-    usecase "Сохранить сессию" as DB3
+    usecase "Показать ошибку" as S4 #FFCDD2
 
-    user ..> UC1 : <<alt>>
-    user ..> UC2 : <<alt>>
-    user --> UC3
+    usecase "Получить данные\n пользователя" as DB1 #E8F5E9
+    usecase "Сохранить сессию" as DB3 #E8F5E9
 
-    UC1 --> UC4
-    UC2 --> UC4
-    UC3 --> UC4
+    user -[#1976D2]..> UC1 : <<alt>> Шаг 1A
+    user -[#1976D2]..> UC2 : <<alt>> Шаг 1B
+    user -[#1976D2]-> UC3 : Шаг 2
 
-    system --> DB1
+    UC1 -[#1976D2]-> UC4 : Шаг 3
+    UC2 -[#1976D2]-> UC4 : Шаг 3
+    UC3 -[#1976D2]-> UC4 : Шаг 3
 
-    UC4 --> S1
-    S1 --> S2
+    UC4 -[#1976D2]-> S1 : Шаг 4
+    S1 -[#388E3C]-> S2 : Шаг 5
 
-    S1 --> system
-    S2 --> system
+    system -[#388E3C]-> DB1 : Шаг 6
+    DB1 -[#388E3C]-> system : Шаг 7
 
-    system --> S3
-    S3 --> DB3
-    system --> S4
+    S1 -[#388E3C]-> system : успешно
+    S2 -[#388E3C]-> system : успешно
 
-    system --> db
+    system -[#388E3C]-> S3 : Шаг 8 (успех)
+    S3 -[#388E3C]-> DB3 : Шаг 9
+    DB3 -[#388E3C]-> system : Шаг 10
 
-    note right of UC1
-        Пользователь может войти
-        используя Email или телефон
+    system -[#D32F2F]-> S4 : при ошибке
+    S4 -[#D32F2F]-> user : сообщение об ошибке
+
+    system -[#388E3C]-> db
+
+    note right of UC1 #FFF8E1
+        <b>Шаг 1A:</b> Пользователь может войти
+        используя Email или телефон (1B).
+        Это альтернативные способы входа.
     end note
 
-    note right of UC4
-        Проверка на корректность
-        введенных данных
-        (валидация формата)
+    note right of UC3 #FFF8E1
+        <b>Шаг 2:</b> Пользователь вводит пароль
+        для своей учетной записи
     end note
 
-    note right of S1
-        Проверка существования
-        пользователя в системе
+    note right of UC4 #FFF8E1
+        <b>Шаг 3:</b> Проверка на корректность
+        введенных данных (валидация формата)
+        перед отправкой на сервер
     end note
 
-    note right of S2
-        Проверка соответствия
-        введенного пароля
-        хешу в базе данных
+    note right of S1 #FFF8E1
+        <b>Шаг 4:</b> Проверка существования
+        пользователя в системе по
+        Email или телефону
     end note
 
-    note right of S3
-        Создание сессии для
+    note right of S2 #FFF8E1
+        <b>Шаг 5:</b> Проверка соответствия
+        введенного пароля хешу в базе данных
+        с использованием безопасных алгоритмов
+    end note
+
+    note right of S3 #FFF8E1
+        <b>Шаг 8:</b> Создание сессии для
         авторизованного пользователя
+        с установкой cookies
     end note
 
-    note right of S4
-        Вывод сообщения об ошибке
-        если проверка не пройдена
+    note right of S4 #FFF9C4
+        <b>Обработка ошибок:</b>
+        • Пользователь не найден
+        • Неверный пароль
+        • Неверный формат Email/телефона
+        • Аккаунт заблокирован
     end note
 
-    note right of DB1
-        Получение информации
-        о пользователе из БД
+    note right of DB1 #FFF8E1
+        <b>Шаг 6-7:</b> Получение информации
+        о пользователе из БД:
+        • Данные профиля
+        • Хеш пароля
+        • Статус аккаунта
     end note
 
-    note right of DB3
-        Сохранение данных
-        сессии в БД
+    note right of DB3 #FFF8E1
+        <b>Шаг 9-10:</b> Сохранение данных
+        сессии в БД:
+        • ID пользователя
+        • Токен сессии
+        • Время создания
+        • IP-адрес
     end note
 }
+
+caption "Диаграмма процесса авторизации в системе PSocial"
 
 @enduml
