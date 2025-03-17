@@ -1,44 +1,65 @@
 @startuml language_management
 
-' на доработку
-
 !include uc_styles.puml
-
-left to right direction
 
 actor "Пользователь" as user
 rectangle "Система" as system
 database "База данных" as db
 
 rectangle "Управление языками" {
-    usecase "Открыть редактирование профиля" as UC1
-    usecase "Выбрать язык" as UC2
-    usecase "Удалить язык" as UC4
-    usecase "Просмотреть список языков" as UC5
-    usecase "Сохранить изменения" as UC6
+    usecase "Открыть редактирование\nпрофиля" as UC1 #BBDEFB
+    usecase "Просмотреть список\nязыков" as UC5 #BBDEFB
+    usecase "Выбрать язык" as UC2 #BBDEFB
+    usecase "Удалить язык" as UC4 #BBDEFB
+    usecase "Сохранить изменения" as UC6 #BBDEFB
 
-    user --> UC1
-    UC1 --> UC5
-    UC5 --> UC2
+    user -[#1976D2]-> UC1 : Шаг 1
+    UC1 -[#1976D2]-> UC5 : Шаг 2
+    UC5 -[#1976D2]-> UC2 : Шаг 3A
+    UC5 -[#1976D2]-> UC4 : Шаг 3B
+    UC2 -[#1976D2]-> UC6 : Шаг 4
+    UC4 -[#1976D2]-> UC6 : Шаг 4
+    UC6 -[#1976D2]-> system : Шаг 5
+    system -[#388E3C]-> db : Шаг 6
 
-    UC5 --> UC4
-    UC2 --> UC6
-    UC4 --> UC6
-
-    UC6 --> system
-
-    system --> db
-
-    note right of UC2
-        Пользователь может
-        выбрать язык из
-        существующего списка
+    note right of UC1 #FFF8E1
+        <b>Шаг 1:</b> Пользователь открывает
+        страницу редактирования профиля,
+        где доступно управление языками
     end note
 
-    note right of UC4
-        Пользователь может удалить
-        один из ранее добавленных языков
+    note right of UC5 #FFF8E1
+        <b>Шаг 2:</b> Пользователь просматривает
+        список доступных языков и
+        уже добавленных в профиль
+    end note
+
+    note right of UC2 #FFF8E1
+        <b>Шаг 3A:</b> Пользователь выбирает язык
+        из списка доступных языков системы.
+        Можно выбрать несколько языков
+        с указанием уровня владения.
+    end note
+
+    note right of UC4 #FFF8E1
+        <b>Шаг 3B:</b> Пользователь может удалить
+        один или несколько ранее добавленных
+        языков из своего профиля
+    end note
+
+    note right of UC6 #FFF8E1
+        <b>Шаг 4-5:</b> Пользователь сохраняет
+        внесенные изменения, отправляя
+        форму на сервер
+    end note
+
+    note bottom of db #FFF8E1
+        <b>Шаг 6:</b> Система сохраняет изменения в БД:
+        • Добавляет новые записи в user_languages
+        • Удаляет записи для удаленных языков
     end note
 }
+
+caption "Диаграмма процесса управления языками в системе PSocial"
 
 @enduml

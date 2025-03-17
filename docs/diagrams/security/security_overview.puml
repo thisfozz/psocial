@@ -1,0 +1,32 @@
+@startuml Security Overview
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+title "Обзор системы безопасности PSocial (Laravel)"
+
+
+Person(User, "Пользователь", "Обычный пользователь системы")
+
+
+Container_Boundary(SecuritySystem, "Система безопасности PSocial") {
+    Component(Auth, "Аутентификация", "Laravel Auth", "Встроенная система аутентификации Laravel")
+    Component(Authorization, "Авторизация", "Laravel Gates & Policies", "Управление правами доступа к ресурсам")
+    Component(Encryption, "Шифрование данных", "BCrypt", "Хеширование паролей с использованием BCrypt")
+    Component(SessionManager, "Управление сессиями", "Laravel Session", "Управление сессиями пользователей")
+}
+
+
+Rel(User, Auth, "Аутентифицируется", "HTTPS")
+Rel(Auth, SessionManager, "Создает сессию")
+Rel(Auth, Authorization, "Передает данные о пользователе")
+Rel(Auth, Encryption, "Использует для хеширования паролей")
+Rel(SessionManager, Encryption, "Шифрует данные сессии")
+
+note bottom of SecuritySystem
+  Для базовой безопасности Laravel предоставляет все необходимые компоненты "из коробки".
+  По мере роста проекта можно добавить дополнительные уровни защиты.
+  Например HTTP Kernel и Middleware
+end note
+
+SHOW_LEGEND()
+@enduml
