@@ -1,29 +1,39 @@
--- Таблица аккаунтов (accounts) - для аутентификации
-CREATE TABLE accounts (
+-- Стандартная таблица пользователей Laravel с дополнительными полями
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    email VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(255),
+    username VARCHAR(50) UNIQUE,
+    email VARCHAR(255) UNIQUE NOT NULL,
     phone_number VARCHAR(15) UNIQUE,
     password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    last_login TIMESTAMP
-);
-
--- Таблица профилей пользователей (user_profiles) - для информации о пользователе
-CREATE TABLE user_profiles (
-    account_id BIGINT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
     nickname VARCHAR(15) UNIQUE,
-    avatar VARCHAR(255),
-    family_status_id BIGINT,
-    cities_id BIGINT,
+    avatar_path VARCHAR(255),
+    family_status_id INT,
+    cities_id INT,
     date_of_birth DATE,
     about_me TEXT,
     status VARCHAR(50),
-    CONSTRAINT fk_user_profiles_account FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE,
-    CONSTRAINT fk_user_profiles_family_status FOREIGN KEY (family_status_id) REFERENCES family_status(id) ON DELETE SET NULL,
-    CONSTRAINT fk_user_profiles_cities FOREIGN KEY (cities_id) REFERENCES cities(id) ON DELETE SET NULL
+    is_deleted BOOLEAN DEFAULT FALSE,
+    email_verified_at TIMESTAMP NULL,
+    remember_token VARCHAR(100),
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_users_family_status FOREIGN KEY (family_status_id) REFERENCES family_status(id) ON DELETE SET NULL,
+    CONSTRAINT fk_users_cities FOREIGN KEY (cities_id) REFERENCES cities(id) ON DELETE SET NULL
+);
+
+-- Таблица архивных пользователей
+CREATE TABLE archived_users (
+    id INT PRIMARY KEY,
+    username VARCHAR(50),
+    email VARCHAR(255),
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    nickname VARCHAR(15),
+    archived_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Таблица семейного положения (family_status)
@@ -56,13 +66,13 @@ CREATE TABLE languages (
 -- Таблица интересов (user_interests)
 CREATE TABLE user_interests (
     id SERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    quotes TEXT,
-    activity TEXT,
-    favorite_music TEXT,
-    favorite_books TEXT,
-    favorite_games TEXT,
-    CONSTRAINT fk_user_interests_user FOREIGN KEY (user_id) REFERENCES user_profiles(account_id) ON DELETE CASCADE
+    user_id INT NOT NULL,
+    quotes VARCHAR(1000),
+    activity VARCHAR(500),
+    favorite_music VARCHAR(1000),
+    favorite_books VARCHAR(1000),
+    favorite_games VARCHAR(1000),
+    CONSTRAINT fk_user_interests_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Таблица запросов в друзья (friend_requests)
