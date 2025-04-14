@@ -4,8 +4,8 @@
 
 ' Таблица друзей
 entity friends {
-    + user_id: BIGINT [PK, FK -> user_profiles.account_id]
-    + friend_id: BIGINT [PK, FK -> user_profiles.account_id]
+    + user_id: INT [PK, FK -> users.id]
+    + friend_id: INT [PK, FK -> users.id]
     --
     created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
 }

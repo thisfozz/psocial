@@ -6,8 +6,8 @@
 entity friend_requests {
     + id: SERIAL [PK]
     --
-    from_user_id: BIGINT [NOT NULL, FK -> user_profiles.account_id]
-    to_user_id: BIGINT [NOT NULL, FK -> user_profiles.account_id]
+    from_user_id: INT [NOT NULL, FK -> users.id]
+    to_user_id: INT [NOT NULL, FK -> users.id]
     status: VARCHAR(20) [DEFAULT 'в ожидании', NOT NULL]
     created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
 }
