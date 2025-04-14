@@ -3,15 +3,29 @@
 !include ../styles.puml
 
 ' Таблица аккаунтов
-entity accounts {
+entity users {
     + id: SERIAL [PK]
     --
-    username: VARCHAR(50) [UNIQUE, NOT NULL]
-    email: VARCHAR(50) [UNIQUE, NOT NULL]
+    name: VARCHAR(255)
+    username: VARCHAR(50) [UNIQUE]
+    email: VARCHAR(255) [UNIQUE, NOT NULL]
     phone_number: VARCHAR(15) [UNIQUE]
     password: VARCHAR(255) [NOT NULL]
+    first_name: VARCHAR(50)
+    last_name: VARCHAR(50)
+    nickname: VARCHAR(15) [UNIQUE]
+    avatar_path: VARCHAR(255)
+    family_status_id: INT
+    cities_id: INT
+    date_of_birth: DATE
+    about_me: TEXT
+    status: VARCHAR(50)
+    is_deleted: BOOLEAN [DEFAULT FALSE]
+    email_verified_at: TIMESTAMP [NULL]
+    remember_token: VARCHAR(100)
+    deleted_at: TIMESTAMP [NULL, DEFAULT NULL]
     created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
-    last_login: TIMESTAMP
+    updated_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
 }
 
 @enduml

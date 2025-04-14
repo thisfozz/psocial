@@ -27,12 +27,12 @@ CREATE TABLE users (
 
 -- Таблица архивных пользователей
 CREATE TABLE archived_users (
-    id INT PRIMARY KEY,
-    username VARCHAR(50),
-    email VARCHAR(255),
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
+    email VARCHAR(255) UNIQUE,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    nickname VARCHAR(15),
+    nickname VARCHAR(15) UNIQUE,
     archived_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -78,52 +78,55 @@ CREATE TABLE user_interests (
 -- Таблица запросов в друзья (friend_requests)
 CREATE TABLE friend_requests (
     id SERIAL PRIMARY KEY,
-    from_user_id BIGINT NOT NULL,
-    to_user_id BIGINT NOT NULL,
+    from_user_id INT NOT NULL,
+    to_user_id INT NOT NULL,
     status VARCHAR(20) DEFAULT 'в ожидании' NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
-    FOREIGN KEY (from_user_id) REFERENCES user_profiles(account_id) ON DELETE CASCADE,
-    FOREIGN KEY (to_user_id) REFERENCES user_profiles(account_id) ON DELETE CASCADE
+    FOREIGN KEY (from_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (to_user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Таблица друзей (friends)
 CREATE TABLE friends (
-    user_id BIGINT NOT NULL,
-    friend_id BIGINT NOT NULL,
+    user_id INT NOT NULL,
+    friend_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, friend_id),
     
-    CONSTRAINT fk_friends_user_id FOREIGN KEY (user_id) REFERENCES user_profiles(account_id) ON DELETE CASCADE,
-    CONSTRAINT fk_friends_friend_id FOREIGN KEY (friend_id) REFERENCES user_profiles(account_id) ON DELETE CASCADE,
+    CONSTRAINT fk_friends_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_friends_friend_id FOREIGN KEY (friend_id) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT check_different_users CHECK (user_id <> friend_id)
 );
 
 -- Таблица постов (posts)
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    user_id INT NOT NULL,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_posts_user_id FOREIGN KEY (user_id) REFERENCES user_profiles(account_id) ON DELETE CASCADE
+
+    CONSTRAINT fk_posts_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Таблица лайков к постам (post_likes)
 CREATE TABLE post_likes (
-    post_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (post_id, user_id),
+
     CONSTRAINT fk_post_likes_post_id FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
-    CONSTRAINT fk_post_likes_user_id FOREIGN KEY (user_id) REFERENCES user_profiles(account_id) ON DELETE CASCADE
+    CONSTRAINT fk_post_likes_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Таблица связи пользователей и языков (user_languages)
 CREATE TABLE user_languages (
-    user_id BIGINT NOT NULL,
+    user_id INT NOT NULL,
     language_id INT NOT NULL,
     PRIMARY KEY (user_id, language_id),
-    CONSTRAINT fk_user_languages_user FOREIGN KEY (user_id) REFERENCES user_profiles(account_id) ON DELETE CASCADE,
+    
+    CONSTRAINT fk_user_languages_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_user_languages_language FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
 );

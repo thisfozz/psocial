@@ -4,7 +4,7 @@
 
 ' Таблица связи пользователей и языков
 entity user_languages {
-    + user_id: BIGINT [PK, FK -> user_profiles.account_id]
+    + user_id: INT [PK, FK -> users.id]
     + language_id: INT [PK, FK -> languages.id]
 }
 

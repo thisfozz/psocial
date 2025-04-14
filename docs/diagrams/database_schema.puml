@@ -3,6 +3,6 @@
 !include styles.puml
 !include relationships.pum
 
-title "Схема базы данных социальной сети(начальный вариант)"
+title "Схема базы данных социальной сети"
 
 @enduml

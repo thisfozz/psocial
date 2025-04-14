@@ -4,8 +4,8 @@
 
 ' Таблица лайков к постам
 entity post_likes {
-    + post_id: BIGINT [PK, FK -> posts.id]
-    + user_id: BIGINT [PK, FK -> user_profiles.account_id]
+    + post_id: INT [PK, FK -> posts.id]
+    + user_id: INT [PK, FK -> users.id]
     --
     created_at: TIMESTAMP [DEFAULT CURRENT_TIMESTAMP]
 }
