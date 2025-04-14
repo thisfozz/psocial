@@ -1,14 +1,39 @@
+-- Таблица семейного положения (family_status)
+CREATE TABLE family_status (
+    id SERIAL PRIMARY KEY,
+    status VARCHAR(50) NOT NULL
+);
+
+-- Таблица стран (countries)
+CREATE TABLE countries (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Таблица языков (languages)
+CREATE TABLE languages (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    language_code VARCHAR(2) NOT NULL UNIQUE
+);
+
+-- Таблица городов (cities)
+CREATE TABLE cities (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    country_id INT NOT NULL,
+    CONSTRAINT fk_cities_country FOREIGN KEY (country_id) REFERENCES countries(id) ON DELETE CASCADE
+);
+
 -- Стандартная таблица пользователей Laravel с дополнительными полями
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    username VARCHAR(50) UNIQUE,
+    username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    phone_number VARCHAR(15) UNIQUE,
+    phone_number VARCHAR(15) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
-    nickname VARCHAR(15) UNIQUE,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
     avatar_path VARCHAR(255),
     family_status_id INT,
     cities_id INT,
@@ -34,33 +59,6 @@ CREATE TABLE archived_users (
     last_name VARCHAR(50),
     nickname VARCHAR(15) UNIQUE,
     archived_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Таблица семейного положения (family_status)
-CREATE TABLE family_status (
-    id SERIAL PRIMARY KEY,
-    status VARCHAR(50) NOT NULL
-);
-
--- Таблица городов (cities)
-CREATE TABLE cities (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    country_id INT NOT NULL,
-    CONSTRAINT fk_cities_country FOREIGN KEY (country_id) REFERENCES countries(id) ON DELETE CASCADE
-);
-
--- Таблица стран (countries)
-CREATE TABLE countries (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL UNIQUE
-);
-
--- Таблица языков (languages)
-CREATE TABLE languages (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    language_code VARCHAR(2) NOT NULL UNIQUE
 );
 
 -- Таблица интересов (user_interests)
