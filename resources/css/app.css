@@ -5,6 +5,7 @@
 @import './register.css';
 @import './home.css';
 @import './login.css';
+@import './social.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
