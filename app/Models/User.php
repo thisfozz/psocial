@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
+use App\Models\City;
 
 class User extends Authenticatable implements AuthenticatableContract, CanResetPassword
 {
