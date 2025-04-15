@@ -18,16 +18,13 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
     protected $table = 'users';
     protected $primaryKey = 'id';
 
-    // ИСПРАВИТЬ!
     protected $fillable = [
-        'name',
         'username',
         'email',
         'phone_number',
         'password',
         'first_name',
         'last_name',
-        'nickname',
         'avatar_path',
         'family_status_id',
         'cities_id',

@@ -1,0 +1,95 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #181c1f;
+}
+
+.terminal-center-home {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.terminal-card-home {
+    width: 1000px;
+    background: #181c1f;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    overflow: hidden;
+}
+
+.terminal-header-home {
+    background: #23282c;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+}
+
+.terminal-title-home {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terminal-icon-home {
+    color: #00e676;
+}
+
+.terminal-body-home {
+    background: #181c1f;
+    color: #fff;
+    padding: 32px 32px 28px 32px;
+}
+
+.command-line-home {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.prompt-home {
+    color: #00e676;
+    font-weight: bold;
+    min-width: 180px;
+    padding-right: 32px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.terminal-text-home, .typed-text-home {
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    flex: 1;
+    min-width: 0;
+}
+
+.typed-text-home {
+    border-right: 2px solid #00e676;
+    animation: blink-cursor-home 1s steps(1) infinite;
+}
+
+@keyframes blink-cursor-home {
+    0%, 100% { border-color: #00e676; }
+    50% { border-color: transparent; }
+}
+
+.terminal-link-home {
+    color: #00e676;
+    text-decoration: underline;
+    margin-left: 8px;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.terminal-link-home:hover {
+    color: #fff;
+}
