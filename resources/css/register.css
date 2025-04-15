@@ -20,7 +20,7 @@ html, body {
   background-color: #181c1f;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-  width: 560px;
+  width: 620px;
   margin: 40px auto;
   overflow: hidden;
   font-family: 'Fira Mono', 'Courier New', Courier, monospace;
@@ -156,6 +156,22 @@ html, body {
   text-decoration: underline;
   margin-left: 8px;
   font-size: 14px;
+}
+
+.terminal-error-register {
+  color: #ff5252;
+  font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-left: 2px;
+  opacity: 0.95;
+  letter-spacing: 0.2px;
+  white-space: pre-line;
+}
+
+.input-error-register {
+  border-bottom: 2px solid #ff5252 !important;
+  background: rgba(255,82,82,0.07);
 }
 
 @keyframes blink-register {

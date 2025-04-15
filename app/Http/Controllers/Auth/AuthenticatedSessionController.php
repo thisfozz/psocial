@@ -21,7 +21,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
     
-        return redirect()->intended(route('social.index', absolute:false));
+        return redirect()->intended(route('social.show', ['id' => auth()->id()], false));
     }
 
     public function destroy(Request $request) : RedirectResponse

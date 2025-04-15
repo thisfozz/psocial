@@ -1,5 +1,6 @@
 @extends('layouts.terminal')
 @section('content')
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <div class="terminal-center-home">
         <div class="terminal-card-home">
             <div class="terminal-header-home">

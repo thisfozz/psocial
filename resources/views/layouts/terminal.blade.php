@@ -12,7 +12,6 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     @stack('styles')
 </head>
     <body style="background: #181c1f; margin: 0; padding: 0;">

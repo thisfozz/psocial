@@ -42,6 +42,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('social.index', absolute:false));
+        return redirect()->intended(route('social.show', ['id' => auth()->id()], false));
     }
 }
