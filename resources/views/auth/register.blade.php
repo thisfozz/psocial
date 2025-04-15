@@ -14,55 +14,67 @@
                 </div>
                 <div class="terminal-body-register">
                     <div class="command-line-register input-row">
-                        <span class="prompt-register">first_name:</span>
+                        <span class="prompt-register">PSocial@register:~$first_name</span>
                         <div class="input-wrapper-register">
-                            <input required type="text" class="input-field-register" name="first_name" value="{{ old('first_name') }}" placeholder="Введите имя">
+                            <input type="text" class="input-field-register @error('first_name') input-error-register @enderror" name="first_name" value="{{ old('first_name') }}" placeholder="Enter first name">
                         </div>
                     </div>
                     <div class="command-line-register input-row">
-                        <span class="prompt-register">last_name:</span>
+                        <span class="prompt-register">PSocial@register:~$last_name</span>
                         <div class="input-wrapper-register">
-                            <input required type="text" class="input-field-register" name="last_name" value="{{ old('last_name') }}" placeholder="Введите фамилию">
+                            <input type="text" class="input-field-register @error('last_name') input-error-register @enderror" name="last_name" value="{{ old('last_name') }}" placeholder="Enter last name">
                         </div>
                     </div>
                     <div class="command-line-register input-row">
-                        <span class="prompt-register">username:</span>
+                        <span class="prompt-register">PSocial@register:~$username</span>
                         <div class="input-wrapper-register">
-                            <input required type="text" class="input-field-register" name="username" value="{{ old('username') }}" placeholder="Введите никнейм">
+                            <input type="text" class="input-field-register @error('username') input-error-register @enderror" name="username" value="{{ old('username') }}" placeholder="Enter username">
+                            @error('username')
+                                <div class="terminal-error-register">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="command-line-register input-row">
-                        <span class="prompt-register">email:</span>
+                        <span class="prompt-register">PSocial@register:~$email</span>
                         <div class="input-wrapper-register">
-                            <input required type="email" class="input-field-register" name="email" value="{{ old('email') }}" placeholder="Введите email">
+                            <input type="email" class="input-field-register @error('email') input-error-register @enderror" name="email" value="{{ old('email') }}" placeholder="Enter email">
+                            @error('email')
+                                <div class="terminal-error-register">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="command-line-register input-row">
-                        <span class="prompt-register">phone_number:</span>
+                        <span class="prompt-register">PSocial@register:~$phone_number</span>
                         <div class="input-wrapper-register">
-                            <input required type="tel" class="input-field-register" name="phone_number" value="{{ old('phone_number') }}" placeholder="Введите телефон">
+                            <input type="tel" class="input-field-register @error('phone_number') input-error-register @enderror" name="phone_number" value="{{ old('phone_number') }}" placeholder="Enter phone number">
+                            @error('phone_number')
+                                <div class="terminal-error-register">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="command-line-register input-row">
-                        <span class="prompt-register">password:</span>
+                        <span class="prompt-register">PSocial@register:~$password</span>
                         <div class="input-wrapper-register">
-                            <input required type="password" class="input-field-register" name="password" placeholder="Введите пароль">
+                            <input type="password" class="input-field-register @error('password') input-error-register @enderror" name="password" placeholder="Enter password">
                         </div>
                     </div>
                     <div class="command-line-register input-row">
-                        <span class="prompt-register">confirm_password:</span>
+                        <span class="prompt-register">PSocial@register:~$confirm_password</span>
                         <div class="input-wrapper-register">
-                            <input required type="password" class="input-field-register" name="password_confirmation" placeholder="Повторите пароль">
+                            <input type="password" class="input-field-register @error('password') input-error-register @enderror" name="password_confirmation" placeholder="Repeat password">
+                            @error('password')
+                                <div class="terminal-error-register">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="command-line-register button-row">
-                        <button type="submit" class="terminal-submit-register">[ Регистрация ]</button>
+                        <button type="submit" class="terminal-submit-register">[ Register ]</button>
                     </div>
                     <div class="command-line-register link-row">
-                        <span class="prompt-register">Уже есть аккаунт?</span>
+                        <span class="prompt-register">Already have an account?</span>
                     </div>
                     <div class="command-line-register link-row">
-                        <a href="{{ route('login') }}" class="terminal-link-register">Войти</a>
+                        <a href="{{ route('login') }}" class="terminal-link-register">Login</a>
                     </div>
                 </div>
             </form>

@@ -14,26 +14,32 @@
                     </span>
                 </div>
                 <div class="terminal-body-login">
+                    @if ($errors->has('identifier'))
+                        <div class="command-line-login error-row">
+                            <span class="prompt-login" style="color:#ff5252;">PSocial@login:~$</span>
+                            <span class="terminal-error-login">{{ $errors->first('identifier') }}</span>
+                        </div>
+                    @endif
                     <div class="command-line-login input-row">
-                        <span class="prompt-login">PSocial@login:~$identifier:</span>
+                        <span class="prompt-login">PSocial@login:~$identifier</span>
                         <div class="input-wrapper-login">
-                            <input required type="text" class="input-field-login" name="identifier" value="{{ old('identifier') }}" placeholder="Email или username">
+                            <input required type="text" class="input-field-login" name="identifier" value="{{ old('identifier') }}" placeholder="Email or username">
                         </div>
                     </div>
                     <div class="command-line-login input-row">
-                        <span class="prompt-login">PSocial@login:~$password:</span>
+                        <span class="prompt-login">PSocial@login:~$password</span>
                         <div class="input-wrapper-login">
-                            <input required type="password" class="input-field-login" name="password" placeholder="Введите пароль">
+                            <input required type="password" class="input-field-login" name="password" placeholder="Enter password">
                         </div>
                     </div>
                     <div class="command-line-login button-row">
-                        <button type="submit" class="terminal-submit-login">[ Войти ]</button>
+                        <button type="submit" class="terminal-submit-login">[ Login ]</button>
                     </div>
                     <div class="command-line-login link-row">
-                        <span class="prompt-login">Нет аккаунта?</span>
+                        <span class="prompt-login">No account?</span>
                     </div>
                     <div class="command-line-login link-row">
-                        <a href="{{ route('register') }}" class="terminal-link-login">Зарегистрироваться</a>
+                        <a href="{{ route('register') }}" class="terminal-link-login">Register</a>
                     </div>
                 </div>
             </form>
