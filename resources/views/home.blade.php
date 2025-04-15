@@ -22,8 +22,8 @@
                 <div class="command-line-home">
                     <span class="prompt-home">PSocial@home:~$</span>
                     <div>
-                        <a href="/login" class="terminal-link-home">[ Войти ]</a>
-                        <a href="/register" class="terminal-link-home" style="margin-left: 16px;">[ Регистрация ]</a>
+                        <a href="{{ route('login') }}" class="terminal-link-home">[ Войти ]</a>
+                        <a href="{{ route('register') }}" class="terminal-link-home" style="margin-left: 16px;">[ Регистрация ]</a>
                     </div>
                 </div>
             </div>
