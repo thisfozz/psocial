@@ -7,7 +7,16 @@ html, body {
   box-sizing: border-box;
 }
 
-.terminal-card {
+.terminal-center-register {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #181c1f;
+}
+
+.terminal-card-register {
   background-color: #181c1f;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.25);
@@ -17,14 +26,14 @@ html, body {
   font-family: 'Fira Mono', 'Courier New', Courier, monospace;
 }
 
-.terminal-header {
+.terminal-header-register {
   background-color: #23282c;
   padding: 12px 18px;
   display: flex;
   align-items: center;
 }
 
-.terminal-title {
+.terminal-title-register {
   color: #fff;
   font-size: 15px;
   font-weight: 600;
@@ -33,45 +42,60 @@ html, body {
   gap: 8px;
 }
 
-.terminal-icon {
+.terminal-icon-register {
   color: #00e676;
 }
 
-.terminal-body {
+.terminal-body-register {
   background-color: #181c1f;
   color: #fff;
   padding: 22px 18px 18px 18px;
 }
 
-.terminal-center {
-  min-height: 100vh;
-  min-width: 100vw;
+.command-line-register.input-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: #181c1f;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
 
-.command-line {
+.command-line-register.link-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.command-line-register {
   display: flex;
   align-items: center;
   margin-bottom: 12px;
 }
 
-.prompt {
+.command-line-register.link-row .prompt-register {
+  width: auto;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.prompt-register {
   color: #00e676;
-  margin-right: 12px;
-  min-width: 120px;
-  text-align: right;
+  text-align: left;
   font-weight: bold;
+  width: 140px;
+  flex-shrink: 0;
+  margin-right: 0;
+  padding-left: 0;
 }
 
-.input-wrapper {
+
+.input-wrapper-register {
   position: relative;
-  flex-grow: 1;
+  width: 220px;
+  flex-shrink: 0;
 }
 
-.input-field {
+.input-field-register {
   background: transparent;
   border: none;
   border-bottom: 1px solid #00e676;
@@ -84,16 +108,16 @@ html, body {
   transition: border-color 0.2s;
 }
 
-.input-field:focus {
+.input-field-register:focus {
   border-bottom: 1.5px solid #fff;
 }
 
-.input-field::placeholder {
+.input-field-register::placeholder {
   color: #4caf50;
   opacity: 0.6;
 }
 
-.input-wrapper::after {
+.input-wrapper-register::after {
   content: "";
   position: absolute;
   right: 0;
@@ -102,11 +126,11 @@ html, body {
   width: 8px;
   height: 18px;
   background-color: #00e676;
-  animation: blink 1s step-end infinite;
+  animation: blink-register 1s step-end infinite;
   opacity: 0.7;
 }
 
-.terminal-submit {
+.terminal-submit-register {
   background: #23282c;
   color: #00e676;
   border: 1px solid #00e676;
@@ -116,21 +140,25 @@ html, body {
   font-size: 15px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 24px;
 }
 
-.terminal-submit:hover {
+.terminal-submit-register:hover {
   background: #00e676;
   color: #23282c;
 }
 
-.terminal-link {
+.terminal-link-register {
   color: #00e676;
   text-decoration: underline;
   margin-left: 8px;
   font-size: 14px;
 }
 
-@keyframes blink {
+@keyframes blink-register {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
