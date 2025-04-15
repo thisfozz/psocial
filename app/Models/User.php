@@ -18,6 +18,7 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
     protected $table = 'users';
     protected $primaryKey = 'id';
 
+    // ИСПРАВИТЬ!
     protected $fillable = [
         'name',
         'username',
