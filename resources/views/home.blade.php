@@ -27,8 +27,8 @@
                     <div class="command-line-home">
                         <span class="prompt-home">PSocial@home:~$</span>
                         <div>
-                            <a href="{{ route('login') }}" class="terminal-link-home">[ Войти ]</a>
-                            <a href="{{ route('register') }}" class="terminal-link-home" style="margin-left: 16px;">[ Регистрация ]</a>
+                            <a href="{{ route('login') }}" class="terminal-link-home">[ Login ]</a>
+                            <a href="{{ route('register') }}" class="terminal-link-home" style="margin-left: 16px;">[ Register ]</a>
                         </div>
                     </div>
                 </div>
@@ -50,8 +50,8 @@
             typing();
         }
         document.addEventListener("DOMContentLoaded", function() {
-            typeText("typed-welcome", "Добро пожаловать в PSocial — терминальную социальную сеть.", 35, function() {
-                typeText("typed-desc", "Вдохновлено атмосферой Mr. Robot.", 35);
+            typeText("typed-welcome", "Welcome to PSocial - a terminal social network inspired by the atmosphere of Mr. Robot.", 35, function() {
+                typeText("typed-desc", "Inspired by the atmosphere of Mr. Robot, and ", 35);
             });
         });
     </script>

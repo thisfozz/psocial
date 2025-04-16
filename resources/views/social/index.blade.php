@@ -28,11 +28,25 @@
                     @endauth
                 </div>
                 <div class="terminal-profile-section-social">
-                    <div class="terminal-profile-avatar-social">
+                <div class="terminal-profile-avatar-social">
                         @php
-                            $gravatar = 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '?s=160&d=mp';
+                            $email = strtolower(trim($user->email));
+                            $hash = md5($email);
+                            $gravatar = "https://www.gravatar.com/avatar/$hash?s=160&d=404";
+                            $uiavatars = 'https://ui-avatars.com/api/?name=' . urlencode($user->first_name . ' ' . $user->last_name) . '&background=000000&color=fff&rounded=true&size=160';
+
+                            $headers = @get_headers($gravatar);
+                            if ($headers && strpos($headers[0], '200') !== false) {
+                                $avatar = $gravatar;
+                            } else {
+                                $avatar = $uiavatars;
+                            }
                         @endphp
-                        <img src="{{ $gravatar }}" alt="avatar" class="terminal-avatar-social">
+                        <img 
+                            src="{{ $avatar }}"
+                            alt="avatar" 
+                            class="terminal-avatar-social"
+                        >
                     </div>
                     <div class="terminal-profile-info-social">
                         <div class="terminal-profile-name-social">
