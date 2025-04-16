@@ -91,4 +91,23 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
             'updated_at' => 'datetime',
         ];
     }
+
+    public function friends()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'friends',
+            'user_id',
+            'friend_id'
+        );
+    }
+    public function friendOf()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'friends',
+            'friend_id',
+            'user_id'
+        );
+    }
 }

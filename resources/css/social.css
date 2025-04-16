@@ -1,9 +1,9 @@
 .terminal-center-social {
     min-height: 100vh;
-    min-width: 100vw;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     background: #181c1f;
 }
 
@@ -12,9 +12,242 @@
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.25);
     width: 800px;
-    margin: 40px auto;
     overflow: hidden;
     font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+}
+
+.terminal-search-form-social {
+    display: flex;
+    align-items: center;
+    background: #23282c;
+    padding: 18px 24px 18px 24px;
+    border-bottom: 1.5px solid #00e676;
+    border-radius: 0 0 8px 8px;
+    gap: 18px;
+    margin-top: 6px;
+}
+
+.terminal-search-input-social {
+    background: #181c1f;
+    border: 1.5px solid #00e676;
+    color: #fff;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 15px;
+    padding: 7px 16px;
+    border-radius: 6px 0 0 6px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 260px;
+}
+.terminal-search-input-social:focus {
+    border-color: #fff;
+}
+.terminal-search-input-social::placeholder {
+    color: #00e676;
+    opacity: 0.7;
+}
+
+.terminal-search-btn-social {
+    background: #00e676;
+    color: #23282c;
+    border: none;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 7px 24px;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.terminal-search-btn-social:hover {
+    background: #23282c;
+    color: #00e676;
+    border: 1.5px solid #00e676;
+}
+
+.terminal-profile-section-social {
+    display: flex;
+    align-items: flex-start;
+    background: #23282c;
+    border-radius: 8px;
+    padding: 32px 32px 32px 32px;
+    gap: 32px;
+    margin-top: 12px;
+}
+
+.terminal-profile-avatar-social {
+    flex-shrink: 0;
+}
+.terminal-avatar-social {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid #00e676;
+    background: #181c1f;
+    display: block;
+}
+
+.terminal-profile-info-social {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 8px;
+}
+.terminal-profile-name-social {
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+.terminal-profile-status-social {
+    color: #00e676;
+    font-size: 16px;
+    font-style: italic;
+    opacity: 0.85;
+    margin-bottom: 8px;
+}
+
+.terminal-profile-edit-btn-wrap {
+    display: flex;
+    align-items: flex-start;
+    margin-left: auto;
+}
+.terminal-profile-edit-btn-social {
+    background: #23282c;
+    color: #00e676;
+    border: 1.5px solid #00e676;
+    border-radius: 6px;
+    padding: 10px 32px;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    margin-top: 8px;
+}
+.terminal-profile-edit-btn-social:hover {
+    background: #00e676;
+    color: #23282c;
+}
+
+.terminal-logout-btn-social {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid #00e676;
+    border-radius: 6px;
+    padding: 5px 18px;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 18px;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.terminal-logout-btn-social:hover {
+    background: #00e676;
+    color: #23282c;
+    border: 1.5px solid #00e676;
+}
+
+.terminal-window-social {
+    background: #23282c;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    max-width: 900px;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    border: 2.5px solid #181c1f;
+    display: block;
+}
+
+.terminal-window-bar-social {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    background: #23282c;
+    padding: 0 18px;
+    border-bottom: 1.5px solid #181c1f;
+    gap: 8px;
+}
+
+.terminal-window-btn-social {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+    border: 1.5px solid #181c1f;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+}
+.terminal-window-btn-social.close {
+    background: #ff5f56;
+}
+.terminal-window-btn-social.minimize {
+    background: #ffbd2e;
+}
+.terminal-window-btn-social.zoom {
+    background: #27c93f;
+}
+
+.terminal-friends-section-social {
+    background: #23282c;
+    border-radius: 8px;
+    margin-top: 12px;
+    padding: 36px 40px 20px 40px;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    width: 400px;
+    float: left;
+    margin-right: 32px;
+}
+.terminal-friends-title-social {
+    color: #00e676;
+    font-weight: bold;
+    margin-bottom: 14px;
+    font-size: 17px;
+    letter-spacing: 1px;
+}
+.terminal-friends-list-social {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+.terminal-friend-social {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #181c1f;
+    border-radius: 6px;
+    padding: 8px 16px 8px 8px;
+    border: 1px solid #23282c;
+    min-width: 120px;
+}
+.terminal-friend-avatar-social {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid #00e676;
+    object-fit: cover;
+    background: #23282c;
+}
+.terminal-friends-section-social .terminal-link-social {
+    color: #00e676;
+    text-decoration: underline;
+    font-size: 15px;
+    margin-top: 12px;
+    display: inline-block;
+    transition: color 0.2s;
+}
+.terminal-friends-section-social .terminal-link-social:hover {
+    color: #fff;
 }
 
 .terminal-header-social {
@@ -22,6 +255,8 @@
     padding: 12px 18px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .terminal-title-social {
@@ -35,109 +270,4 @@
 
 .terminal-icon-social {
     color: #00e676;
-}
-
-.terminal-body-social {
-    background-color: #181c1f;
-    color: #fff;
-    padding: 32px 32px 28px 32px;
-}
-
-.command-line-social {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 18px;
-}
-
-.prompt-social {
-    color: #00e676;
-    font-weight: bold;
-    min-width: 180px;
-    padding-right: 32px;
-    text-align: right;
-    flex-shrink: 0;
-}
-
-.terminal-text-social {
-    white-space: pre-line;
-    word-break: break-word;
-    flex: 1;
-    min-width: 0;
-}
-
-/* Секции профиля */
-.terminal-section-social {
-    margin: 32px 0 16px 0;
-    border-top: 1px solid #23282c;
-    padding-top: 18px;
-}
-
-.terminal-section-title-social {
-    color: #00e676;
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 12px;
-    letter-spacing: 1px;
-}
-
-/* Аватар пользователя */
-.terminal-avatar-social {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #00e676;
-    margin-bottom: 18px;
-    background: #23282c;
-}
-
-/* Списки (интересы, друзья, языки и т.д.) */
-.terminal-list-social {
-    margin: 0;
-    padding-left: 18px;
-    color: #fff;
-    font-size: 15px;
-}
-
-.terminal-list-social li {
-    margin-bottom: 6px;
-    list-style: disc;
-}
-
-.terminal-link-social {
-    color: #00e676;
-    text-decoration: underline;
-    margin-left: 8px;
-    font-size: 15px;
-    transition: color 0.2s;
-}
-
-.terminal-link-social:hover {
-    color: #fff;
-}
-
-.terminal-profile-title {
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: 18px;
-    text-align: center;
-    display: block;
-}
-
-.terminal-status-social {
-    color: #00e676;
-    font-size: 13px;
-    font-style: italic;
-    margin-bottom: 10px;
-    display: block;
-    text-align: center;
-    opacity: 0.85;
-    letter-spacing: 0.2px;
-}
-.command-line-social.avatar-block {
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 0;
 }

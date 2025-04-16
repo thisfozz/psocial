@@ -5,15 +5,57 @@ html, body {
   padding: 0;
   background: #181c1f;
   box-sizing: border-box;
-}
-
-.terminal-center-register {
-  min-height: 100vh;
-  min-width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #181c1f;
+}
+
+.terminal-window-register {
+  background: #23282c;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  max-width: 620px;
+  overflow: hidden;
+  border: 2.5px solid #181c1f;
+  display: block;
+}
+
+.terminal-window-bar-register {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  background: #23282c;
+  padding: 0 18px;
+  border-bottom: 1.5px solid #181c1f;
+  gap: 8px;
+}
+
+.terminal-window-btn-register.close {
+  background: #ff5f56;
+}
+.terminal-window-btn-register.minimize {
+  background: #ffbd2e;
+}
+.terminal-window-btn-register.zoom {
+  background: #27c93f;
+}
+
+.terminal-window-btn-register {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+  border: 1.5px solid #181c1f;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+}
+
+.terminal-center-register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
 }
 
 .terminal-card-register {
@@ -21,7 +63,6 @@ html, body {
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.25);
   width: 620px;
-  margin: 40px auto;
   overflow: hidden;
   font-family: 'Fira Mono', 'Courier New', Courier, monospace;
 }
