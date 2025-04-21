@@ -14,8 +14,18 @@ class SocialController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        //$friends = $user->friends()->with('friend')->get();
+        $friends = $user->friends()->get();
         $isFriend = false;
-        return view('social.index', ['user' => $user, 'isFriend' => $isFriend]);
+        if($user->friends()->where('friend_id', auth()->id())->exists()){
+            $isFriend = true;
+        }
+        $isRequested = false;
+        if(auth()->user()->sentFriendRequests()->where('to_user_id', $user->id)->exists()){
+            $isRequested = true;
+        }
+        $incomingRequest = auth()->user()->receivedFriendRequests()->where('from_user_id', $user->id)->first();
+        $hasIncomingRequest = $incomingRequest ? true : false;
+        $incomingRequestId = $incomingRequest ? $incomingRequest->id : null;
+        return view('social.index', ['user' => $user, 'friends' => $friends, 'isFriend' => $isFriend, 'isRequested' => $isRequested, 'hasIncomingRequest' => $hasIncomingRequest, 'incomingRequestId' => $incomingRequestId]);
     }
 }

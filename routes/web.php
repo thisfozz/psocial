@@ -14,5 +14,4 @@ Route::get('/social/{id}', [App\Http\Controllers\SocialController::class, 'show'
     ->middleware('auth')
     ->name('social.show');
 
-
 require __DIR__ . '/auth.php';

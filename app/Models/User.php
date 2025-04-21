@@ -110,4 +110,12 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
             'user_id'
         );
     }
+
+    public function receivedFriendRequests(){
+        return $this->hasMany(FriendRequest::class, 'to_user_id');
+    }
+
+    public function sentFriendRequests(){
+        return $this->hasMany(FriendRequest::class, 'from_user_id');
+    }
 }
