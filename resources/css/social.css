@@ -76,6 +76,25 @@
     margin-top: 12px;
 }
 
+.terminal-profile-cancel-btn-social {
+    background: transparent;
+    color: #00e676;
+    border: 1.5px solid #00e676;
+    border-radius: 8px;
+    padding: 10px 32px;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    margin-top: 8px;
+}
+.terminal-profile-cancel-btn-social:hover {
+    background: #00e67622;
+    color: #00e676;
+}
+
 .terminal-profile-avatar-social {
     flex-shrink: 0;
 }
@@ -250,26 +269,6 @@
     margin-top: 8px;
     text-align: center;
 }
-.terminal-friends-section-social .terminal-link-social {
-    color: #00e676;
-    text-decoration: underline;
-    font-size: 15px;
-    margin-top: 12px;
-    display: inline-block;
-    transition: color 0.2s;
-}
-.terminal-friends-section-social .terminal-link-social:hover {
-    color: #fff;
-}
-
-.terminal-header-social {
-    background-color: #23282c;
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
 
 .terminal-title-social {
     color: #fff;
@@ -278,10 +277,6 @@
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.terminal-icon-social {
-    color: #00e676;
 }
 
 .terminal-profile-follow-btn-social {
@@ -322,13 +317,6 @@
 
 .terminal-learn-more-link-social:hover {
     color: #fff;
-}
-.terminal-learn-more-link-social svg {
-    stroke: #00e676;
-    transition: stroke 0.2s;
-}
-.terminal-learn-more-link-social:hover svg {
-    stroke: #fff;
 }
 
 .terminal-modal-overlay {

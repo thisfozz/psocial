@@ -17,4 +17,5 @@ Route::middleware('auth')->group(function (){
     Route::post('/friend-request/{toUserId}', [FriendRequestController::class, 'sendRequest'])->name('friend-request.send');
     Route::post('/friend-request/accept/{requestId}', [FriendRequestController::class, 'acceptRequest'])->name('friend-request.accept');
     Route::post('/friend-request/decline/{requestId}', [FriendRequestController::class, 'declineRequest'])->name('friend-request.decline');
+    Route::post('/friend-request/cancel/{requestId}', [FriendRequestController::class, 'cancelRequest'])->name('friend-request.cancel');
 });

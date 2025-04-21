@@ -26,6 +26,17 @@ class SocialController extends Controller
         $incomingRequest = auth()->user()->receivedFriendRequests()->where('from_user_id', $user->id)->first();
         $hasIncomingRequest = $incomingRequest ? true : false;
         $incomingRequestId = $incomingRequest ? $incomingRequest->id : null;
-        return view('social.index', ['user' => $user, 'friends' => $friends, 'isFriend' => $isFriend, 'isRequested' => $isRequested, 'hasIncomingRequest' => $hasIncomingRequest, 'incomingRequestId' => $incomingRequestId]);
+
+        $outgoingRequest = auth()->user()->sentFriendRequests()->where('to_user_id', $user->id)->first();
+        $outgoingRequestId = $outgoingRequest ? $outgoingRequest->id : null;
+
+        return view('social.index', [
+            'user' => $user,
+            'friends' => $friends,
+            'isFriend' => $isFriend,
+            'isRequested' => $isRequested,
+            'hasIncomingRequest' => $hasIncomingRequest,
+            'incomingRequestId' => $incomingRequestId,
+            'outgoingRequestId' => $outgoingRequestId]);
     }
 }
