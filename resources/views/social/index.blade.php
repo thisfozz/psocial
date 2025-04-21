@@ -28,7 +28,7 @@
                     @endauth
                 </div>
                 <div class="terminal-profile-section-social">
-                <div class="terminal-profile-avatar-social">
+                    <div class="terminal-profile-avatar-social">
                         @php
                             $email = strtolower(trim($user->email));
                             $hash = md5($email);
@@ -79,10 +79,23 @@
                         <a href="#" class="terminal-profile-edit-btn-social">Edit profile</a>
                     </div>
                     @endif
-                    @if(auth()->check() && auth()->user()->id != $user->id && !$isFriend)
-                    <div class="terminal-profile-follow-btn-wrap">
-                        <button type="button" class="terminal-profile-follow-btn-social">Follow</button>
-                    </div>
+                    @if(auth()->check() && auth()->user()->id != $user->id)
+                        @if($isFriend)
+                            {{-- Кнопки не показываем --}}
+                        @elseif($hasIncomingRequest)
+                        <button type="button" class="terminal-profile-follow-btn-social" id="acceptFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Принять</button>
+                            <form method="POST" action="{{ route('friend-request.decline', ['requestId' => $incomingRequestId]) }}">
+                                @csrf
+                                <button type="submit" class="terminal-profile-follow-btn-social" id="declineFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Отклонить</button>
+                            </form>
+                        @elseif($isRequested)
+                            <button type="button" class="terminal-profile-follow-btn-social" disabled>Ожидание</button>
+                        @else
+                            <form method="POST" action="{{ route('friend-request.send', ['toUserId' => $user->id]) }}">
+                                @csrf
+                                <button type="submit" class="terminal-profile-follow-btn-social">Follow</button>
+                            </form>
+                        @endif
                     @endif
                     @if(auth()->check() && auth()->user()->id != $user->id && $isFriend)
                         <a href="#" class="terminal-profile-edit-btn-social">Send message</a>
@@ -97,20 +110,28 @@
                     <div class="terminal-friends-list-social">
                         @if(count($friends ?? []) > 0)
                             @foreach($friends as $friend)
+                                @php
+                                    $email = strtolower(trim($friend->email));
+                                    $hash = md5($email);
+                                    $gravatar = "https://www.gravatar.com/avatar/$hash?s=40&d=404";
+                                    $uiavatars = 'https://ui-avatars.com/api/?name=' . urlencode($friend->first_name . ' ' . $friend->last_name) . '&background=000000&color=fff&rounded=true&size=40';
+
+                                    $headers = @get_headers($gravatar);
+                                    if ($headers && strpos($headers[0], '200') !== false) {
+                                        $avatar = $gravatar;
+                                    } else {
+                                        $avatar = $uiavatars;
+                                    }
+                                @endphp
                                 <div class="terminal-friend-social">
-                                    <img src="{{ $friend->avatar }}" class="terminal-friend-avatar-social">
-                                    <span>{{ $friend->name }}</span>
+                                    <a href="{{ route('social.show', ['id' => $friend->id]) }}" style="text-decoration: none;">
+                                        <img src="{{ $avatar }}" class="terminal-friend-avatar-social">
+                                    </a>
+                                    <a href="{{ route('social.show', ['id' => $friend->id]) }}" style="text-decoration: none;">
+                                        <span style="margin-top: 8px; color: #00e676;">{{ $friend->first_name }} {{ $friend->last_name }}</span>
+                                    </a>
                                 </div>
                             @endforeach
-                        @else
-                            <div style="display: flex; gap: 18px; justify-content: flex-start; align-items: flex-start; padding: 32px 0;">
-                                @for($i=0; $i<7; $i++)
-                                    <div class="terminal-friend-social" style="flex-direction: column; align-items: center; min-width: 80px; padding: 8px 0; background: none; border: none;">
-                                        <div class="terminal-friend-avatar-social" style="background: #23282c; border: 1.5px solid #00e676; width: 40px; height: 40px;"></div>
-                                        <span style="color:#00e676; font-size:13px; margin-top:8px;">Friend</span>
-                                    </div>
-                                @endfor
-                            </div>
                         @endif
                     </div>
                 </div>
@@ -128,5 +149,27 @@
         document.getElementById('modalOverlay').onclick = function(e) {
             if (e.target === this) this.style.display = 'none';
         };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const acceptBtn = document.getElementById('acceptFriendRequestBtn');
+            if (acceptBtn) {
+                acceptBtn.addEventListener('click', function() {
+                    const requestId = this.getAttribute('data-request-id');
+                    fetch(`${window.location.protocol}//${window.location.host}/friend-request/accept/${requestId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    })
+                    .then(response => response.json())
+                    .catch(error => {
+                        alert('Ошибка при обработке запроса');
+                    });
+                });
+            }
+        });
     </script>
 @endsection
