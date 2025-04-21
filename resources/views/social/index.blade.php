@@ -81,20 +81,15 @@
                     @endif
                     @if(auth()->check() && auth()->user()->id != $user->id)
                         @if($isFriend)
-                            {{-- Кнопки не показываем --}}
                         @elseif($hasIncomingRequest)
                         <button type="button" class="terminal-profile-follow-btn-social" id="acceptFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Принять</button>
-                            <form method="POST" action="{{ route('friend-request.decline', ['requestId' => $incomingRequestId]) }}">
-                                @csrf
-                                <button type="submit" class="terminal-profile-follow-btn-social" id="declineFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Отклонить</button>
-                            </form>
+                        <button type="submit" class="terminal-profile-follow-btn-social" id="declineFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Отклонить</button>
                         @elseif($isRequested)
-                            <button type="button" class="terminal-profile-follow-btn-social" disabled>Ожидание</button>
+                            <div id="requsetActions" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 8px;">
+                                <button type="button" class="terminal-profile-cancel-btn-social" id="cancelRequestBtn" data-request-id="{{ $outgoingRequestId }}" data-user-id="{{ $user->id }}">Отменить заявку</button>
+                            </div>
                         @else
-                            <form method="POST" action="{{ route('friend-request.send', ['toUserId' => $user->id]) }}">
-                                @csrf
-                                <button type="submit" class="terminal-profile-follow-btn-social">Follow</button>
-                            </form>
+                        <button type="submit" class="terminal-profile-follow-btn-social" id="followBtn" data-user-id="{{ $user->id }}">Follow</button>
                         @endif
                     @endif
                     @if(auth()->check() && auth()->user()->id != $user->id && $isFriend)
@@ -151,6 +146,36 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
+            const followBtn = document.getElementById('followBtn');
+            if (followBtn) {
+                followBtn.addEventListener('click', function() {
+                    const userId = this.getAttribute('data-user-id');
+                    const csrfToken = document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content');
+                    fetch(`/friend-request/${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        this.outerHTML = `
+                            <div id="requsetActions" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 8px;">
+                                <button type="button" class="terminal-profile-cancel-btn-social" id="cancelRequestBtn" data-request-id="${data.request_id}" data-user-id="${userId}">Отменить заявку</button>
+                            </div>
+                        `;
+                    })
+                    .catch(error => {
+                        alert('Ошибка при отправке заявки');
+                    });
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
             const acceptBtn = document.getElementById('acceptFriendRequestBtn');
             if (acceptBtn) {
                 acceptBtn.addEventListener('click', function() {
@@ -167,6 +192,62 @@
                     .then(response => response.json())
                     .catch(error => {
                         alert('Ошибка при обработке запроса');
+                    });
+                });
+            }
+
+            const declinedBtn = document.getElementById('declineFriendRequestBtn');
+            if(declinedBtn){
+                declinedBtn.addEventListener('click', function(){
+                    const requestId = this.getAttribute('data-request-id');
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    fetch(`${window.location.protocol}//${window.location.host}/friend-request/decline/${requestId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    })
+                    .then(response => response.json())
+                    .catch(error => {
+                        alert('Ошибка при отклонении запроса');
+                    });
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const cancelRequestBtn = document.getElementById('cancelRequestBtn');
+            if (cancelRequestBtn) {
+                cancelRequestBtn.addEventListener('click', function() {
+                    const requestId = this.getAttribute('data-request-id');
+                    const userId = this.getAttribute('data-user-id');
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    fetch(`/friend-request/cancel/${requestId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'Content-Typpe': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Ошибка при отмене запроса');
+                        return response.json();
+                    })
+                    .then(data => {
+                        const parent = document.getElementById('requsetActions');
+                        parent.innerHTML = `
+                        <form method="POST" action="/friend/request/send/${userId}">
+                            <input type="hidden" name="_token" value="${csrfToken}">
+                            <button type="submit" class="terminal-profile-follow-btn-social">Follow</button>
+                        </form>`;
+                    })
+                    .catch(error => {
+                        alert('Ошибка при отмене запроса');
                     });
                 });
             }
