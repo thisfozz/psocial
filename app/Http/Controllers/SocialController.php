@@ -15,6 +15,7 @@ class SocialController extends Controller
     {
         $user = User::findOrFail($id);
         //$friends = $user->friends()->with('friend')->get();
-        return view('social.index', ['user' => $user]);
+        $isFriend = false;
+        return view('social.index', ['user' => $user, 'isFriend' => $isFriend]);
     }
 }

@@ -203,9 +203,7 @@
     padding: 36px 40px 20px 40px;
     color: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-    width: 400px;
-    float: left;
-    margin-right: 32px;
+    width: 100%;
 }
 .terminal-friends-title-social {
     color: #00e676;
@@ -270,4 +268,98 @@
 
 .terminal-icon-social {
     color: #00e676;
+}
+
+.terminal-profile-follow-btn-social {
+    background: #00e676;
+    color: #23282c;
+    border: 1.5px solid #00e676;
+    border-radius: 8px;
+    padding: 10px 32px;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    margin-top: 8px;
+}
+
+.terminal-profile-follow-btn-social:hover {
+    background: #23282c;
+    color: #00e676;
+    border: 1.5px solid #00e676;
+}
+
+.terminal-learn-more-social {
+    margin-top: 12px;
+}
+
+.terminal-learn-more-link-social {
+    color: #00e676;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.terminal-learn-more-link-social:hover {
+    color: #fff;
+}
+.terminal-learn-more-link-social svg {
+    stroke: #00e676;
+    transition: stroke 0.2s;
+}
+.terminal-learn-more-link-social:hover svg {
+    stroke: #fff;
+}
+
+.terminal-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(24, 28, 31, 0.97);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.terminal-modal-window {
+    background: #23282c;
+    border: 2px solid #00e676;
+    border-radius: 10px;
+    padding: 32px 40px;
+    min-width: 340px;
+    max-width: 90vw;
+    color: #fff;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+
+.terminal-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 28px;
+    color: #00e676;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.terminal-modal-close:hover {
+    color: #fff;
+}
+.terminal-modal-content h3 {
+    color: #00e676;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    margin-bottom: 18px;
+}
+.terminal-modal-content p {
+    color: #fff;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
 }
