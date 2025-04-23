@@ -1,8 +1,8 @@
 @extends('layouts.terminal')
 @section('content')
     <div class="terminal-window-home">
-        <div class="terminal-window-bar-home">
-            <span class="terminal-window-btn-home close"></span>
+            <div class="terminal-window-bar-home">
+                <span class="terminal-window-btn-home close"></span>
             <span class="terminal-window-btn-home minimize"></span>
             <span class="terminal-window-btn-home zoom"></span>
             <span class="terminal-title-home">
