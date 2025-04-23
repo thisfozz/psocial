@@ -379,3 +379,136 @@
     color: #888;
     border: 1.5px solid #888;
 }
+
+.terminal-status-social {
+    background: #23282c;
+    color: #00e676;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 13px;
+    padding: 4px 18px;
+    border-top: 1px solid #181c1f;
+    text-align: right;
+}
+
+.terminal-profile-edit-btn-social,
+.terminal-profile-cancel-btn-social {
+    width: 220px;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    margin-left: 0;
+}
+
+.terminal-posts-section-social {
+    margin-top: 32px;
+    background: #23282c;
+    border-radius: 8px;
+    padding: 32px 40px 20px 40px;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+.terminal-post-form-social {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+}
+
+.terminal-post-input-social {
+    width: 100%;
+    box-sizing: border-box;
+    background: #181c1f;
+    border: 1.5px solid #00e676;
+    color: #fff;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 15px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    outline: none;
+    resize: none;
+    height: 60px;
+}
+
+.terminal-post-btn-social {
+    align-self: flex-start;
+    background: #00e676;
+    color: #23282c;
+    border: none;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 7px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.terminal-post-btn-social:hover {
+    background: #23282c;
+    color: #00e676;
+    border: 1.5px solid #00e676;
+}
+
+.terminal-posts-list-social {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.terminal-post-social {
+    background: #181c1f;
+    border-radius: 8px;
+    padding: 18px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    margin-bottom: 8px;
+}
+
+.terminal-post-header-social {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.terminal-post-author-social {
+    color: #00e676;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.terminal-post-date-social {
+    color: #888;
+    font-size: 13px;
+    margin-left: 12px;
+}
+
+.terminal-post-delete-btn-social {
+    background: transparent;
+    color: #00e676;
+    border: 1px solid #00e676;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: background 0.2s, color 0.2s;
+}
+.terminal-post-delete-btn-social:hover {
+    background: #00e67622;
+    color: #00e676;
+}
+
+.terminal-post-content-social {
+    color: #fff;
+    font-size: 15px;
+    margin-top: 4px;
+    white-space: pre-line;
+}
+
+.terminal-posts-empty-social {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    margin-top: 24px;
+}

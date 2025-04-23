@@ -1,17 +1,16 @@
 @extends('layouts.terminal')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/social.css') }}">
     <div class="terminal-window-social">
         <div class="terminal-window-bar-social">
             <span class="terminal-window-btn-social close"></span>
             <span class="terminal-window-btn-social minimize"></span>
             <span class="terminal-window-btn-social zoom"></span>
             <span class="terminal-title-social">
-                        <svg class="terminal-icon-home" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 17l6-6-6-6M12 19h8"></path>
-                        </svg>
-                        PSocial@home:~$
-                    </span>
+                <svg class="terminal-icon-home" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 17l6-6-6-6M12 19h8"></path>
+                </svg>
+                PSocial@home:~$
+            </span>
         </div>
         <div class="terminal-center-social">
             <div class="terminal-card-social">
@@ -65,7 +64,7 @@
                             Learn more
                         </a>
                     </div>
-                        <div id="modalOverlay" class="terminal-modal-overlay" style="display: none;">
+                        <div id="modalOverlayMoreInfo" class="terminal-modal-overlay" style="display: none;">
                             <div class="terminal-modal-window">
                                 <span class="terminal-modal-close" id="closeModalBtn">&times;</span>
                                 <div class="terminal-modal-content">
@@ -75,25 +74,43 @@
                         </div>
                     </div>
                     @if(auth()->check() && auth()->user()->id == $user->id)
-                    <div class="terminal-profile-edit-btn-wrap">
+                    <div class="terminal-profile-edit-btn-wrap" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: auto;">
                         <a href="#" class="terminal-profile-edit-btn-social">Edit profile</a>
                     </div>
                     @endif
                     @if(auth()->check() && auth()->user()->id != $user->id)
                         @if($isFriend)
                         @elseif($hasIncomingRequest)
-                        <button type="button" class="terminal-profile-follow-btn-social" id="acceptFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Принять</button>
-                        <button type="submit" class="terminal-profile-follow-btn-social" id="declineFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Отклонить</button>
+                        <div id="requsetActions1">
+                            <button type="button" class="terminal-profile-follow-btn-social" id="acceptFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Accept</button>
+                            <button type="submit" class="terminal-profile-follow-btn-social" id="declineFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Decline</button>
+                        </div>
                         @elseif($isRequested)
                             <div id="requsetActions" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 8px;">
-                                <button type="button" class="terminal-profile-cancel-btn-social" id="cancelRequestBtn" data-request-id="{{ $outgoingRequestId }}" data-user-id="{{ $user->id }}">Отменить заявку</button>
+                                <button type="button" class="terminal-profile-cancel-btn-social" id="cancelRequestBtn" data-request-id="{{ $outgoingRequestId }}" data-user-id="{{ $user->id }}">Cancel request</button>
                             </div>
                         @else
                         <button type="submit" class="terminal-profile-follow-btn-social" id="followBtn" data-user-id="{{ $user->id }}">Follow</button>
                         @endif
                     @endif
                     @if(auth()->check() && auth()->user()->id != $user->id && $isFriend)
-                        <a href="#" class="terminal-profile-edit-btn-social">Send message</a>
+                        <div class="terminal-profile-edit-btn-wrap" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: auto;">
+                            <a href="#" class="terminal-profile-edit-btn-social">Message</a>
+                            <button type="button" class="terminal-profile-cancel-btn-social" id="unfriendBtn" data-user-id="{{ $user->id }}">
+                                Unfriend
+                            </button>
+                        </div>
+                        <div id="unfriendModal" class="terminal-modal-overlay" style="display: none;">
+                            <div class="terminal-modal-window">
+                                <span class="terminal-modal-close" id="closeUnfriendModalBtn">&times;</span>
+                                <div class="terminal-modal-content">
+                                    <h3>Delete friend?</h3>
+                                    <p>Are you sure you want to delete this user from friends?</p>
+                                    <button id="confirmUnfriendBtn" class="terminal-profile-cancel-btn-social">Yes, delete</button>
+                                    <button id="cancelUnfriendBtn" class="terminal-profile-edit-btn-social">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 </div>
                 <div class="terminal-friends-section-social">
@@ -130,127 +147,63 @@
                         @endif
                     </div>
                 </div>
+                <div class="terminal-posts-section-social">
+                    @if(auth()->check() && (auth()->id() == $user->id || $isFriend))
+                        <form method="POST" action="{{ route('post-publish') }}" class="terminal-post-form-social">
+                            @csrf
+                            <input type="hidden" name="wall_id" value="{{ $user->id }}">
+                            <textarea name="content" class="terminal-post-input-social" placeholder="What's new?" rows="3" required></textarea>
+                            <button type="submit" class="terminal-post-btn-social">Publish</button>
+                        </form>
+                    @elseif(auth()->check())
+                        <div class="terminal-post-form-social">
+                            <textarea name="content" class="terminal-post-input-social" placeholder="You must be friends to publish a post" rows="3" disabled></textarea>
+                        </div>
+                    @endif
+
+                    <div class="terminal-posts-list-social">
+                        @forelse($posts as $post)
+                            <div class="terminal-post-social">
+                                <div class="terminal-post-header-social" style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        @php
+                                            $email = strtolower(trim($post->author->email));
+                                            $hash = md5($email);
+                                            $gravatar = "https://www.gravatar.com/avatar/$hash?s=32&d=404";
+                                            $uiavatars = 'https://ui-avatars.com/api/?name=' . urlencode($post->author->first_name . ' ' . $post->author->last_name) . '&background=000000&color=fff&rounded=true&size=32';
+
+                                            $headers = @get_headers($gravatar);
+                                            if ($headers && strpos($headers[0], '200') !== false) {
+                                                $avatar = $gravatar;
+                                            } else {
+                                                $avatar = $uiavatars;
+                                            }
+                                        @endphp
+                                        <img src="{{ $avatar }}" alt="avatar" class="terminal-friend-avatar-social" style="width:32px; height:32px; margin-right: 6px;">
+                                        <span class="terminal-post-author-social">{{ $post->author->first_name }} {{ $post->author->last_name }}</span>
+                                        <span class="terminal-post-date-social">{{ $post->created_at->format('d.m.Y H:i') }}</span>
+                                    </div>
+                                    @if((auth()->check() && auth()->user()->id == $post->wall_id) || (auth()->check() && auth()->user()->id == $post->author->id && $isFriend))
+                                        <form method="POST" action="#" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="terminal-post-delete-btn-social">Delete</button>
+                                        </form>
+                                    @endif
+                                </div>
+                                <div class="terminal-post-content-social">
+                                    {{ $post->content }}
+                                </div>
+                            </div>
+                        @empty
+                            <div class="terminal-posts-empty-social">It's still quiet here...</div>
+                        @endforelse
+                    </div>
+                </div>
+                <div class="terminal-status-social">
+                    [PSocial v0.4.1] [Connected] [EN] [UTF-8]
+                </div>
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById('openModalBtn').onclick = function(e) {
-            e.preventDefault();
-            document.getElementById('modalOverlay').style.display = 'flex';
-        };
-        document.getElementById('closeModalBtn').onclick = function() {
-            document.getElementById('modalOverlay').style.display = 'none';
-        };
-        document.getElementById('modalOverlay').onclick = function(e) {
-            if (e.target === this) this.style.display = 'none';
-        };
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const followBtn = document.getElementById('followBtn');
-            if (followBtn) {
-                followBtn.addEventListener('click', function() {
-                    const userId = this.getAttribute('data-user-id');
-                    const csrfToken = document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content');
-                    fetch(`/friend-request/${userId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        credentials: 'same-origin'
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        this.outerHTML = `
-                            <div id="requsetActions" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 8px;">
-                                <button type="button" class="terminal-profile-cancel-btn-social" id="cancelRequestBtn" data-request-id="${data.request_id}" data-user-id="${userId}">Отменить заявку</button>
-                            </div>
-                        `;
-                    })
-                    .catch(error => {
-                        alert('Ошибка при отправке заявки');
-                    });
-                });
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const acceptBtn = document.getElementById('acceptFriendRequestBtn');
-            if (acceptBtn) {
-                acceptBtn.addEventListener('click', function() {
-                    const requestId = this.getAttribute('data-request-id');
-                    fetch(`${window.location.protocol}//${window.location.host}/friend-request/accept/${requestId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        credentials: 'same-origin'
-                    })
-                    .then(response => response.json())
-                    .catch(error => {
-                        alert('Ошибка при обработке запроса');
-                    });
-                });
-            }
-
-            const declinedBtn = document.getElementById('declineFriendRequestBtn');
-            if(declinedBtn){
-                declinedBtn.addEventListener('click', function(){
-                    const requestId = this.getAttribute('data-request-id');
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    fetch(`${window.location.protocol}//${window.location.host}/friend-request/decline/${requestId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        credentials: 'same-origin'
-                    })
-                    .then(response => response.json())
-                    .catch(error => {
-                        alert('Ошибка при отклонении запроса');
-                    });
-                });
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const cancelRequestBtn = document.getElementById('cancelRequestBtn');
-            if (cancelRequestBtn) {
-                cancelRequestBtn.addEventListener('click', function() {
-                    const requestId = this.getAttribute('data-request-id');
-                    const userId = this.getAttribute('data-user-id');
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    fetch(`/friend-request/cancel/${requestId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                            'Content-Typpe': 'application/json'
-                        },
-                        credentials: 'same-origin'
-                    })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Ошибка при отмене запроса');
-                        return response.json();
-                    })
-                    .then(data => {
-                        const parent = document.getElementById('requsetActions');
-                        parent.innerHTML = `
-                        <form method="POST" action="/friend/request/send/${userId}">
-                            <input type="hidden" name="_token" value="${csrfToken}">
-                            <button type="submit" class="terminal-profile-follow-btn-social">Follow</button>
-                        </form>`;
-                    })
-                    .catch(error => {
-                        alert('Ошибка при отмене запроса');
-                    });
-                });
-            }
-        });
-    </script>
 @endsection

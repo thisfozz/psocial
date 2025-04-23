@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FriendRequestController;
+use App\Http\Controllers\PostController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -18,4 +19,6 @@ Route::middleware('auth')->group(function (){
     Route::post('/friend-request/accept/{requestId}', [FriendRequestController::class, 'acceptRequest'])->name('friend-request.accept');
     Route::post('/friend-request/decline/{requestId}', [FriendRequestController::class, 'declineRequest'])->name('friend-request.decline');
     Route::post('/friend-request/cancel/{requestId}', [FriendRequestController::class, 'cancelRequest'])->name('friend-request.cancel');
+    Route::post('/friends/remove/{id}', [FriendRequestController::class, 'removeFriend'])->name('friends.remove');
+    Route::post('/posts', [PostController::class, 'store'])->name('post-publish');
 });

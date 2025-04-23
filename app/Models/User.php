@@ -118,4 +118,17 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
     public function sentFriendRequests(){
         return $this->hasMany(FriendRequest::class, 'from_user_id');
     }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
+    public function postsLikes(){
+        return $this->belongsToMany(
+            Post::class,
+            'post_likes',
+            'user_id',
+            'post_id'
+        );
+    }
 }

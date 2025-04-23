@@ -1,6 +1,5 @@
 @extends('layouts.terminal')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <div class="terminal-window-login">
         <div class="terminal-window-bar-login">
             <span class="terminal-window-btn-login close"></span>
@@ -45,6 +44,9 @@
                         <div class="command-line-login link-row">
                             <a href="{{ route('register') }}" class="terminal-link-login">Register</a>
                         </div>
+                    </div>
+                    <div class="terminal-status-login">
+                        [PSocial v0.4.1 [Connected] [EN] [UTF-8]
                     </div>
                 </form>
             </div>
