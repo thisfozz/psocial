@@ -1,6 +1,5 @@
 @extends('layouts.terminal')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/social.css') }}">
     <div class="terminal-window-social">
         <div class="terminal-window-bar-social">
             <span class="terminal-window-btn-social close"></span>
@@ -105,10 +104,10 @@
                             <div class="terminal-modal-window">
                                 <span class="terminal-modal-close" id="closeUnfriendModalBtn">&times;</span>
                                 <div class="terminal-modal-content">
-                                    <h3>Удалить из друзей?</h3>
-                                    <p>Вы уверены, что хотите удалить этого пользователя из друзей?</p>
-                                    <button id="confirmUnfriendBtn" class="terminal-profile-cancel-btn-social">Да, удалить</button>
-                                    <button id="cancelUnfriendBtn" class="terminal-profile-edit-btn-social">Отмена</button>
+                                    <h3>Delete friend?</h3>
+                                    <p>Are you sure you want to delete this user from friends?</p>
+                                    <button id="confirmUnfriendBtn" class="terminal-profile-cancel-btn-social">Yes, delete</button>
+                                    <button id="cancelUnfriendBtn" class="terminal-profile-edit-btn-social">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +148,57 @@
                     </div>
                 </div>
                 <div class="terminal-posts-section-social">
+                    @if(auth()->check() && (auth()->id() == $user->id || $isFriend))
+                        <form method="POST" action="{{ route('post-publish') }}" class="terminal-post-form-social">
+                            @csrf
+                            <input type="hidden" name="wall_id" value="{{ $user->id }}">
+                            <textarea name="content" class="terminal-post-input-social" placeholder="What's new?" rows="3" required></textarea>
+                            <button type="submit" class="terminal-post-btn-social">Publish</button>
+                        </form>
+                    @elseif(auth()->check())
+                        <div class="terminal-post-form-social">
+                            <textarea name="content" class="terminal-post-input-social" placeholder="You must be friends to publish a post" rows="3" disabled></textarea>
+                        </div>
+                    @endif
 
+                    <div class="terminal-posts-list-social">
+                        @forelse($posts as $post)
+                            <div class="terminal-post-social">
+                                <div class="terminal-post-header-social" style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        @php
+                                            $email = strtolower(trim($post->author->email));
+                                            $hash = md5($email);
+                                            $gravatar = "https://www.gravatar.com/avatar/$hash?s=32&d=404";
+                                            $uiavatars = 'https://ui-avatars.com/api/?name=' . urlencode($post->author->first_name . ' ' . $post->author->last_name) . '&background=000000&color=fff&rounded=true&size=32';
+
+                                            $headers = @get_headers($gravatar);
+                                            if ($headers && strpos($headers[0], '200') !== false) {
+                                                $avatar = $gravatar;
+                                            } else {
+                                                $avatar = $uiavatars;
+                                            }
+                                        @endphp
+                                        <img src="{{ $avatar }}" alt="avatar" class="terminal-friend-avatar-social" style="width:32px; height:32px; margin-right: 6px;">
+                                        <span class="terminal-post-author-social">{{ $post->author->first_name }} {{ $post->author->last_name }}</span>
+                                        <span class="terminal-post-date-social">{{ $post->created_at->format('d.m.Y H:i') }}</span>
+                                    </div>
+                                    @if((auth()->check() && auth()->user()->id == $post->wall_id) || (auth()->check() && auth()->user()->id == $post->author->id && $isFriend))
+                                        <form method="POST" action="#" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="terminal-post-delete-btn-social">Delete</button>
+                                        </form>
+                                    @endif
+                                </div>
+                                <div class="terminal-post-content-social">
+                                    {{ $post->content }}
+                                </div>
+                            </div>
+                        @empty
+                            <div class="terminal-posts-empty-social">It's still quiet here...</div>
+                        @endforelse
+                    </div>
                 </div>
                 <div class="terminal-status-social">
                     [PSocial v0.4.1] [Connected] [EN] [UTF-8]
@@ -157,180 +206,4 @@
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById('openModalBtn').onclick = function(e) {
-            e.preventDefault();
-            document.getElementById('modalOverlayMoreInfo').style.display = 'flex';
-        };
-        document.getElementById('closeModalBtn').onclick = function() {
-            document.getElementById('modalOverlayMoreInfo').style.display = 'none';
-        };
-        document.getElementById('modalOverlayMoreInfo').onclick = function(e) {
-            if (e.target === this) this.style.display = 'none';
-        };
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const followBtn = document.getElementById('followBtn');
-            if (followBtn) {
-                followBtn.addEventListener('click', function() {
-                    const userId = this.getAttribute('data-user-id');
-                    const csrfToken = document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content');
-                    fetch(`/friend-request/${userId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        location.reload();
-                    })
-                    .catch(error => {
-                        alert('Ошибка при отправке заявки');
-                    });
-                });
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const acceptBtn = document.getElementById('acceptFriendRequestBtn');
-            if (acceptBtn) {
-                acceptBtn.addEventListener('click', function() {
-                    const requestId = this.getAttribute('data-request-id');
-                    fetch(`/friend-request/accept/${requestId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        location.reload();
-                    })
-                    .catch(error => {
-                        alert('Ошибка при обработке запроса');
-                    });
-                });
-            }
-
-            const declinedBtn = document.getElementById('declineFriendRequestBtn');
-            if(declinedBtn){
-                declinedBtn.addEventListener('click', function(){
-                    const requestId = this.getAttribute('data-request-id');
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    fetch(`/friend-request/decline/${requestId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        location.reload();
-                    })
-                    .catch(error => {
-                        alert('Ошибка при отклонении запроса');
-                    });
-                });
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const cancelRequestBtn = document.getElementById('cancelRequestBtn');
-            if (cancelRequestBtn) {
-                cancelRequestBtn.addEventListener('click', function() {
-                    const requestId = this.getAttribute('data-request-id');
-                    const userId = this.getAttribute('data-user-id');
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    fetch(`/friend-request/cancel/${requestId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                            'Content-Typpe': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Ошибка при отмене запроса');
-                        return response.json();
-                    })
-                    .then(data => {
-                        const parent = document.getElementById('requsetActions');
-                        parent.innerHTML = `
-                        <form method="POST" action="/friend/request/send/${userId}">
-                            <input type="hidden" name="_token" value="${csrfToken}">
-                            <button type="submit" class="terminal-profile-follow-btn-social">Follow</button>
-                        </form>`;
-                    })
-                    .catch(error => {
-                        alert('Ошибка при отмене запроса');
-                    });
-                });
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const unfriendBtn = document.getElementById('unfriendBtn');
-            if (unfriendBtn) {
-                unfriendBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.getElementById('unfriendModal').style.display = 'flex';
-                });
-            }
-
-            const closeUnfriendModalBtn = document.getElementById('closeUnfriendModalBtn');
-            if (closeUnfriendModalBtn) {
-                closeUnfriendModalBtn.addEventListener('click', function() {
-                    document.getElementById('unfriendModal').style.display = 'none';
-                });
-            }
-            const cancelUnfriendBtn = document.getElementById('cancelUnfriendBtn');
-            if (cancelUnfriendBtn) {
-                cancelUnfriendBtn.addEventListener('click', function() {
-                    document.getElementById('unfriendModal').style.display = 'none';
-                });
-            }
-            const unfriendModal = document.getElementById('unfriendModal');
-            if (unfriendModal) {
-                unfriendModal.addEventListener('click', function(e) {
-                    if (e.target === this) this.style.display = 'none';
-                });
-            }
-
-            const confirmUnfriendBtn = document.getElementById('confirmUnfriendBtn');
-            if (confirmUnfriendBtn) {
-                confirmUnfriendBtn.addEventListener('click', function() {
-                    const userId = document.getElementById('unfriendBtn').getAttribute('data-user-id');
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    fetch(`/friends/remove/${userId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            alert('Ошибка при удалении из друзей');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        location.reload();
-                    })
-                    .catch(error => {
-                        alert('Ошибка при удалении из друзей');
-                    });
-                });
-            }
-        });
-    </script>
 @endsection

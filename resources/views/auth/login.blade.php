@@ -1,6 +1,5 @@
 @extends('layouts.terminal')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <div class="terminal-window-login">
         <div class="terminal-window-bar-login">
             <span class="terminal-window-btn-login close"></span>

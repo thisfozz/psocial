@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Friend;
+use App\Models\Post;
+
 class SocialController extends Controller
 {
-    // public function index()
-    // {
-    //     return redirect()->route('social.show', ['id' => auth()->id()]);
-    // }
-
     public function show($id)
     {
         $user = User::findOrFail($id);
         $friends = $user->friends()->get();
+        $posts = Post::with('author')->where('wall_id', $user->id)->orderBy('created_at', 'desc')->get();
+
         $isFriend = false;
         if($user->friends()->where('friend_id', auth()->id())->exists()){
             $isFriend = true;
@@ -37,6 +35,7 @@ class SocialController extends Controller
             'isRequested' => $isRequested,
             'hasIncomingRequest' => $hasIncomingRequest,
             'incomingRequestId' => $incomingRequestId,
-            'outgoingRequestId' => $outgoingRequestId]);
+            'outgoingRequestId' => $outgoingRequestId,
+            'posts' => $posts]);
     }
 }
