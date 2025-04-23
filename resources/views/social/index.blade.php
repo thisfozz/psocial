@@ -7,11 +7,11 @@
             <span class="terminal-window-btn-social minimize"></span>
             <span class="terminal-window-btn-social zoom"></span>
             <span class="terminal-title-social">
-                        <svg class="terminal-icon-home" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 17l6-6-6-6M12 19h8"></path>
-                        </svg>
-                        PSocial@home:~$
-                    </span>
+                <svg class="terminal-icon-home" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 17l6-6-6-6M12 19h8"></path>
+                </svg>
+                PSocial@home:~$
+            </span>
         </div>
         <div class="terminal-center-social">
             <div class="terminal-card-social">
@@ -65,7 +65,7 @@
                             Learn more
                         </a>
                     </div>
-                        <div id="modalOverlay" class="terminal-modal-overlay" style="display: none;">
+                        <div id="modalOverlayMoreInfo" class="terminal-modal-overlay" style="display: none;">
                             <div class="terminal-modal-window">
                                 <span class="terminal-modal-close" id="closeModalBtn">&times;</span>
                                 <div class="terminal-modal-content">
@@ -75,25 +75,43 @@
                         </div>
                     </div>
                     @if(auth()->check() && auth()->user()->id == $user->id)
-                    <div class="terminal-profile-edit-btn-wrap">
+                    <div class="terminal-profile-edit-btn-wrap" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: auto;">
                         <a href="#" class="terminal-profile-edit-btn-social">Edit profile</a>
                     </div>
                     @endif
                     @if(auth()->check() && auth()->user()->id != $user->id)
                         @if($isFriend)
                         @elseif($hasIncomingRequest)
-                        <button type="button" class="terminal-profile-follow-btn-social" id="acceptFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Принять</button>
-                        <button type="submit" class="terminal-profile-follow-btn-social" id="declineFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Отклонить</button>
+                        <div id="requsetActions1">
+                            <button type="button" class="terminal-profile-follow-btn-social" id="acceptFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Accept</button>
+                            <button type="submit" class="terminal-profile-follow-btn-social" id="declineFriendRequestBtn" data-request-id="{{ $incomingRequestId }}">Decline</button>
+                        </div>
                         @elseif($isRequested)
                             <div id="requsetActions" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 8px;">
-                                <button type="button" class="terminal-profile-cancel-btn-social" id="cancelRequestBtn" data-request-id="{{ $outgoingRequestId }}" data-user-id="{{ $user->id }}">Отменить заявку</button>
+                                <button type="button" class="terminal-profile-cancel-btn-social" id="cancelRequestBtn" data-request-id="{{ $outgoingRequestId }}" data-user-id="{{ $user->id }}">Cancel request</button>
                             </div>
                         @else
                         <button type="submit" class="terminal-profile-follow-btn-social" id="followBtn" data-user-id="{{ $user->id }}">Follow</button>
                         @endif
                     @endif
                     @if(auth()->check() && auth()->user()->id != $user->id && $isFriend)
-                        <a href="#" class="terminal-profile-edit-btn-social">Send message</a>
+                        <div class="terminal-profile-edit-btn-wrap" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: auto;">
+                            <a href="#" class="terminal-profile-edit-btn-social">Message</a>
+                            <button type="button" class="terminal-profile-cancel-btn-social" id="unfriendBtn" data-user-id="{{ $user->id }}">
+                                Unfriend
+                            </button>
+                        </div>
+                        <div id="unfriendModal" class="terminal-modal-overlay" style="display: none;">
+                            <div class="terminal-modal-window">
+                                <span class="terminal-modal-close" id="closeUnfriendModalBtn">&times;</span>
+                                <div class="terminal-modal-content">
+                                    <h3>Удалить из друзей?</h3>
+                                    <p>Вы уверены, что хотите удалить этого пользователя из друзей?</p>
+                                    <button id="confirmUnfriendBtn" class="terminal-profile-cancel-btn-social">Да, удалить</button>
+                                    <button id="cancelUnfriendBtn" class="terminal-profile-edit-btn-social">Отмена</button>
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 </div>
                 <div class="terminal-friends-section-social">
@@ -130,20 +148,27 @@
                         @endif
                     </div>
                 </div>
+                <div class="terminal-posts-section-social">
+
+                </div>
+                <div class="terminal-status-social">
+                    [PSocial v0.4.1] [Connected] [EN] [UTF-8]
+                </div>
             </div>
         </div>
     </div>
     <script>
         document.getElementById('openModalBtn').onclick = function(e) {
             e.preventDefault();
-            document.getElementById('modalOverlay').style.display = 'flex';
+            document.getElementById('modalOverlayMoreInfo').style.display = 'flex';
         };
         document.getElementById('closeModalBtn').onclick = function() {
-            document.getElementById('modalOverlay').style.display = 'none';
+            document.getElementById('modalOverlayMoreInfo').style.display = 'none';
         };
-        document.getElementById('modalOverlay').onclick = function(e) {
+        document.getElementById('modalOverlayMoreInfo').onclick = function(e) {
             if (e.target === this) this.style.display = 'none';
         };
+
 
         document.addEventListener('DOMContentLoaded', function() {
             const followBtn = document.getElementById('followBtn');
@@ -157,16 +182,11 @@
                             'X-CSRF-TOKEN': csrfToken,
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
-                        },
-                        credentials: 'same-origin'
+                        }
                     })
                     .then(response => response.json())
                     .then(data => {
-                        this.outerHTML = `
-                            <div id="requsetActions" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 8px;">
-                                <button type="button" class="terminal-profile-cancel-btn-social" id="cancelRequestBtn" data-request-id="${data.request_id}" data-user-id="${userId}">Отменить заявку</button>
-                            </div>
-                        `;
+                        location.reload();
                     })
                     .catch(error => {
                         alert('Ошибка при отправке заявки');
@@ -180,16 +200,18 @@
             if (acceptBtn) {
                 acceptBtn.addEventListener('click', function() {
                     const requestId = this.getAttribute('data-request-id');
-                    fetch(`${window.location.protocol}//${window.location.host}/friend-request/accept/${requestId}`, {
+                    fetch(`/friend-request/accept/${requestId}`, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
-                        },
-                        credentials: 'same-origin'
+                        }
                     })
                     .then(response => response.json())
+                    .then(data => {
+                        location.reload();
+                    })
                     .catch(error => {
                         alert('Ошибка при обработке запроса');
                     });
@@ -201,16 +223,18 @@
                 declinedBtn.addEventListener('click', function(){
                     const requestId = this.getAttribute('data-request-id');
                     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    fetch(`${window.location.protocol}//${window.location.host}/friend-request/decline/${requestId}`, {
+                    fetch(`/friend-request/decline/${requestId}`, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': csrfToken,
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
-                        },
-                        credentials: 'same-origin'
+                        }
                     })
                     .then(response => response.json())
+                    .then(data => {
+                        location.reload();
+                    })
                     .catch(error => {
                         alert('Ошибка при отклонении запроса');
                     });
@@ -231,8 +255,7 @@
                             'X-CSRF-TOKEN': csrfToken,
                             'Accept': 'application/json',
                             'Content-Typpe': 'application/json'
-                        },
-                        credentials: 'same-origin'
+                        }
                     })
                     .then(response => {
                         if (!response.ok) throw new Error('Ошибка при отмене запроса');
@@ -248,6 +271,63 @@
                     })
                     .catch(error => {
                         alert('Ошибка при отмене запроса');
+                    });
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const unfriendBtn = document.getElementById('unfriendBtn');
+            if (unfriendBtn) {
+                unfriendBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('unfriendModal').style.display = 'flex';
+                });
+            }
+
+            const closeUnfriendModalBtn = document.getElementById('closeUnfriendModalBtn');
+            if (closeUnfriendModalBtn) {
+                closeUnfriendModalBtn.addEventListener('click', function() {
+                    document.getElementById('unfriendModal').style.display = 'none';
+                });
+            }
+            const cancelUnfriendBtn = document.getElementById('cancelUnfriendBtn');
+            if (cancelUnfriendBtn) {
+                cancelUnfriendBtn.addEventListener('click', function() {
+                    document.getElementById('unfriendModal').style.display = 'none';
+                });
+            }
+            const unfriendModal = document.getElementById('unfriendModal');
+            if (unfriendModal) {
+                unfriendModal.addEventListener('click', function(e) {
+                    if (e.target === this) this.style.display = 'none';
+                });
+            }
+
+            const confirmUnfriendBtn = document.getElementById('confirmUnfriendBtn');
+            if (confirmUnfriendBtn) {
+                confirmUnfriendBtn.addEventListener('click', function() {
+                    const userId = document.getElementById('unfriendBtn').getAttribute('data-user-id');
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    fetch(`/friends/remove/${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            alert('Ошибка при удалении из друзей');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        location.reload();
+                    })
+                    .catch(error => {
+                        alert('Ошибка при удалении из друзей');
                     });
                 });
             }

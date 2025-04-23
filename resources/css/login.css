@@ -206,3 +206,13 @@ html, body {
     letter-spacing: 0.2px;
     white-space: pre-line;
 }
+
+.terminal-status-login {
+    background: #23282c;
+    color: #00e676;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 13px;
+    padding: 4px 18px;
+    border-top: 1px solid #181c1f;
+    text-align: right;
+}

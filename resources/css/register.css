@@ -219,3 +219,13 @@ html, body {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+
+.terminal-status-register {
+  background: #23282c;
+  color: #00e676;
+  font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+  font-size: 13px;
+  padding: 4px 18px;
+  border-top: 1px solid #181c1f;
+  text-align: right;
+}

@@ -46,6 +46,9 @@
                             <a href="{{ route('register') }}" class="terminal-link-login">Register</a>
                         </div>
                     </div>
+                    <div class="terminal-status-login">
+                        [PSocial v0.4.1 [Connected] [EN] [UTF-8]
+                    </div>
                 </form>
             </div>
         </div>

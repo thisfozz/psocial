@@ -379,3 +379,22 @@
     color: #888;
     border: 1.5px solid #888;
 }
+
+.terminal-status-social {
+    background: #23282c;
+    color: #00e676;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 13px;
+    padding: 4px 18px;
+    border-top: 1px solid #181c1f;
+    text-align: right;
+}
+
+.terminal-profile-edit-btn-social,
+.terminal-profile-cancel-btn-social {
+    width: 220px;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    margin-left: 0;
+}
