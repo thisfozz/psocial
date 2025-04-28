@@ -29,10 +29,27 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
+        $email = strtolower(trim($request->email));
+        $hash = md5($email);
+        $fullName = $request->first_name . ' ' . $request->last_name;
+
+        $gravatarCheckUrl = "https://www.gravatar.com/avatar/$hash?d=404";
+        $gravatarBase = "https://www.gravatar.com/avatar/$hash";
+
+        $uiavatars = 'https://ui-avatars.com/api/?name=' . urlencode($fullName) . '&background=000000&color=fff&rounded=true';
+
+        $headers = @get_headers($gravatarCheckUrl);
+        if ($headers && strpos($headers[0], '200') !== false) {
+            $avatar = $gravatarBase;
+        } else {
+            $avatar = $uiavatars;
+        }
+
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'username' => $request->username,
+            'avatar_path' => $avatar,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),

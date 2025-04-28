@@ -15,8 +15,9 @@
         <div class="terminal-center-social">
             <div class="terminal-card-social">
                 <div class="terminal-search-form-social" style="display: flex; align-items: center; justify-content: space-between;">
-                    <form method="GET" action="#" style="display: flex; align-items: center; gap: 18px; flex: 1;">
+                    <form method="GET" action="{{ route('search-users') }}" style="display: flex; align-items: center; gap: 18px; flex: 1; position: relative;">
                         <input type="text" class="terminal-search-input-social" name="search" placeholder="Search...">
+                        <div id="search-results" class="terminal-search-dropdown-social" style="display: none;"></div>
                         <button type="submit" class="terminal-search-btn-social">Search</button>
                     </form>
                     @auth
@@ -28,24 +29,10 @@
                 </div>
                 <div class="terminal-profile-section-social">
                     <div class="terminal-profile-avatar-social">
-                        @php
-                            $email = strtolower(trim($user->email));
-                            $hash = md5($email);
-                            $gravatar = "https://www.gravatar.com/avatar/$hash?s=160&d=404";
-                            $uiavatars = 'https://ui-avatars.com/api/?name=' . urlencode($user->first_name . ' ' . $user->last_name) . '&background=000000&color=fff&rounded=true&size=160';
-
-                            $headers = @get_headers($gravatar);
-                            if ($headers && strpos($headers[0], '200') !== false) {
-                                $avatar = $gravatar;
-                            } else {
-                                $avatar = $uiavatars;
-                            }
-                        @endphp
                         <img 
-                            src="{{ $avatar }}"
+                            src="{{ $user->avatar_path }}$size=160"
                             alt="avatar" 
-                            class="terminal-avatar-social"
-                        >
+                            class="terminal-avatar-social">
                     </div>
                     <div class="terminal-profile-info-social">
                         <div class="terminal-profile-name-social">
@@ -122,22 +109,9 @@
                     <div class="terminal-friends-list-social">
                         @if(count($friends ?? []) > 0)
                             @foreach($friends as $friend)
-                                @php
-                                    $email = strtolower(trim($friend->email));
-                                    $hash = md5($email);
-                                    $gravatar = "https://www.gravatar.com/avatar/$hash?s=40&d=404";
-                                    $uiavatars = 'https://ui-avatars.com/api/?name=' . urlencode($friend->first_name . ' ' . $friend->last_name) . '&background=000000&color=fff&rounded=true&size=40';
-
-                                    $headers = @get_headers($gravatar);
-                                    if ($headers && strpos($headers[0], '200') !== false) {
-                                        $avatar = $gravatar;
-                                    } else {
-                                        $avatar = $uiavatars;
-                                    }
-                                @endphp
                                 <div class="terminal-friend-social">
                                     <a href="{{ route('social.show', ['id' => $friend->id]) }}" style="text-decoration: none;">
-                                        <img src="{{ $avatar }}" class="terminal-friend-avatar-social">
+                                        <img src="{{ $friend->avatar_path }}$size=40" class="terminal-friend-avatar-social">
                                     </a>
                                     <a href="{{ route('social.show', ['id' => $friend->id]) }}" style="text-decoration: none;">
                                         <span style="margin-top: 8px; color: #00e676;">{{ $friend->first_name }} {{ $friend->last_name }}</span>
@@ -166,20 +140,7 @@
                             <div class="terminal-post-social">
                                 <div class="terminal-post-header-social" style="display: flex; align-items: center; justify-content: space-between;">
                                     <div style="display: flex; align-items: center; gap: 12px;">
-                                        @php
-                                            $email = strtolower(trim($post->author->email));
-                                            $hash = md5($email);
-                                            $gravatar = "https://www.gravatar.com/avatar/$hash?s=32&d=404";
-                                            $uiavatars = 'https://ui-avatars.com/api/?name=' . urlencode($post->author->first_name . ' ' . $post->author->last_name) . '&background=000000&color=fff&rounded=true&size=32';
-
-                                            $headers = @get_headers($gravatar);
-                                            if ($headers && strpos($headers[0], '200') !== false) {
-                                                $avatar = $gravatar;
-                                            } else {
-                                                $avatar = $uiavatars;
-                                            }
-                                        @endphp
-                                        <img src="{{ $avatar }}" alt="avatar" class="terminal-friend-avatar-social" style="width:32px; height:32px; margin-right: 6px;">
+                                        <img src="{{ $post->author->avatar_path }}$size=32" alt="avatar" class="terminal-friend-avatar-social" style="width:32px; height:32px; margin-right: 6px;">
                                         <span class="terminal-post-author-social">{{ $post->author->first_name }} {{ $post->author->last_name }}</span>
                                         <span class="terminal-post-date-social">{{ $post->created_at->format('d.m.Y H:i') }}</span>
                                     </div>
