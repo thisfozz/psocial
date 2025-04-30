@@ -13,10 +13,8 @@ class SocialController extends Controller
         $friends = $user->friends()->get();
         $posts = Post::with('author')->where('wall_id', $user->id)->orderBy('created_at', 'desc')->get();
 
-        $isFriend = false;
-        if($user->friends()->where('friend_id', auth()->id())->exists()){
-            $isFriend = true;
-        }
+        $isFriend = $user->friends()->where('friend_id', auth()->id())->exists()
+                 || $user->friendOf()->where('user_id', auth()->id())->exists();
         $isRequested = false;
         if(auth()->user()->sentFriendRequests()->where('to_user_id', $user->id)->exists()){
             $isRequested = true;
