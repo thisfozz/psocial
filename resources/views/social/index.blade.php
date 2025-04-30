@@ -82,7 +82,11 @@
                     @endif
                     @if(auth()->check() && auth()->user()->id != $user->id && $isFriend)
                         <div class="terminal-profile-edit-btn-wrap" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: auto;">
-                            <a href="#" class="terminal-profile-edit-btn-social">Message</a>
+                            <form method="POST" action="{{ route('messages.setFriend') }}" style="display:inline;">
+                                @csrf
+                                <input type="hidden" name="friend_id" value="{{ $user->id }}">
+                                <button type="submit" class="terminal-profile-edit-btn-social">Message</button>
+                            </form>
                             <button type="button" class="terminal-profile-cancel-btn-social" id="unfriendBtn" data-user-id="{{ $user->id }}">
                                 Unfriend
                             </button>
@@ -167,4 +171,5 @@
             </div>
         </div>
     </div>
+    <div>isFriend: {{ $isFriend ? 'yes' : 'no' }}</div>
 @endsection

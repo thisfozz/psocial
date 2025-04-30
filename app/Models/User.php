@@ -131,4 +131,8 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
             'post_id'
         );
     }
+
+    public function messages(){
+        return $this->hasMany(Message::class, 'sender_id');
+    }
 }

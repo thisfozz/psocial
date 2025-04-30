@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FriendRequestController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
+
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('/register', [RegisteredUserController::class, 'store']);
@@ -23,3 +25,8 @@ Route::middleware('auth')->group(function (){
     Route::post('/posts', [PostController::class, 'store'])->name('post-publish');
     Route::get('/search-users', [UserController::class, 'search'])->name('search-users');
 });
+
+Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+Route::post('/broadcast', [MessageController::class, 'broadcast'])->name('broadcast');
+Route::post('/receive', [MessageController::class, 'receive'])->name('receive');
+Route::post('/messages/set-friend', [MessageController::class, 'setFriend'])->name('messages.setFriend');

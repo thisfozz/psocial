@@ -19,6 +19,7 @@ class PostController extends Controller
             'user_id' => auth()->id(),
             'wall_id' => $request->input('wall_id'),
         ]);
+        
         return redirect()->back()->with('success', 'Пост успешно создан!');
     }
 }

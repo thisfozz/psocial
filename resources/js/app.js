@@ -1,3 +1,4 @@
 import './bootstrap';
-import './social.js';
-import './home.js';
+import './chat.js';
+import './social';
+import './home';
