@@ -47,6 +47,9 @@ class PostController extends Controller
     }
 
     public function destroy(Post $post){
+        foreach ($post->images as $image) {
+            Storage::disk('s3')->delete($image->image_path);
+        }
         $post->delete();
         return redirect()->back()->with('success', 'Пост успешно удален!');
     }

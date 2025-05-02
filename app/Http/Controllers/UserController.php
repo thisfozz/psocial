@@ -31,6 +31,7 @@ class UserController extends Controller
         else{
             $users = [];
         }
+        // TODO: Изменить на редирект на страницу пользователя
         return response()->json($users);
     }
 }
