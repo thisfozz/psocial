@@ -11,12 +11,14 @@ class MessageController extends Controller
 {
     public function setFriend(Request $request) {
         $request->session()->put('friend_id', $request->input('friend_id'));
+        
         return redirect()->route('messages.index');
     }
 
     public function index(Request $request) {
         $user = auth()->id();
         $friendId = $request->session()->get('friend_id');
+
         if (!$friendId) {
             return view('messages.empty');
         }

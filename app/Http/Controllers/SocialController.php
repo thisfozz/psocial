@@ -11,7 +11,11 @@ class SocialController extends Controller
     {
         $user = User::findOrFail($id);
         $friends = $user->friends()->get();
-        $posts = Post::with('author')->where('wall_id', $user->id)->orderBy('created_at', 'desc')->withCount('likes')->get();
+        $posts = Post::with(['author', 'images'])
+            ->where('wall_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->withCount('likes')
+            ->get();
 
         $isFriend = $user->friends()->where('friend_id', auth()->id())->exists()
                  || $user->friendOf()->where('user_id', auth()->id())->exists();

@@ -119,6 +119,18 @@ CREATE TABLE post_likes (
     CONSTRAINT fk_post_likes_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE post_images (
+    id SERIAL PRIMARY KEY,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
+    image_path VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_post_images_post_id FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    CONSTRAINT fk_post_images_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- Таблица связи пользователей и языков (user_languages)
 CREATE TABLE user_languages (
     user_id INT NOT NULL,
