@@ -548,3 +548,68 @@
     margin-right: 8px;
     vertical-align: middle;
 }
+.terminal-search-dropdown-social a {
+    text-decoration: none;
+    color: inherit;
+}
+.terminal-search-dropdown-social a:hover {
+    background: #333;
+    text-decoration: none;
+    color: #00e676;
+}
+
+.terminal-search-dropdown-social .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.terminal-post-actions-social {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #2a2f33;
+}
+
+.terminal-like-btn-social {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: #00e676;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.terminal-like-btn-social:hover {
+    background: #00e67615;
+}
+
+.terminal-like-btn-social[data-liked="true"] .terminal-like-icon {
+    fill: #00e676;
+    stroke: #00e676;
+}
+
+.terminal-like-btn-social[data-liked="false"] .terminal-like-icon {
+    fill: none;
+    stroke: #00e676;
+}
+
+.terminal-like-count {
+    color: #00e676;
+    font-weight: 500;
+}
+
+.terminal-like-icon {
+    transition: all 0.2s ease;
+}
+
+.terminal-like-btn-social:hover .terminal-like-icon {
+    transform: scale(1.1);
+}

@@ -198,13 +198,50 @@ document.querySelector('.terminal-search-input-social').addEventListener('input'
                 resultsDiv.innerHTML = '<div class="dropdown-item">Ничего не найдено</div>';
             } else {
                 resultsDiv.innerHTML = data.map(user =>
-                    `<div class="dropdown-item">
-                        <img src="${user.avatar_path}$size=40" alt="avatar">
-                        <span>${user.first_name} ${user.last_name}</span>
-                    </div>`
+                    `<a href="/social/${user.id}">
+                        <div class="dropdown-item">
+                            <img src="${user.avatar_path}$size=40" alt="avatar">
+                            <span>${user.first_name} ${user.last_name}</span>
+                        </div>
+                    </a>`
                 ).join('');
             }
             resultsDiv.style.display = 'block';
         });
     }, 400);
+});
+const likeBtn = document.querySelectorAll('.terminal-like-btn-social');
+document.addEventListener('DOMContentLoaded', function() {
+    likeBtn.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault(); // Предотвращаем отправку формы
+            
+            const form = this.closest('form');
+            const postId = this.id.replace('likeBtn', '');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.querySelector('.terminal-like-count').textContent = data.likes_count;
+                
+                const svg = this.querySelector('.terminal-like-icon');
+                if (data.is_liked) {
+                    svg.setAttribute('fill', '#00e676');
+                } else {
+                    svg.setAttribute('fill', 'none');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при лайке:', error);
+            });
+        });
+    });
 });
