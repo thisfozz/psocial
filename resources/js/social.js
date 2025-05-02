@@ -210,11 +210,12 @@ document.querySelector('.terminal-search-input-social').addEventListener('input'
         });
     }, 400);
 });
+
 const likeBtn = document.querySelectorAll('.terminal-like-btn-social');
 document.addEventListener('DOMContentLoaded', function() {
     likeBtn.forEach(button => {
         button.addEventListener('click', function(e) {
-            e.preventDefault(); // Предотвращаем отправку формы
+            e.preventDefault();
             
             const form = this.closest('form');
             const postId = this.id.replace('likeBtn', '');

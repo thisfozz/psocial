@@ -4,26 +4,52 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 class PostController extends Controller
 {
-    public function show(){
-
-    }
+    public function show(){}
     public function store(Request $request){
-        $request->validate([
-            'content' => 'required|string|max:600',
-            'wall_id' => 'required|exists:users,id',
+        $validated = $request->validate([
+            'content' => 'nullable|string|required_without:images',
+            'images' => 'nullable|array|required_without:content',
+            'images.*' => 'image|max:8192',
         ]);
-        $request->user()->posts()->create([
-            'content' => $request->input('content'),
+
+        if (!Storage::disk('s3')->exists('user_' . auth()->id())) {
+            Storage::disk('s3')->makeDirectory('user_' . auth()->id());
+        }
+
+        $post = $request->user()->posts()->create([
+            'content' => $request->input('content') ?? '',
             'user_id' => auth()->id(),
             'wall_id' => $request->input('wall_id'),
         ]);
-        
-        return redirect()->back()->with('success', 'Пост успешно создан!');
+
+        if($request->hasFile('images')){
+            foreach ($request->file('images', []) as $image) {
+                $extension = $image->getClientOriginalExtension();
+                $filename = 'images_' . now()->format('YmdHis') . '_' . Str::random(8) . '.' . $extension;
+                $path = $image->storeAs('user_' . auth()->id(), $filename, 's3');
+
+                $post->images()->create([
+                    'user_id' => auth()->id(),
+                    'image_path' => $path,
+                ]);
+            }
+        }
+
+        if ($request->wantsJson()) {
+            return response()->json(['ok' => true]);
+        }
+        return redirect()->back()->with('success', 'Пост успешно опубликован!');
     }
 
     public function destroy(Post $post){
+        foreach ($post->images as $image) {
+            Storage::disk('s3')->delete($image->image_path);
+        }
         $post->delete();
         return redirect()->back()->with('success', 'Пост успешно удален!');
     }
@@ -42,9 +68,6 @@ class PostController extends Controller
             $isLiked = true;
         }
 
-        return response()->json([
-            'likes_count' => $post->likes()->count(),
-            'is_liked' => $isLiked
-        ]);
+        return response()->json(['likes_count' => $post->likes()->count(),'is_liked' => $isLiked]);
     }
 }

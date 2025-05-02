@@ -33,4 +33,7 @@ class Post extends Model
     public function hasLikeFrom(User $user){
         return $this->likes()->where('user_id', $user->id)->exists();
     }
+    public function images() {
+        return $this->hasMany(PostImage::class);
+    }
 }

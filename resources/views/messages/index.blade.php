@@ -29,6 +29,5 @@
         };
     </script>
     @vite(['resources/js/app.js'])
-    <script>alert('test inline');</script>
 </div>
 @endsection
