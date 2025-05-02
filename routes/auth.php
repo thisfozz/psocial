@@ -17,12 +17,17 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function (){
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
     Route::post('/friend-request/{toUserId}', [FriendRequestController::class, 'sendRequest'])->name('friend-request.send');
     Route::post('/friend-request/accept/{requestId}', [FriendRequestController::class, 'acceptRequest'])->name('friend-request.accept');
     Route::post('/friend-request/decline/{requestId}', [FriendRequestController::class, 'declineRequest'])->name('friend-request.decline');
     Route::post('/friend-request/cancel/{requestId}', [FriendRequestController::class, 'cancelRequest'])->name('friend-request.cancel');
     Route::post('/friends/remove/{id}', [FriendRequestController::class, 'removeFriend'])->name('friends.remove');
+
     Route::post('/posts', [PostController::class, 'store'])->name('post-publish');
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+    Route::post('/posts/{post}/toggleLike', [PostController::class, 'toggleLike'])->name('post.toggleLike');
+
     Route::get('/search-users', [UserController::class, 'search'])->name('search-users');
 });
 
