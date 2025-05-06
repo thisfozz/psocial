@@ -1,55 +1,48 @@
 @extends('layouts.terminal')
 @section('content')
-    <div class="terminal-window-login">
-        <div class="terminal-window-bar-login">
-            <span class="terminal-window-btn-login close"></span>
-            <span class="terminal-window-btn-login minimize"></span>
-            <span class="terminal-window-btn-login zoom"></span>
-            <span class="terminal-title-login">
-                <svg class="terminal-icon-login" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 17l6-6-6-6M12 19h8"></path>
+<div class="terminal-container">
+    <div class="terminal-bg-grid"></div>
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <div class="window-controls">
+                <span class="control close"></span>
+                <span class="control minimize"></span>
+                <span class="control zoom"></span>
+            </div>
+            <div class="terminal-title">
+                <svg class="terminal-icon" viewBox="0 0 24 24">
+                    <path d="M4 17l6-6-6-6M12 19h8"/>
                 </svg>
                 PSocial@login:~$
-             </span>
-        </div>
-        <div class="terminal-center-login">
-            <div class="terminal-card-login">
-                <form class="terminal-form-login" method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="terminal-body-login">
-                        @if ($errors->has('identifier'))
-                            <div class="command-line-login error-row">
-                                <span class="prompt-login" style="color:#ff5252;">PSocial@login:~$</span>
-                                <span class="terminal-error-login">{{ $errors->first('identifier') }}</span>
-                            </div>
-                        @endif
-                        <div class="command-line-login input-row">
-                            <span class="prompt-login">PSocial@login:~$identifier</span>
-                            <div class="input-wrapper-login">
-                                <input required type="text" class="input-field-login" name="identifier" value="{{ old('identifier') }}" placeholder="Email or username">
-                            </div>
-                        </div>
-                        <div class="command-line-login input-row">
-                            <span class="prompt-login">PSocial@login:~$password</span>
-                            <div class="input-wrapper-login">
-                                <input required type="password" class="input-field-login" name="password" placeholder="Enter password">
-                            </div>
-                        </div>
-                        <div class="command-line-login button-row">
-                            <button type="submit" class="terminal-submit-login">[ Login ]</button>
-                        </div>
-                        <div class="command-line-login link-row">
-                            <span class="prompt-login">No account?</span>
-                        </div>
-                        <div class="command-line-login link-row">
-                            <a href="{{ route('register') }}" class="terminal-link-login">Register</a>
-                        </div>
-                    </div>
-                    <div class="terminal-status-login">
-                        [PSocial v0.4.1 [Connected] [EN] [UTF-8]
-                    </div>
-                </form>
             </div>
         </div>
+        <form method="POST" action="{{ route('login') }}" class="terminal-form">
+            @csrf
+            <div class="terminal-body">
+                <div class="input-container">
+                    <p class="bash-text">
+                        <span class="user">user</span><span class="vm">@psocial</span>:<span class="char">~$</span>
+                    </p>
+                    <input type="text" name="identifier" required placeholder="Email or username" autocomplete="username" class="input" />
+                </div>
+                <div class="input-container">
+                    <p class="bash-text">
+                        <span class="user">user</span><span class="vm">@psocial</span>:<span class="char">~$</span>
+                    </p>
+                    <input type="password" name="password" required placeholder="Password" autocomplete="current-password" class="input" />
+                </div>
+                <div class="button-row">
+                    <button type="submit" class="terminal-submit">[ Login ]</button>
+                </div>
+                <div class="link-row">
+                    <span class="prompt">No account?</span>
+                    <a href="{{ route('register') }}" class="terminal-link">Register</a>
+                </div>
+            </div>
+            <div class="terminal-status">
+                [PSocial v1.0.0] [Connected] [EN] [UTF-8]
+            </div>
+        </form>
     </div>
+</div>
 @endsection

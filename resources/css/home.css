@@ -1,169 +1,217 @@
+:root {
+    --primary: #00e676;
+    --bg: #050a1a;
+    --primary-2: #050a1a;
+    --surface: rgba(0, 230, 118, 0.05);
+    --border: rgba(0, 230, 118, 0.2);
+}
+
 html, body {
     height: 100%;
-    width: 100%;
     margin: 0;
     padding: 0;
-    background: #181c1f;
-    box-sizing: border-box;
+    background: var(--bg);
+}
+
+.terminal-container {
+    min-height: 100vh;
+    min-width: 100vw;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.terminal-center-home {
+.terminal-window {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    max-width: 700px;
+    width: 100%;
+    min-width: 700px;
+    box-shadow: 0 0 40px rgba(0,230,118,0.10), 0 0 0 1px rgba(0,230,118,0.05);
+    backdrop-filter: blur(8px);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0;
-}
-
-.terminal-card-home {
-    width: 1000px;
-    background: #181c1f;
-    border-radius: 12px;
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     overflow: hidden;
+    max-height: 98vh;
+    min-height: 50vh;
 }
 
-.terminal-header-home {
-    background: #23282c;
-    padding: 12px 18px;
+.terminal-header {
     display: flex;
     align-items: center;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--border);
 }
 
-.terminal-title-home {
-    color: #fff;
-    font-size: 15px;
-    font-weight: 600;
+.terminal-output {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 1.5rem 1.2rem 1.5rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+    font-family: 'Fira Mono', monospace;
+    color: #e0ffe7;
+    font-size: 1rem;
+    min-height: 8em;
+}
+
+.input-container {
     display: flex;
     align-items: center;
-    gap: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin: 0 1.2rem 1rem 1.2rem;
+    font-family: 'Fira Mono', monospace;
+    gap: 0.75rem;
 }
 
-.terminal-icon-home {
-    color: #00e676;
+.prompt-line {
+    color: white;
+    font-family: inherit;
+    white-space: nowrap;
+    margin-right: 0.5rem;
 }
+.prompt-line .user { color: var(--primary); }
+.prompt-line .host { color: #2dd4bf; }
+.prompt-line .path { color: #a78bfa; }
 
-.terminal-body-home {
-    background: #181c1f;
-    color: #fff;
-    padding: 32px 32px 28px 32px;
-}
-
-.command-line-home {
-    display: flex;
-    align-items: center;
-    margin-bottom: 18px;
-}
-
-.prompt-home {
-    color: #00e676;
-    font-weight: bold;
-    /* min-width: 180px; */
-    /* padding-right: 32px; */
-    /* text-align: right; */
-    /* flex-shrink: 0; */
-    margin-right: 12px; /* или меньше, по вкусу */
-}
-
-.terminal-text-home, .typed-text-home {
-    overflow: visible;
-    text-overflow: clip;
-    flex: 1;
+.terminal-input {
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    transition: border 0.2s;
     min-width: 0;
-    white-space: normal;
-    word-break: break-word;
 }
 
-.typed-text-home {
-    border-right: 2px solid #00e676;
-    animation: blink-cursor-home 1s steps(1) infinite;
+.terminal-input:focus {
+    outline: none;
+    /* можешь добавить свою кастомную рамку, если нужно */
 }
 
-@keyframes blink-cursor-home {
-    0%, 100% { border-color: #00e676; }
-    50% { border-color: transparent; }
+.terminal-links {
+    display: flex;
+    gap: 1rem;
+    margin: 0 1.2rem 1rem 1.2rem;
+    justify-content: center;
 }
-
-.terminal-link-home {
-    color: #00e676;
-    text-decoration: underline;
-    margin-left: 8px;
-    font-size: 15px;
-    transition: color 0.2s;
+.terminal-link {
+    color: var(--primary);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 0.4rem 1.2rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-family: 'Fira Mono', monospace;
+    font-size: 1rem;
+    background: transparent;
+    box-shadow: 0 0 0 0 rgba(0,230,118,0.1);
 }
-
-.terminal-link-home:hover {
+.terminal-link:hover {
+    background: rgba(0,230,118,0.10);
+    box-shadow: 0 0 15px rgba(0,230,118,0.18);
     color: #fff;
 }
 
-.terminal-window-home {
-    background: #23282c;
-    border: 2.5px solid #181c1f;
-    border-radius: 12px;
-    max-width: 1000px;
-    overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-    margin: 0 auto;
-}
-
-.terminal-window-bar-home {
-    display: flex;
-    align-items: center;
-    height: 36px;
-    background: #23282c;
-    padding: 0 18px;
-    border-bottom: 1.5px solid #181c1f;
-    gap: 8px;
-}
-
-.terminal-window-btn-home {
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 6px;
-    border: 1.5px solid #181c1f;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
-}
-.terminal-window-btn-home.close {
-    background: #ff5f56;
-}
-.terminal-window-btn-home.minimize {
-    background: #ffbd2e;
-}
-.terminal-window-btn-home.zoom {
-    background: #27c93f;
-}
-
-.terminal-status-home {
-    background: #23282c;
-    color: #00e676;
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-    font-size: 13px;
-    padding: 4px 18px;
-    border-top: 1px solid #181c1f;
+.terminal-status {
+    color: #6ee7b7;
+    font-family: 'Fira Mono', monospace;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+    border-top: 1px solid var(--border);
+    opacity: 0.6;
     text-align: right;
 }
 
-.terminal-input-home {
-    background: none;
-    border: none;
-    outline: none;
-    color: #00e676;
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-    font-size: 15px;
-    flex: 1;
-    padding: 0;
-    margin: 0;
-    caret-color: #00e676;
+@media (max-width: 600px) {
+    .terminal-window {
+        max-width: 98vw;
+        border-radius: 10px;
+        max-height: 98vh;
+        min-width: 70vw;
+    }
+    .terminal-header,
+    .terminal-output,
+    .input-container,
+    .terminal-links,
+    .terminal-status {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+    .input-container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.5rem 0.5rem;
+        margin: 0 0.5rem 1rem 0.5rem;
+        gap: 0.3rem;
+    }
+    .terminal-input {
+        font-size: 1rem;
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
-.terminal-input-home::placeholder {
-    color: #444;
-    opacity: 0.7;
+
+.terminal-bg-grid {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(0, 230, 118, 0.07) 0px,
+            rgba(0, 230, 118, 0.07) 1px,
+            transparent 1px,
+            transparent 32px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(0, 230, 118, 0.07) 0px,
+            rgba(0, 230, 118, 0.07) 1px,
+            transparent 1px,
+            transparent 32px
+        );
+    animation: terminal-grid-move 6s linear infinite;
 }
-.terminal-input-row {
-    margin-bottom: 0;
+
+@keyframes terminal-grid-move {
+    0% {
+        background-position: 0 0, 0 0;
+    }
+    100% {
+        background-position: 64px 64px, 64px 64px;
+    }
+}
+
+.command-line-home {
+    font-family: 'Fira Mono', monospace;
+    color: #e0ffe7;
+    margin-bottom: 0.2em;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    word-break: break-all;
+}
+.prompt-home {
+    color: var(--primary);
+    margin-right: 0.3em;
+}
+.terminal-text-home {
+    color: #fff;
 }
