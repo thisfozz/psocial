@@ -29,9 +29,9 @@ html, body {
     background: var(--surface);
     border: 1.5px solid var(--border);
     border-radius: 14px;
-    max-width: 700px;
+    max-width: 950px;
     width: 100%;
-    min-width: 700px;
+    min-width: 950px;
     box-shadow: 0 0 40px rgba(0,230,118,0.10), 0 0 0 1px rgba(0,230,118,0.05);
     backdrop-filter: blur(8px);
     display: flex;
@@ -94,11 +94,11 @@ html, body {
     padding: 0.25rem 0.5rem;
     transition: border 0.2s;
     min-width: 0;
+    width: 100%;
 }
 
 .terminal-input:focus {
     outline: none;
-    /* можешь добавить свою кастомную рамку, если нужно */
 }
 
 .terminal-links {
@@ -211,7 +211,35 @@ html, body {
 .prompt-home {
     color: var(--primary);
     margin-right: 0.3em;
+    white-space: nowrap;
 }
 .terminal-text-home {
     color: #fff;
+    overflow-wrap: anywhere;
+}
+
+.terminal-help-block {
+    font-family: 'Fira Mono', monospace;
+    background: rgba(0, 230, 118, 0.07);
+    color: #e0ffe7;
+    border-radius: 6px;
+    padding: 0.7em 1em;
+    margin: 0.5em 0 1em 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: pre;
+    box-shadow: 0 0 8px rgba(0,230,118,0.08);
+}
+
+.terminal-error-line {
+    font-family: 'Fira Mono', monospace;
+    background: rgba(255, 0, 0, 0.08);
+    color: #ff4d4f;
+    border-radius: 6px;
+    padding: 0.5em 1em;
+    margin: 0.3em 0 0.7em 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    white-space: pre;
+    border-left: 3px solid #ff4d4f;
 }

@@ -23,7 +23,6 @@ const FOLDER_ID = process.env.YANDEX_FOLDER_ID;
 
 app.post('/api/translate', async (req, res) => {
     const { text, to = 'ru' } = req.body;
-    console.log('BODY:', req.body);
 
     try {
         const response = await axios.post(
