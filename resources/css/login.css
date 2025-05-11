@@ -1,11 +1,19 @@
 :root {
-    --primary: #00e676;
-    --bg: #050a1a;
-    --surface: rgba(0, 230, 118, 0.05);
-    --border: rgba(0, 230, 118, 0.2);
+    --primary-login: #00e676;
+    --bg-login: #050a1a;
+    --surface-login: rgba(0, 230, 118, 0.05);
+    --border-login: rgba(0, 230, 118, 0.2);
 }
 
-.terminal-container {
+.terminal-header-login {
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--border-login);
+    gap: 1rem;
+}
+
+.terminal-container-login {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,9 +21,9 @@
     box-sizing: border-box;
 }
 
-.terminal-window {
-    background: var(--surface, #10181e);
-    border: 1.5px solid var(--primary, #00e676);
+.terminal-window-login {
+    background: var(--surface-login, #10181e);
+    border: 1.5px solid var(--primary-login, #00e676);
     border-radius: 14px;
     max-width: 410px;
     width: 100%;
@@ -30,32 +38,24 @@
     justify-content: flex-start;
 }
 
-.terminal-header {
-    display: flex;
-    align-items: center;
-    padding: 0.7rem 1rem;
-    border-bottom: 1px solid var(--border);
-    gap: 1rem;
-}
-
-.window-controls {
+.window-controls-login {
     display: flex;
     gap: 0.5rem;
 }
-.control {
+.control-login {
     width: 12px; height: 12px; border-radius: 50%;
     opacity: 0.3;
     transition: opacity 0.3s;
     border: 1.5px solid #181c1f;
     box-shadow: 0 1px 2px rgba(0,0,0,0.10);
 }
-.control.close { background: #ff5f56; }
-.control.minimize { background: #ffbd2e; }
-.control.zoom { background: #27c93f; }
-.control:hover { opacity: 1; }
+.control-login.close-login { background: #ff5f56; }
+.control-login.minimize-login { background: #ffbd2e; }
+.control-login.zoom-login { background: #27c93f; }
+.control-login:hover { opacity: 1; }
 
-.terminal-title {
-    color: var(--primary);
+.terminal-title-login {
+    color: var(--primary-login);
     font-weight: 600;
     font-size: 1rem;
     display: flex;
@@ -63,18 +63,18 @@
     gap: 0.5rem;
 }
 
-.terminal-icon {
-    stroke: var(--primary);
+.terminal-icon-login {
+    stroke: var(--primary-login);
     width: 16px;
     height: 16px;
 }
 
-.terminal-form {
+.terminal-form-login {
     display: flex;
     flex-direction: column;
 }
 
-.terminal-body {
+.terminal-body-login {
     background: #181c1f;
     padding: 0.7rem 0.7rem 0.7rem 0.7rem;
     color: white;
@@ -83,7 +83,7 @@
     gap: 0.6rem;
 }
 
-.input-container {
+.input-container-login {
     display: flex;
     align-items: center;
     background-color: #0f172a;
@@ -93,7 +93,7 @@
     margin-bottom: 0.3rem;
 }
 
-.bash-text {
+.bash-text-login {
     font-size: 0.95rem;
     color: white;
     margin: 0;
@@ -102,17 +102,17 @@
     user-select: none;
 }
 
-.bash-text .user {
+.bash-text-login .user-login {
     color: #e879f9;
 }
-.bash-text .vm {
+.bash-text-login .vm-login {
     color: #2dd4bf;
 }
-.bash-text .char {
+.bash-text-login .char-login {
     color: #a78bfa;
 }
 
-.input {
+.input-login {
     background-color: transparent;
     border: none;
     outline: none;
@@ -124,27 +124,27 @@
     min-width: 0;
 }
 
-.input::placeholder {
+.input-login::placeholder {
     color: #6ee7b7;
     opacity: 0.6;
 }
 
-.error-row {
+.error-row-login {
     color: #ff5252;
     font-size: 0.95rem;
     margin-bottom: 0.7rem;
 }
 
-.button-row {
+.button-row-login {
     display: flex;
     justify-content: center;
     margin-top: 0.5rem;
 }
 
-.terminal-submit {
+.terminal-submit-login {
     background: #23282c;
-    color: var(--primary);
-    border: 1px solid var(--primary);
+    color: var(--primary-login);
+    border: 1px solid var(--primary-login);
     border-radius: 4px;
     padding: 5px 18px;
     font-family: inherit;
@@ -154,12 +154,12 @@
     user-select: none;
 }
 
-.terminal-submit:hover {
-    background: var(--primary);
+.terminal-submit-login:hover {
+    background: var(--primary-login);
     color: #23282c;
 }
 
-.link-row {
+.link-row-login {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -169,17 +169,17 @@
     font-size: 0.85rem;
 }
 
-.terminal-link {
-    color: var(--primary);
+.terminal-link-login {
+    color: var(--primary-login);
     text-decoration: underline;
     cursor: pointer;
     font-size: 0.95rem;
     margin-top: 0.2rem;
 }
 
-.terminal-status {
+.terminal-status-login {
     background: #23282c;
-    color: var(--primary);
+    color: var(--primary-login);
     font-family: 'Fira Mono', monospace;
     font-size: 0.8rem;
     padding: 0.3rem 1rem;
@@ -188,7 +188,7 @@
     user-select: none;
 }
 
-.terminal-bg-grid {
+.terminal-bg-grid-login {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     width: 100vw;
@@ -214,26 +214,26 @@
 }
 
 @media (max-width: 600px) {
-    .terminal-window {
+    .terminal-window-login {
         max-width: 98vw;
         border-radius: 10px;
     }
-    .terminal-header {
+    .terminal-header-login {
         padding: 0.75rem 1rem;
     }
-    .terminal-body {
+    .terminal-body-login {
         padding: 1rem 0.5rem 1rem 0.5rem;
     }
-    .input-container {
+    .input-container-login {
         flex-direction: column;
         align-items: stretch;
         padding: 10px 8px;
         gap: 0.4rem;
     }
-    .bash-text {
+    .bash-text-login {
         font-size: 0.9rem;
     }
-    .input {
+    .input-login {
         font-size: 0.95rem;
     }
 }

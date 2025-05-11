@@ -178,7 +178,7 @@ pass || password [--l <длина>]             Сгенерировать па�
 
                 history.className = 'command-line-home';
                 history.innerHTML = `<span class="prompt-home">guest@psocial:~$</span><span class="terminal-text-home">${val}</span>`;
-                terminalOutput.appendChild(history);
+                terminalOutput.prepend(history);
 
                 if (!valid) {
                     const errorDiv = document.createElement('div');
@@ -247,7 +247,12 @@ pass || password [--l <длина>]             Сгенерировать па�
 
                             quoteElement.className = 'terminal-output-line';
                             quoteElement.innerHTML = `${translated} <span style="color:#6ee7b7;">— ${author}</span>`;
-                            terminalOutput.appendChild(quoteElement);
+
+                            if (history.nextSibling) {
+                                terminalOutput.insertBefore(quoteElement, history.nextSibling);
+                            } else {
+                                terminalOutput.appendChild(quoteElement);
+                            }
                         } catch (error) {
                             const errorDiv = document.createElement('div');
 

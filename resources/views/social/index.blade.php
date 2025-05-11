@@ -1,11 +1,5 @@
 @extends('layouts.terminal')
 @section('content')
-    <style>
-        html, body {
-        height: auto !important;
-        overflow: auto !important;
-    }
-    </style>
     <div class="terminal-window-social">
         <div class="terminal-window-bar-social">
             <span class="terminal-window-btn-social close"></span>
@@ -209,6 +203,5 @@
                     </div>
                 </div>
             </div>
-        </div>
-    <div>isFriend: {{ $isFriend ? 'yes' : 'no' }}</div>
+    </div>
 @endsection

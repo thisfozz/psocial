@@ -1,33 +1,16 @@
+/* home.css */
 :root {
-    --primary: #00e676;
-    --bg: #050a1a;
-    --primary-2: #050a1a;
-    --surface: rgba(0, 230, 118, 0.05);
-    --border: rgba(0, 230, 118, 0.2);
+    --primary-home: #00e676;
+    --bg-home: #050a1a;
+    --primary-2-home: #050a1a;
+    --surface-home: rgba(0, 230, 118, 0.05);
+    --border-home: rgba(0, 230, 118, 0.2);
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-}
-
-.terminal-container {
-    min-height: 100vh;
-    min-width: 100vw;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.terminal-window {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
+/* Уникальные стили для home-страницы */
+.terminal-window-home {
+    background: var(--surface-home);
+    border: 1.5px solid var(--border-home);
     border-radius: 14px;
     max-width: 950px;
     width: 100%;
@@ -41,20 +24,54 @@ html, body {
     min-height: 50vh;
 }
 
-.terminal-header {
+.terminal-header-home {
     display: flex;
     align-items: center;
     padding: 1rem 1.2rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border-home);
 }
 
-.terminal-output {
+.window-controls-home {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.control-home {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+    border: 1.5px solid #181c1f;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+}
+.control-home.close-home { background: #ff5f56; }
+.control-home.minimize-home { background: #ffbd2e; }
+.control-home.zoom-home { background: #27c93f; }
+.control-home:hover { opacity: 1; }
+
+.terminal-title-home {
+    color: var(--primary-home);
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1rem;
+}
+
+.terminal-icon-home {
+    stroke: var(--primary-home);
+    width: 16px;
+    height: 16px;
+}
+
+.terminal-output-home {
     flex: 1 1 auto;
     overflow-y: auto;
     padding: 1.5rem 1.2rem 1.5rem 1.2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 0.25rem;
     font-family: 'Fira Mono', monospace;
     color: #e0ffe7;
@@ -62,7 +79,7 @@ html, body {
     min-height: 8em;
 }
 
-.input-container {
+.input-container-home {
     display: flex;
     align-items: center;
     background: rgba(0, 0, 0, 0.3);
@@ -73,17 +90,17 @@ html, body {
     gap: 0.75rem;
 }
 
-.prompt-line {
+.prompt-line-home {
     color: white;
     font-family: inherit;
     white-space: nowrap;
     margin-right: 0.5rem;
 }
-.prompt-line .user { color: var(--primary); }
-.prompt-line .host { color: #2dd4bf; }
-.prompt-line .path { color: #a78bfa; }
+.prompt-line-home .user-home { color: var(--primary-home); }
+.prompt-line-home .host-home { color: #2dd4bf; }
+.prompt-line-home .path-home { color: #a78bfa; }
 
-.terminal-input {
+.terminal-input-home {
     border: none;
     border-radius: 4px;
     outline: none;
@@ -97,20 +114,16 @@ html, body {
     width: 100%;
 }
 
-.terminal-input:focus {
-    outline: none;
-}
-
-.terminal-links {
+.terminal-links-home {
     display: flex;
     gap: 1rem;
     margin: 0 1.2rem 1rem 1.2rem;
     justify-content: center;
 }
-.terminal-link {
-    color: var(--primary);
+.terminal-link-home {
+    color: var(--primary-home);
     text-decoration: none;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-home);
     padding: 0.4rem 1.2rem;
     border-radius: 4px;
     transition: all 0.3s;
@@ -119,84 +132,20 @@ html, body {
     background: transparent;
     box-shadow: 0 0 0 0 rgba(0,230,118,0.1);
 }
-.terminal-link:hover {
+.terminal-link-home:hover {
     background: rgba(0,230,118,0.10);
     box-shadow: 0 0 15px rgba(0,230,118,0.18);
     color: #fff;
 }
 
-.terminal-status {
+.terminal-status-home {
     color: #6ee7b7;
     font-family: 'Fira Mono', monospace;
     font-size: 0.9rem;
     padding: 0.5rem 1.2rem;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--border-home);
     opacity: 0.6;
     text-align: right;
-}
-
-@media (max-width: 600px) {
-    .terminal-window {
-        max-width: 98vw;
-        border-radius: 10px;
-        max-height: 98vh;
-        min-width: 70vw;
-    }
-    .terminal-header,
-    .terminal-output,
-    .input-container,
-    .terminal-links,
-    .terminal-status {
-        padding-left: 0.6rem;
-        padding-right: 0.6rem;
-    }
-    .input-container {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0.5rem 0.5rem;
-        margin: 0 0.5rem 1rem 0.5rem;
-        gap: 0.3rem;
-    }
-    .terminal-input {
-        font-size: 1rem;
-        min-width: 0;
-        width: 100%;
-        box-sizing: border-box;
-    }
-}
-
-.terminal-bg-grid {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-    pointer-events: none;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            rgba(0, 230, 118, 0.07) 0px,
-            rgba(0, 230, 118, 0.07) 1px,
-            transparent 1px,
-            transparent 32px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            rgba(0, 230, 118, 0.07) 0px,
-            rgba(0, 230, 118, 0.07) 1px,
-            transparent 1px,
-            transparent 32px
-        );
-    animation: terminal-grid-move 6s linear infinite;
-}
-
-@keyframes terminal-grid-move {
-    0% {
-        background-position: 0 0, 0 0;
-    }
-    100% {
-        background-position: 64px 64px, 64px 64px;
-    }
 }
 
 .command-line-home {
@@ -209,7 +158,7 @@ html, body {
     word-break: break-all;
 }
 .prompt-home {
-    color: var(--primary);
+    color: var(--primary-home);
     margin-right: 0.3em;
     white-space: nowrap;
 }
@@ -218,7 +167,7 @@ html, body {
     overflow-wrap: anywhere;
 }
 
-.terminal-help-block {
+.terminal-help-block-home {
     font-family: 'Fira Mono', monospace;
     background: rgba(0, 230, 118, 0.07);
     color: #e0ffe7;
@@ -231,7 +180,7 @@ html, body {
     box-shadow: 0 0 8px rgba(0,230,118,0.08);
 }
 
-.terminal-error-line {
+.terminal-error-line-home {
     font-family: 'Fira Mono', monospace;
     background: rgba(255, 0, 0, 0.08);
     color: #ff4d4f;
@@ -242,4 +191,34 @@ html, body {
     line-height: 1.5;
     white-space: pre;
     border-left: 3px solid #ff4d4f;
+}
+
+@media (max-width: 600px) {
+    .terminal-window-home {
+        max-width: 98vw;
+        border-radius: 10px;
+        max-height: 98vh;
+        min-width: 70vw;
+    }
+    .terminal-header-home,
+    .terminal-output-home,
+    .input-container-home,
+    .terminal-links-home,
+    .terminal-status-home {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+    .input-container-home {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.5rem 0.5rem;
+        margin: 0 0.5rem 1rem 0.5rem;
+        gap: 0.3rem;
+    }
+    .terminal-input-home {
+        font-size: 1rem;
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
