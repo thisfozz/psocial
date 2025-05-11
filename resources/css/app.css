@@ -26,6 +26,7 @@ html, body {
     padding: 1rem;
     box-sizing: border-box;
     background: var(--bg);
+    z-index: 1;
 }
 
 .terminal-bg-grid {
@@ -36,7 +37,7 @@ html, body {
     bottom: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
     background:
         repeating-linear-gradient(
