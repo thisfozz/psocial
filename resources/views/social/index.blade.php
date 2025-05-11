@@ -109,7 +109,7 @@
                     </div>
                     <div class="terminal-friends-section-social">
                         @if(count($friends ?? []) > 0)
-                            <a href="#" class="terminal-friends-title-social" style="text-decoration: underline; cursor: pointer;">Friends ({{ count($friends ?? []) }})</a>
+                            <a href="#" class="terminal-friends-title-social">Friends ({{ count($friends ?? []) }})</a>
                         @else
                             <div class="terminal-friends-title-social">Friends (0)</div>
                         @endif

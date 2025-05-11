@@ -318,6 +318,12 @@
     margin-bottom: 14px;
     font-size: 17px;
     letter-spacing: 1px;
+    text-decoration: none;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.terminal-friends-title-social:hover {
+    color: #00e676;
 }
 .terminal-friends-list-social {
     display: flex;
