@@ -1,35 +1,53 @@
+:root {
+    --primary-social: var(--primary);
+    --bg-social: var(--bg);
+    --surface-social: #181c1f;
+    --border-social: var(--border);
+}
+
+.terminal-window-social {
+    background: var(--surface-social);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
+    border: 2.5px solid var(--border-social);
+}
+
+.terminal-card-social {
+    background-color: var(--surface-social);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    padding: 0;
+}
+
 .terminal-center-social {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background: #181c1f;
-}
-
-.terminal-card-social {
-    background-color: #181c1f;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-    width: 800px;
-    overflow: hidden;
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    background: var(--surface-social);
+    width: 100%;
 }
 
 .terminal-search-form-social {
     display: flex;
     align-items: center;
-    background: #23282c;
+    background: var(--surface-social);
     padding: 18px 24px 18px 24px;
-    border-bottom: 1.5px solid #00e676;
+    border-bottom: 1.5px solid var(--primary-social);
     border-radius: 0 0 8px 8px;
     gap: 8px;
     margin-top: 6px;
 }
 
 .terminal-search-input-social {
-    background: #181c1f;
-    border: 1.5px solid #00e676;
+    background: var(--surface-social);
+    border: 1.5px solid var(--primary-social);
     color: #fff;
     font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     font-size: 15px;
@@ -39,16 +57,18 @@
     transition: border-color 0.2s;
     width: 260px;
 }
+
 .terminal-search-input-social:focus {
     border-color: #fff;
 }
+
 .terminal-search-input-social::placeholder {
-    color: #00e676;
+    color: var(--primary-social);
     opacity: 0.7;
 }
 
 .terminal-search-btn-social {
-    background: #00e676;
+    background: var(--primary-social);
     color: #23282c;
     border: none;
     font-family: 'Fira Mono', 'Courier New', Courier, monospace;
@@ -69,7 +89,7 @@
 .terminal-profile-section-social {
     display: flex;
     align-items: flex-start;
-    background: #23282c;
+    background: var(--surface-social);
     border-radius: 8px;
     padding: 32px 32px 32px 32px;
     gap: 32px;
@@ -104,7 +124,7 @@
     border-radius: 50%;
     object-fit: cover;
     border: 2.5px solid #00e676;
-    background: #181c1f;
+    background: var(--surface-social);
     display: block;
 }
 .terminal-friend-avatar-social {
@@ -113,7 +133,7 @@
     border-radius: 50%;
     border: 1.5px solid #00e676;
     object-fit: cover;
-    background: #23282c;
+    background: var(--surface-social);
 }
 
 .terminal-profile-info-social {
@@ -144,7 +164,7 @@
     margin-left: auto;
 }
 .terminal-profile-edit-btn-social {
-    background: #23282c;
+    background: var(--surface-social);
     color: #00e676;
     border: 1.5px solid #00e676;
     border-radius: 6px;
@@ -177,25 +197,28 @@
 }
 .terminal-logout-btn-social:hover {
     background: #00e676;
-    color: #23282c;
+    color: var(--surface-social);
     border: 1.5px solid #00e676;
 }
 
-.terminal-window-social {
-    background: #23282c;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-    max-width: 900px;
-    width: calc(100% - 40px);
-    overflow: hidden;
-    border: 2.5px solid #181c1f;
-    display: block;
-}
-
-/* Для полноэкранного режима */
-@media screen and (display-mode: fullscreen) {
-    .terminal-window-social {
-        margin: 60px auto 20px;
+@media (max-width: 900px) {
+    .terminal-card-social {
+        width: 95%;
+    }
+    
+    .terminal-search-form-social {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .terminal-search-input-social {
+        width: auto;
+        border-radius: 6px;
+        margin-bottom: 8px;
+    }
+    
+    .terminal-search-btn-social {
+        border-radius: 6px;
     }
 }
 
@@ -203,7 +226,7 @@
     display: flex;
     align-items: center;
     height: 36px;
-    background: #23282c;
+    background: var(--surface-social);
     padding: 0 18px;
     border-bottom: 1.5px solid #181c1f;
     gap: 8px;
@@ -246,7 +269,7 @@
 }
 
 .terminal-friends-section-social {
-    background: #23282c;
+    background: #181c1f;
     border-radius: 8px;
     margin-top: 12px;
     padding: 36px 40px 20px 40px;
@@ -283,7 +306,7 @@
     border-radius: 50%;
     border: 1.5px solid #00e676;
     object-fit: cover;
-    background: #23282c;
+    background: var(--surface-social);
 }
 .terminal-friend-social span {
     color: #00e676;
@@ -293,9 +316,9 @@
 }
 
 .terminal-profile-follow-btn-social {
-    background: #00e676;
-    color: #23282c;
-    border: 1.5px solid #00e676;
+    background: var(--primary-social);
+    color: var(--surface-social);
+    border: 1.5px solid var(--primary-social);
     border-radius: 8px;
     padding: 10px 32px;
     font-family: 'Fira Mono', 'Courier New', Courier, monospace;
@@ -308,9 +331,9 @@
 }
 
 .terminal-profile-follow-btn-social:hover {
-    background: #23282c;
-    color: #00e676;
-    border: 1.5px solid #00e676;
+    background: var(--surface-social);
+    color: var(--primary-social);
+    border: 1.5px solid var(--primary-social);
 }
 
 .terminal-learn-more-social {
@@ -380,7 +403,7 @@
 }
 
 .terminal-profile-follow-btn-social[disabled] {
-    background: #23282c;
+    background: var(--surface-social);
     color: #888 !important;
     border: 1.5px solid #888 !important;
     cursor: not-allowed;
@@ -388,13 +411,13 @@
     transition: none;
 }
 .terminal-profile-follow-btn-social[disabled]:hover {
-    background: #23282c;
+    background: var(--surface-social);
     color: #888;
     border: 1.5px solid #888;
 }
 
 .terminal-status-social {
-    background: #23282c;
+    background: var(--surface-social);
     color: #00e676;
     font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     font-size: 13px;
@@ -414,7 +437,7 @@
 
 .terminal-posts-section-social {
     margin-top: 32px;
-    background: #23282c;
+    background: var(--surface-social);
     border-radius: 8px;
     padding: 32px 40px 20px 40px;
     color: #fff;

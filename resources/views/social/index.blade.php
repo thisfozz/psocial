@@ -1,5 +1,8 @@
 @extends('layouts.terminal')
 @section('content')
+
+<div class="terminal-container terminal-container-social">
+<div class="terminal-bg-grid terminal-bg-grid-social"></div>
     <div class="terminal-window-social">
         <div class="terminal-window-bar-social">
             <span class="terminal-window-btn-social close"></span>
@@ -204,4 +207,5 @@
                 </div>
             </div>
     </div>
+</div>
 @endsection
