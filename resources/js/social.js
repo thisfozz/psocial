@@ -219,10 +219,23 @@ document.addEventListener('DOMContentLoaded', function() {
     likeBtn.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            
+
             const form = this.closest('form');
             const postId = this.id.replace('likeBtn', '');
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const likeCountElem = this.querySelector('.terminal-like-count');
+            const svg = this.querySelector('.terminal-like-icon');
+
+            const prevCount = parseInt(likeCountElem.textContent, 10);
+            const wasLiked = svg.getAttribute('fill') === '#00e676';
+
+            if (wasLiked) {
+                likeCountElem.textContent = prevCount - 1;
+                svg.setAttribute('fill', 'none');
+            } else {
+                likeCountElem.textContent = prevCount + 1;
+                svg.setAttribute('fill', '#00e676');
+            }
 
             fetch(form.action, {
                 method: 'POST',
@@ -232,11 +245,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) throw new Error('Ошибка при лайке');
+                return response.json();
+            })
             .then(data => {
-                this.querySelector('.terminal-like-count').textContent = data.likes_count;
-                
-                const svg = this.querySelector('.terminal-like-icon');
+                likeCountElem.textContent = data.likes_count;
                 if (data.is_liked) {
                     svg.setAttribute('fill', '#00e676');
                 } else {
@@ -244,6 +258,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
+                likeCountElem.textContent = prevCount;
+                if (wasLiked) {
+                    svg.setAttribute('fill', '#00e676');
+                } else {
+                    svg.setAttribute('fill', 'none');
+                }
                 console.error('Ошибка при лайке:', error);
             });
         });

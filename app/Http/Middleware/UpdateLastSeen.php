@@ -12,7 +12,6 @@ class UpdateLastSeen
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            \Log::info('UpdateLastSeen сработал для пользователя: ' . Auth::id());
             Auth::user()->update(['last_seen' => now()]);
         }
         return $next($request);
