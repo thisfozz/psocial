@@ -179,37 +179,40 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-let timer;
-document.querySelector('.terminal-search-input-social').addEventListener('input', function(e) {
-    const query = e.target.value.trim();
-    const resultsDiv = document.getElementById('search-results');
-    if (query.length < 2) {
-        resultsDiv.style.display = 'none';
-        resultsDiv.innerHTML = '';
+const searchInput = document.querySelector('.terminal-search-input-social');
+if (searchInput) {
+    let timer;
+    searchInput.addEventListener('input', function(e) {
+        const query = e.target.value.trim();
+        const resultsDiv = document.getElementById('search-results');
+        if (query.length < 2) {
+            resultsDiv.style.display = 'none';
+            resultsDiv.innerHTML = '';
+            clearTimeout(timer);
+            return;
+        }
         clearTimeout(timer);
-        return;
-    }
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-        fetch(`/search-users?search=${encodeURIComponent(query)}`)
-            .then(res => res.json())
-        .then(data => {
-            if (data.length === 0) {
-                resultsDiv.innerHTML = '<div class="dropdown-item">Ничего не найдено</div>';
-            } else {
-                resultsDiv.innerHTML = data.map(user =>
-                    `<a href="/social/${user.id}">
-                        <div class="dropdown-item">
-                            <img src="${user.avatar_path}$size=40" alt="avatar">
-                            <span>${user.first_name} ${user.last_name}</span>
-                        </div>
-                    </a>`
-                ).join('');
-            }
-            resultsDiv.style.display = 'block';
-        });
-    }, 400);
-});
+        timer = setTimeout(() => {
+            fetch(`/search-users?search=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+            .then(data => {
+                if (data.length === 0) {
+                    resultsDiv.innerHTML = '<div class="dropdown-item">Ничего не найдено</div>';
+                } else {
+                    resultsDiv.innerHTML = data.map(user =>
+                        `<a href="/social/${user.id}">
+                            <div class="dropdown-item">
+                                <img src="${user.avatar_path}$size=40" alt="avatar">
+                                <span>${user.first_name} ${user.last_name}</span>
+                            </div>
+                        </a>`
+                    ).join('');
+                }
+                resultsDiv.style.display = 'block';
+            });
+        }, 400);
+    });
+}
 
 const likeBtn = document.querySelectorAll('.terminal-like-btn-social');
 document.addEventListener('DOMContentLoaded', function() {

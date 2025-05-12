@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FriendRequestController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Middleware\UpdateLastSeen;
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -15,7 +17,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 });
 
-Route::middleware('auth')->group(function (){
+Route::middleware(['auth', UpdateLastSeen::class])->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     Route::post('/friend-request/{toUserId}', [FriendRequestController::class, 'sendRequest'])->name('friend-request.send');

@@ -2,19 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --primary: #00e676;
+    --bg: #050a1a;
+    --surface: #181c1f;
+    --border: rgba(0, 230, 118, 0.2);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    font-family: var(--font-sans);
+}
+
+.terminal-container {
+    min-height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    background: var(--bg);
+    z-index: 1;
+}
+
+.terminal-bg-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(0, 230, 118, 0.07) 0px,
+            rgba(0, 230, 118, 0.07) 1px,
+            transparent 1px,
+            transparent 32px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(0, 230, 118, 0.07) 0px,
+            rgba(0, 230, 118, 0.07) 1px,
+            transparent 1px,
+            transparent 32px
+        );
+    animation: terminal-grid-move 6s linear infinite;
+}
+
+@keyframes terminal-grid-move {
+    0% {
+        background-position: 0 0, 0 0;
+    }
+    100% {
+        background-position: 64px 64px, 64px 64px;
+    }
+}
+
 @import './register.css';
-@import './home.css';
 @import './login.css';
+@import './home.css';
 @import './social.css';
 @import './chat.css';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source "../**/*.blade.php";
-@source "../**/*.js";
-@source "../**/*.vue";
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
