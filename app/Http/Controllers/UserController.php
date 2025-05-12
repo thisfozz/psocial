@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -33,5 +34,16 @@ class UserController extends Controller
         }
         // TODO: Изменить на редирект на страницу пользователя
         return response()->json($users);
+    }
+
+    public function userOnlineStatus()
+    {
+        $users = User::all();
+        foreach ($users as $user) {
+            if (Cache::has('user-online' . $user->id))
+                $user->last_seen = now();
+            else
+                echo $user->name . " is offline <br>";
+        }
     }
 }
