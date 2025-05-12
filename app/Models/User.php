@@ -52,6 +52,8 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
         'last_seen' => 'datetime',
     ];
 
+    const ONLINE_MINUTES = 15;
+
     public function getAuthIdentifier(): int{
         return $this->id;
     }
@@ -134,11 +136,8 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
         return $this->hasMany(Message::class, 'sender_id');
     }
 
-    public function lastSeen(){
-        if($this->last_seen && $this->last_seen > now()->subMinutes(15)){
-            return true;
-        } else{
-            return false;
-        }
+    public function lastSeen()
+    {
+        return $this->last_seen && $this->last_seen > now()->subMinutes(self::ONLINE_MINUTES);
     }
 }

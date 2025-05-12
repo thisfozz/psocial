@@ -2,13 +2,14 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FriendRequestController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Middleware\UpdateLastSeen;
+use App\Http\Controllers\SocialController;
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -31,9 +32,11 @@ Route::middleware(['auth', UpdateLastSeen::class])->group(function () {
     Route::post('/posts/{post}/toggleLike', [PostController::class, 'toggleLike'])->name('post.toggleLike');
 
     Route::get('/search-users', [UserController::class, 'search'])->name('search-users');
-});
 
-Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
-Route::post('/broadcast', [MessageController::class, 'broadcast'])->name('broadcast');
-Route::post('/receive', [MessageController::class, 'receive'])->name('receive');
-Route::post('/messages/set-friend', [MessageController::class, 'setFriend'])->name('messages.setFriend');
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::post('/broadcast', [MessageController::class, 'broadcast'])->name('broadcast');
+    Route::post('/receive', [MessageController::class, 'receive'])->name('receive');
+    Route::post('/messages/set-friend', [MessageController::class, 'setFriend'])->name('messages.setFriend');
+
+    Route::get('/social/{id}', [SocialController::class, 'show'])->name('social.show');
+});

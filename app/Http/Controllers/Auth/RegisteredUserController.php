@@ -58,6 +58,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        Auth::user()->update(['last_seen' => now()]);
 
         return redirect()->intended(route('social.show', ['id' => auth()->id()], false));
     }

@@ -20,7 +20,9 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
-    
+
+        Auth::user()->update(['last_seen' => now()]);
+
         return redirect()->intended(route('social.show', ['id' => auth()->id()], false));
     }
 
