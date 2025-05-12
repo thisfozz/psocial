@@ -32,12 +32,24 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
         'date_of_birth',
         'about_me',
         'status',
-        'is_deleted'
+        'is_deleted',
+        'last_seen'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'date_of_birth' => 'date',
+        'is_deleted' => 'boolean',
+        'deleted_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'last_seen' => 'datetime',
     ];
 
     public function getAuthIdentifier(): int{
@@ -76,20 +88,6 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
 
     public function familyStatus(){
         return $this->belongsTo(FamilyStatus::class, 'family_status_id', 'id');
-    }
-    
-
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'date_of_birth' => 'date',
-            'is_deleted' => 'boolean',
-            'deleted_at' => 'datetime',
-            'created_at' => 'datetime',
-            'updated_at' => 'datetime',
-        ];
     }
 
     public function friends()
@@ -134,5 +132,13 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
 
     public function messages(){
         return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function lastSeen(){
+        if($this->last_seen && $this->last_seen > now()->subMinutes(15)){
+            return true;
+        } else{
+            return false;
+        }
     }
 }

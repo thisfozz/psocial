@@ -4,17 +4,19 @@
 <div class="terminal-container terminal-container-social">
 <div class="terminal-bg-grid terminal-bg-grid-social"></div>
     <div class="terminal-window-social">
-        <div class="terminal-window-bar-social">
-            <span class="terminal-window-btn-social close"></span>
-            <span class="terminal-window-btn-social minimize"></span>
-            <span class="terminal-window-btn-social zoom"></span>
-            <span class="terminal-title-social">
-                <svg class="terminal-icon-home" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 17l6-6-6-6M12 19h8"></path>
-                </svg>
-                PSocial@home:~$
-            </span>
-        </div>
+        <div class="terminal-header-social">
+                <div class="window-controls-social">
+                    <span class="control-social close-social"></span>
+                    <span class="control-social minimize-social"></span>
+                    <span class="control-social zoom-social"></span>
+                </div>
+                <div class="terminal-title-social">
+                    <svg class="terminal-icon-social" viewBox="0 0 24 24">
+                        <path d="M4 17l6-6-6-6M12 19h8"/>
+                    </svg>
+                    PSocial@&#6155;{{ $user->username }}:~$
+                </div>
+            </div>
             <div class="terminal-center-social">
                 <div class="terminal-card-social">
                     <div class="terminal-search-form-social">
@@ -35,7 +37,8 @@
                             <img 
                                 src="{{ $user->avatar_path }}$size=160"
                                 alt="avatar" 
-                                class="terminal-avatar-social">
+                                class="terminal-avatar-social"
+                                style="border-color: {{ $user->lastSeen() ? '#00e676' : '#ff0000' }}">
                         </div>
                         <div class="terminal-profile-info-social">
                             <div class="terminal-profile-name-social">
