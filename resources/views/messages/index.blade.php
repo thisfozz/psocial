@@ -18,13 +18,13 @@
                 </div>
             </div>
 
-            <!-- ВСЕ ОКНО чата + Блок с поиском + Блок с контактами. Внутри него все остальное. Т.е это самый основной блок -->
             <div class="terminal-main-chat-container">
                 <div class="terminal-chat-sidebar">
                     <div class="chat-search-container">
                         <input type="text" class="chat-search-input" placeholder="Search...">
                     </div>
                     <div class="chat-contacts-list">
+                        <!-- Временная заглушка -->
                         @if(isset($contacts) && count($contacts))
                             @foreach($contacts as $contact)
                                 <div class="chat-contact" onclick="window.location.href='{{ route('messages.with', $contact->id) }}'">
@@ -41,7 +41,7 @@
                             @endforeach
                         @else
                             <div class="chat-contact-empty" style="padding: 2rem; text-align: center; color: var(--text-tertiary);">
-                                Нет контактов
+                                No contacts
                             </div>
                         @endif
                     </div>
@@ -78,14 +78,21 @@
                             <span class="host-chat">@psocial</span>
                             <span class="path-chat">:~/chat$</span>
                         </div>
-                        <input type="text" class="terminal-input-chat" id="message" placeholder="type your message..." autocomplete="off">
-                        <button type="submit" class="terminal-button-chat">[ Send ]</button>
+                        <input type="text" class="terminal-input-chat" id="message" placeholder="Message" autocomplete="off">
+                        <button type="button" class="attach-button" onclick="document.getElementById('chat-images').click()" title="Прикрепить изображение">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="11" fill="none" stroke="#00e676" stroke-width="2"/>
+                                <path d="M12 6V18" stroke="#00e676" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M6 12H18" stroke="#00e676" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                        <input type="file" name="images[]" id="chat-images" multiple accept="image/*" style="display: none;">
                     </form>
                 </div>
             </div>
             
             <div class="terminal-status-chat">
-                [PSocial v1.0.0] [Connected] [Chat with {{ $friend->username }}] [EN] [UTF-8]
+                [PSocial v1.3.0] [Connected] [Chat with {{ $friend->username }}] [EN] [UTF-8]
             </div>
         </div>
     </div>

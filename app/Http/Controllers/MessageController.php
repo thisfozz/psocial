@@ -55,7 +55,7 @@ class MessageController extends Controller
                 'is_read' => false,
             ]);
 
-            broadcast(new PusherBroadcast($message, $request->get('client_id')));
+            broadcast(new PusherBroadcast($message, $request->get('client_id')))->toOthers();
 
             return response()->json([
                 'status' => 'ok',
@@ -70,6 +70,10 @@ class MessageController extends Controller
     }
 
     public function receive(Request $request) {
-        return view('messages.receive', ['message' => $request->get('message')]);
+        $message = $request->get('message');
+        if (is_array($message) && isset($message['id'])) {
+            $message = Message::with('sender')->find($message['id']);
+        }
+        return view('messages.receive', ['message' => $message, 'authId' => $request->get('authId')]);
     }
 }

@@ -21,11 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 authId: window.chatConfig.authId
             })
             .done(function(res) {
-                if(data.sender_id == window.chatConfig.authId && data.temp_id == tempId) {
-                    $optimistic.replaceWith(res);
-                    $('.messages').scrollTop($('.messages')[0].scrollHeight);
-                    return;
-                }
                 $(".messages").append(res);
                 $('.messages').scrollTop($('.messages')[0].scrollHeight);
             });

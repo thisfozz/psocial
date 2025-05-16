@@ -45,6 +45,7 @@
 .control-register:hover { opacity: 1; }
 
 .terminal-title-register {
+    font-family: 'Fira Mono', monospace;
     color: var(--primary);
     font-weight: 600;
     font-size: 1rem;
