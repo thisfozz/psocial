@@ -330,6 +330,7 @@
 }
 
 .terminal-title-social {
+    font-family: 'Fira Mono', monospace;
     color: #fff;
     font-size: 15px;
     font-weight: 600;
@@ -609,7 +610,6 @@
 .terminal-post-social {
     background: var(--surface-highlight);
     border-left: 3px solid var(--terminal-green);
-    box-shadow: 0 2px 6px var(--shadow);
     border-radius: 8px;
     padding: 18px 24px;
     margin-bottom: 8px;

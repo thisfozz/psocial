@@ -51,6 +51,7 @@
 .control-home:hover { opacity: 1; }
 
 .terminal-title-home {
+    font-family: 'Fira Mono', monospace;
     color: var(--primary-home);
     font-weight: 600;
     font-size: 1rem;
