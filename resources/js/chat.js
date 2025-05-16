@@ -17,16 +17,40 @@ document.addEventListener('DOMContentLoaded', function () {
         .listen('.chat', function(data) {
             $.post('/receive', {
                 _token: window.chatConfig.csrfToken,
-                message: data
+                message: data,
+                authId: window.chatConfig.authId
             })
             .done(function(res) {
+                if(data.sender_id == window.chatConfig.authId && data.temp_id == tempId) {
+                    $optimistic.replaceWith(res);
+                    $('.messages').scrollTop($('.messages')[0].scrollHeight);
+                    return;
+                }
                 $(".messages").append(res);
-                $(document).scrollTop($(".messages").height());
+                $('.messages').scrollTop($('.messages')[0].scrollHeight);
             });
         });
 
     $("#chat-form").submit(function(event) {
         event.preventDefault();
+
+        const messageText = $('#chat-form #message').val();
+        if (!messageText.trim()) return;
+
+        const tempId = 'temp-' + Date.now();
+
+        $(".messages").append(`
+            <div class="message-row sent optimistic" data-temp-id="${tempId}">
+                <div class="message-content">
+                    <div class="message-text">${$('<div>').text(messageText).html()}</div>
+                    <div class="message-time">
+                        ${new Date().toLocaleTimeString().slice(0,5)}
+                    </div>
+                </div>
+            </div>
+        `);
+        $('#chat-form #message').val('');
+        $('.messages').scrollTop($('.messages')[0].scrollHeight);
 
         $.ajax({
             url: '/broadcast',
@@ -36,14 +60,10 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             data: {
                 _token: window.chatConfig.csrfToken,
-                message: $('#chat-form #message').val(),
-                receiver_id: window.chatConfig.friendId
+                message: messageText,
+                receiver_id: window.chatConfig.friendId,
+                client_id: tempId
             }
-        })
-        .done(function(res) {
-            $('.messages > .message').last().after(res);
-            $('#chat-form #message').val('');
-            $(document).scrollTop($('.messages').height());
-        })
+        });
     });
 });

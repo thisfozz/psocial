@@ -55,12 +55,14 @@ class MessageController extends Controller
                 'is_read' => false,
             ]);
 
-            broadcast(new PusherBroadcast($message));
+            broadcast(new PusherBroadcast($message, $request->get('client_id')));
 
             return response()->json([
                 'status' => 'ok',
                 'message_id' => $message->id,
                 'message' => $message,
+                'temp_id' => $request->get('client_id')
+
             ]);
         } catch (\Throwable $e) {
             return response()->json(['error' => $e->getMessage()], 500);
