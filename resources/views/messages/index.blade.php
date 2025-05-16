@@ -40,7 +40,7 @@
                                 </div>
                             @endforeach
                         @else
-                            <div class="chat-contact-empty" style="padding: 2rem; text-align: center; color: var(--text-tertiary);">
+                            <div style="display: flex; padding: 2rem; text-align: center; color: var(--text-tertiary); justify-content: center; align-items: center;">
                                 No contacts
                             </div>
                         @endif
