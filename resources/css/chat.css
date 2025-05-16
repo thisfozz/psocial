@@ -126,8 +126,27 @@
     padding: 1rem;
     border-bottom: 1px solid var(--border-primary);
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 0.75rem;
+}
+
+.chat-search-input {
+    width: 90%;
+    max-width: 220px;
+    background: var(--surface-extra-light);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: 'Fira Mono', monospace;
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.chat-search-input:focus {
+    border: 1.5px solid var(--primary-chat);
 }
 
 .prompt-line-chat {
@@ -344,9 +363,16 @@
 }
 
 .message-content {
+    border-radius: 12px;
+    border: 1px solid #00ff88;
     max-width: 400px;
     word-break: break-word;
     overflow-wrap: anywhere;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+    position: relative;
 }
 
 .message-body {
@@ -357,14 +383,12 @@
 
 .message-row.received .message-content {
     background: var(--surface-light);
-    border: 1px solid var(--border-light);
     color: var(--text-primary);
 }
 
 .message-row.sent .message-content {
     background: var(--primary-chat);
     color: var(--surface-dark);
-    border: 1px solid var(--border-primary);
 }
 
 .message-header {
