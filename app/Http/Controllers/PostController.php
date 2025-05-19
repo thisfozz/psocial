@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
+use App\Models\PostVideo;
 class PostController extends Controller
 {
     public function show(){}
@@ -21,11 +21,23 @@ class PostController extends Controller
             Storage::disk('s3')->makeDirectory('user_' . auth()->id());
         }
 
+        $content = $request->input('content') ?? '';
         $post = $request->user()->posts()->create([
-            'content' => $request->input('content') ?? '',
+            'content' => $content,
             'user_id' => auth()->id(),
             'wall_id' => $request->input('wall_id'),
         ]);
+
+        $videoData = PostVideo::extractVideoData($content);
+        if($videoData) {
+            $post->videos()->create([
+                'platform' => $videoData['platform'],
+                'video_id' => $videoData['video_id'],
+                'embed_code' => $videoData['embed_code'],
+                'thumbnail_url' => $videoData['thumbnail_url'],
+            ]);
+            $post->update(['content' => '']);
+        }
 
         if($request->hasFile('images')){
             foreach ($request->file('images', []) as $image) {

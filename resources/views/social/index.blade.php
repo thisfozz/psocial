@@ -182,6 +182,12 @@
                                             @endforeach
                                         </div>
                                     @endif
+                                    @if($post->video)
+                                        <div class="terminal-post-video-preview-social">
+                                            <img src="{{ $post->video->thumbnail_url }}" alt="Video thumbnail">
+                                            <iframe src="{{ $post->video->embed_code }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                    @endif
                                     <div class="terminal-post-actions-social">
                                         <form method="POST" action="{{ route('post.toggleLike', $post->id) }}" style="display:inline;">
                                                 @csrf
