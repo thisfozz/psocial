@@ -36,4 +36,10 @@ class Post extends Model
     public function images() {
         return $this->hasMany(PostImage::class);
     }
+    public function videos() {
+        return $this->hasMany(PostVideo::class);
+    }
+    public function video() {
+        return $this->hasOne(PostVideo::class);
+    }
 }

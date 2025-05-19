@@ -119,6 +119,7 @@ CREATE TABLE post_likes (
     CONSTRAINT fk_post_likes_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Сохранение изрбражений в S3
 CREATE TABLE post_images (
     id SERIAL PRIMARY KEY,
     post_id INT NOT NULL,
@@ -129,6 +130,19 @@ CREATE TABLE post_images (
 
     CONSTRAINT fk_post_images_post_id FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
     CONSTRAINT fk_post_images_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE post_videos (
+    id SERIAL PRIMARY KEY,
+    post_id INT NOT NULL,
+    platform VARCHAR(50) NOT NULL,
+    video_id VARCHAR(255) NOT NULL,
+    embed_code TEXT NOT NULL,
+    thumbnail_url VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_post_videos_post_id FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
 
 -- Таблица связи пользователей и языков (user_languages)
