@@ -90,7 +90,7 @@
 .control-chat:hover { opacity: 1; }
 
 .terminal-title-chat {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     color: var(--primary-chat);
     font-weight: 600;
     font-size: 1rem;
@@ -133,7 +133,7 @@
 }
 
 .chat-search-input {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     background: var(--surface-extra-light);
     border: 1px solid var(--border-light);
     width: 90%;
@@ -147,7 +147,7 @@
 }
 
 .prompt-line-chat {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     color: var(--text-primary);
     white-space: nowrap;
 }
@@ -193,7 +193,7 @@
 }
 
 .contact-avatar {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -217,7 +217,7 @@
 }
 
 .contact-message-avatar {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -247,7 +247,7 @@
 }
 
 .contact-name {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     color: var(--text-primary);
     font-weight: 500;
     margin-bottom: 0.2rem;
@@ -257,7 +257,7 @@
 }
 
 .contact-message-name {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     color: var(--text-primary);
     font-weight: 500;
     font-size: 0.95rem;
@@ -274,7 +274,7 @@
 }
 
 .contact-time {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     color: var(--primary-chat);
     font-size: 0.8rem;
     opacity: 0.7;
@@ -320,7 +320,7 @@
 }
 
 .contact-status {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     margin-left: 0.5rem;
     font-size: 0.85rem;
 }
@@ -394,7 +394,7 @@
 }
 
 .message-main {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -403,7 +403,7 @@
 }
 
 .message-text-time {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -412,7 +412,7 @@
 }
 
 .message-text {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     font-size: 1.2rem;
     line-height: 1.4;
     margin-bottom: 0.2rem;
@@ -447,7 +447,7 @@
 }
 
 .terminal-button-chat {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     background: var(--primary-chat);
     color: var(--surface-dark);
     border: 1.5px solid var(--primary-chat);
@@ -464,7 +464,7 @@
 }
 
 .terminal-status-chat {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     background: var(--surface-dark);
     color: var(--primary-chat);
     border-top: 1px solid var(--border-dark);

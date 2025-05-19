@@ -10,17 +10,21 @@
     --surface-light: #1a1f23;
     --surface-highlight: #22282d;
     --surface-extra-light: #2a3137;
+
+    --button-hover-bg: #3a3a3a;
     
     --border-primary: rgba(0, 255, 110, 0.4);
     --border-secondary: rgba(0, 209, 115, 0.3);
     --border-dark: #06090c;
     --border-light: rgba(0, 255, 136, 0.2);
+    --logout-border: #8b0000;
     
     --text-primary: #f0f0f0;
     --text-secondary: #b0b0b0;
     --text-tertiary: #808080;
     --text-accent: #00ff88;
     --text-cyan: #00ffff;
+    --text-logout: #ff6b6b;
     
     --warning: #ffbb33;
     --error: #ff5555;
@@ -31,6 +35,7 @@
     --scrollbar: #00ff8833;
     --shadow: rgba(0, 255, 110, 0.1);
 }
+
 .terminal-container-social{
     min-height: 100vh;
     width: 100vw;
@@ -98,12 +103,12 @@
 }
 
 .terminal-card-social {
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     background-color: var(--surface-light);
     box-shadow: 0 4px 16px var(--shadow);
     border-radius: 12px;
     width: 100%;
     overflow: hidden;
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     padding: 0;
 }
 
@@ -119,26 +124,27 @@
 
 .terminal-search-form-social {
     display: flex;
-    align-items: center;
-    background: var(--surface-social);
     padding: 18px 24px 18px 24px;
-    border-bottom: 1.5px solid var(--primary-social);
-    border-radius: 0 0 8px 8px;
-    gap: 8px;
-    margin-top: 6px;
+    border-bottom: 1px solid var(--border-primary);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .terminal-search-input-social {
-    background: var(--surface-social);
-    border: 1.5px solid var(--primary-social);
-    color: #fff;
     font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-    font-size: 15px;
-    padding: 7px 16px;
-    border-radius: 6px 0 0 6px;
+    background: var(--surface-extra-light);
+    border: 1px solid var(--border-light);
+    width: 90%;
+    max-width: 220px;
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
     outline: none;
-    transition: border-color 0.2s;
-    width: 260px;
+    transition: border 0.2s;
 }
 
 .terminal-search-input-social:focus {
@@ -151,22 +157,20 @@
 }
 
 .terminal-search-btn-social {
-    background: var(--terminal-green);
-    color: var(--surface-dark);
-    border: 1.5px solid var(--terminal-green);
+    background: transparent;
+    color: var(--terminal-green);
+    border: 1px solid var(--terminal-green);
     font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 7px 24px;
-    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+    padding: 6px 14px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transition: background 0.2s, color 0.2s, border 0.2s;
 }
 .terminal-search-btn-social:hover {
-    background: var(--surface-dark);
+    background: var(--button-hover-bg);
     color: var(--terminal-green);
-    border: 1.5px solid #00e676;
+    border-color: var(--terminal-green);
 }
 
 .terminal-profile-section-social {
@@ -247,42 +251,41 @@
     margin-left: auto;
 }
 .terminal-profile-edit-btn-social {
-    background: var(--surface-light);
-    color: var(--terminal-cyan);
-    border: 1.5px solid #00e676;
-    border-color: var(--terminal-cyan);
-    border-radius: 6px;
-    padding: 10px 32px;
     font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    background: var(--primary-social);
+    color: var(--surface-dark);
+    border: 1.5px solid var(--primary-social);
+    border-radius: 8px;
+    padding: 10px 32px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     text-decoration: none;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
     margin-top: 8px;
+    box-shadow: 0 2px 6px rgba(0, 255, 136, 0.3);
 }
 .terminal-profile-edit-btn-social:hover {
     background: #00e676;
-    color: #23282c;
+    color: #0f1113;
+    transform: scale(1.02);
 }
 
 .terminal-logout-btn-social {
-    background: transparent;
-    color: #fff;
-    border: 1.5px solid #00e676;
-    border-radius: 6px;
-    padding: 5px 18px;
     font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-    font-size: 15px;
-    font-weight: bold;
+    background: transparent;
+    color: var(--text-logout);
+    border: 1px solid var(--logout-border);
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-size: 14px;
     cursor: pointer;
-    margin-left: 6px;
     transition: background 0.2s, color 0.2s, border 0.2s;
 }
 .terminal-logout-btn-social:hover {
-    background: #00e676;
-    color: var(--surface-social);
-    border: 1.5px solid #00e676;
+    background: var(--button-hover-bg);
+    color: var(--text-logout);
+    border-color: var(--logout-border);
 }
 
 @media (max-width: 900px) {
@@ -330,7 +333,7 @@
 }
 
 .terminal-title-social {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     color: #fff;
     font-size: 15px;
     font-weight: 600;
@@ -468,7 +471,6 @@
 .terminal-modal-window {
     background: var(--surface-light);
     border: 2px solid var(--terminal-cyan);
-    box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
     border-radius: 10px;
     padding: 32px 40px;
     min-width: 340px;
@@ -559,12 +561,12 @@
 }
 
 .terminal-post-input-social {
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     width: 100%;
     box-sizing: border-box;
     background: #181c1f;
     border: 1.5px solid #00e676;
     color: #fff;
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     font-size: 15px;
     padding: 10px 16px;
     border-radius: 6px;
@@ -583,11 +585,11 @@
     line-height: 1.1;
 }
 .terminal-post-btn-social {
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     align-self: flex-start;
     background: #23282c;
     color: #00e676;
     border: 1.5px solid #00e676;
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     font-size: 15px;
     font-weight: bold;
     padding: 7px 24px;
@@ -725,6 +727,7 @@
 }
 
 .terminal-like-btn-social {
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -734,7 +737,6 @@
     cursor: pointer;
     padding: 6px 12px;
     border-radius: 4px;
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     font-size: 14px;
     transition: all 0.2s ease;
 }
@@ -767,12 +769,12 @@
 }
 
 .terminal-post-image-btn-social {
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     background: #23282c;
     color: #00e676;
     border: 1.5px solid #00e676;
     border-radius: 6px;
     padding: 7px 24px;
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
     font-size: 15px;
     font-weight: bold;
     cursor: pointer;

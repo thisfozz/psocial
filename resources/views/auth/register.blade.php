@@ -1,7 +1,7 @@
 @extends('layouts.terminal')
 @section('content')
 <div class="terminal-container terminal-container-register">
-    <div class="terminal-bg-grid terminal-bg-grid-register"></div>
+    <div class="terminal-bg-grid"></div>
     <div class="terminal-window-register">
         <div class="terminal-header-register">
             <div class="window-controls-register">
@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="terminal-status-register">
-                [PSocial v1.3.0] [Connected] [EN] [UTF-8]
+                [PSocial v1.3.3] [Connected] [Register] [EN] [UTF-8]
             </div>
         </form>
     </div>

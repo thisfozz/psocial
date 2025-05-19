@@ -12,9 +12,7 @@
             @endif
             <div class="message-main">
                 <div class="message-text">{{ $message['content'] ?? $message->content }}</div>
-                <div class="message-time">
-                    {{ isset($message['created_at']) ? \Carbon\Carbon::parse($message['created_at'])->format('H:i') : ($message->created_at->format('H:i') ?? '') }}
-                </div>
+                <div class="message-time" data-time="{{ $message->created_at->toIso8601String() }}"></div>
             </div>
         </div>
     </div>

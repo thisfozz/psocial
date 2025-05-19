@@ -11,8 +11,8 @@ class Message extends Model
     public $timestamps = true;
 
     protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at' => 'datetime:Y-m-d\TH:i:s\Z',
+        'updated_at' => 'datetime:Y-m-d\TH:i:s\Z',
     ];
 
     public function sender() {

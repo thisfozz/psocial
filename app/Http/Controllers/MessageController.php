@@ -16,26 +16,26 @@ class MessageController extends Controller
     }
 
     public function index(Request $request) {
-        $user = auth()->id();
+        $user = auth()->user();
         $friendId = $request->session()->get('friend_id');
-
+    
         if (!$friendId) {
             return view('messages.empty');
         }
         $friend = User::findOrFail($friendId);
         $messages = Message::with('sender')
             ->where(function($query) use ($user, $friend) {
-                $query->where('sender_id', $user)
+                $query->where('sender_id', $user->id)
                       ->where('receiver_id', $friend->id);
             })
             ->orWhere(function($query) use ($user, $friend) {
                 $query->where('sender_id', $friend->id)
-                      ->where('receiver_id', $user);
+                      ->where('receiver_id', $user->id);
             })
             ->orderBy('created_at', 'asc')
             ->get();
-
-        return view('messages.index', compact('messages', 'friend'));
+    
+        return view('messages.index', compact('messages', 'user', 'friend'));
     }
 
     public function broadcast(Request $request) {
@@ -60,9 +60,16 @@ class MessageController extends Controller
             return response()->json([
                 'status' => 'ok',
                 'message_id' => $message->id,
-                'message' => $message,
+                'message' => [
+                    'id' => $message->id,
+                    'sender_id' => $message->sender_id,
+                    'receiver_id' => $message->receiver_id,
+                    'content' => $message->content,
+                    'is_read' => $message->is_read,
+                    'created_at' => $message->created_at->toIso8601String(),
+                    'updated_at' => $message->updated_at->toIso8601String(),
+                ],
                 'temp_id' => $request->get('client_id')
-
             ]);
         } catch (\Throwable $e) {
             return response()->json(['error' => $e->getMessage()], 500);
