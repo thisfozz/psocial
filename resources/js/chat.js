@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const ids = [window.chatConfig.authId, window.chatConfig.friendId].sort((a, b) => a - b);
     const channelName = 'chat.' + ids[0] + '.' + ids[1];
 
+    renderAllMessageTimes();
+
     window.Echo.private(channelName)
         .listen('.chat', function(data) {
             $.post('/receive', {
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .done(function(res) {
                 $(".messages").append(res);
                 $('.messages').scrollTop($('.messages')[0].scrollHeight);
+                renderAllMessageTimes();
             });
         });
 
@@ -38,9 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="message-row sent optimistic" data-temp-id="${tempId}">
                 <div class="message-content">
                     <div class="message-text">${$('<div>').text(messageText).html()}</div>
-                    <div class="message-time">
-                        ${new Date().toLocaleTimeString().slice(0,5)}
-                    </div>
+                    <div class="message-time">${new Date().toLocaleTimeString().slice(0,5)}</div>
                 </div>
             </div>
         `);
@@ -62,3 +63,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+function renderAllMessageTimes() {
+    document.querySelectorAll('.message-time').forEach(function (el) {
+        const isoTime = el.dataset.time;
+        if (!isoTime) return;
+
+        const date = new Date(isoTime);
+        if (isNaN(date)) {
+            el.textContent = '';
+            return;
+        }
+
+        el.textContent = date.toLocaleTimeString(undefined, {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        });
+    });
+}

@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="terminal-container terminal-container-chat">
-        <div class="terminal-bg-grid terminal-bg-grid-chat"></div>
+        <div class="terminal-bg-grid"></div>
         <div class="terminal-window-chat">
             <div class="terminal-header-chat">
                 <div class="window-controls-chat">
@@ -47,7 +47,6 @@
                     </div>
                 </div>
 
-                <!-- САМ ЧАТ -->
                 <div class="terminal-chat-content">
                     <div class="chat-current-header">
                         <div class="current-contact" onclick="window.location.href='{{ route('social.show', $friend->id) }}'">
@@ -74,7 +73,7 @@
 
                     <form id="chat-form" class="chat-input-container">
                         <div class="prompt-line-chat">
-                            <span class="user-chat">{{ $friend->username }}</span>
+                            <span class="user-chat">{{ $user->username }}</span>
                             <span class="host-chat">@psocial</span>
                             <span class="path-chat">:~/chat$</span>
                         </div>
@@ -92,7 +91,7 @@
             </div>
             
             <div class="terminal-status-chat">
-                [PSocial v1.3.0] [Connected] [Chat with {{ $friend->username }}] [EN] [UTF-8]
+                [PSocial v1.3.3] [Connected] [Chat with {{ $friend->username }}] [EN] [UTF-8]
             </div>
         </div>
     </div>

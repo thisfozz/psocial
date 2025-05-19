@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="terminal-container terminal-container-social">
-<div class="terminal-bg-grid terminal-bg-grid-social"></div>
+<div class="terminal-bg-grid"></div>
     <div class="terminal-window-social">
         <div class="terminal-header-social">
                 <div class="window-controls-social">
@@ -157,13 +157,13 @@
                             @forelse($posts as $post)
                                 <div class="terminal-post-social">
                                     <div class="terminal-post-header-social" style="display: flex; align-items: center; justify-content: space-between;">
-                                        <div style="display: flex; align-items: center; gap: 12px;">
-                                            <a href="{{ route('social.show', ['id' => $post->author->id]) }}" style="text-decoration: none;">
-                                                <img src="{{ $post->author->avatar_path }}$size=32" alt="avatar" class="terminal-friend-avatar-social" style="width:32px; height:32px; margin-right: 6px;">
-                                                <span class="terminal-post-author-social">{{ $post->author->first_name }} {{ $post->author->last_name }}</span>
-                                                <span class="terminal-post-date-social">{{ $post->created_at->format('d.m.Y H:i') }}</span>
-                                            </a>
-                                        </div>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <a href="{{ route('social.show', ['id' => $post->author->id]) }}" style="text-decoration: none; display: flex; align-items: center;">
+                                            <img src="{{ $post->author->avatar_path }}$size=32" alt="avatar" class="terminal-friend-avatar-social" style="width:32px; height:32px; margin: 0;">
+                                            <span class="terminal-post-author-social" style="margin-left: 20px;">{{ $post->author->first_name }} {{ $post->author->last_name }}</span>
+                                            <span class="terminal-post-date-social" style="margin-left: 20px; font-size: 0.8em; color: #666;">{{ $post->created_at->format('d.m.Y H:i') }}</span>
+                                        </a>
+                                    </div>
                                         @if((auth()->check() && auth()->user()->id == $post->wall_id) || (auth()->check() && auth()->user()->id == $post->author->id && $isFriend))
                                             <form method="POST" action="{{ route('post.destroy', $post->id) }}" style="display:inline;">
                                                 @csrf
@@ -205,7 +205,7 @@
                         </div>
                     </div>
                     <div class="terminal-status-social">
-                        [PSocial v0.4.1] [Connected] [EN] [UTF-8]
+                        [PSocial v1.3.3] [Connected] [{{ $user->username }}] [EN] [UTF-8]
                     </div>
                 </div>
             </div>
