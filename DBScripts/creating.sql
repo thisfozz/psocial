@@ -168,3 +168,17 @@ CREATE TABLE messages (
     CONSTRAINT fk_messages_sender FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_messages_receiver FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Таблица диалогов (чатов) между пользователями
+CREATE TABLE dialogs (
+    id SERIAL PRIMARY KEY,
+    user1_id INT NOT NULL,
+    user2_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (user1_id, user2_id),
+    FOREIGN KEY (user1_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (user2_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+ALTER TABLE messages ADD COLUMN dialog_id INT;
+ALTER TABLE messages ADD CONSTRAINT fk_messages_dialog FOREIGN KEY (dialog_id) REFERENCES dialogs(id) ON DELETE CASCADE;

@@ -140,4 +140,23 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
     {
         return $this->last_seen && $this->last_seen > now()->subMinutes(self::ONLINE_MINUTES);
     }
+
+    public function dialogsAsUser1()
+    {
+        return $this->hasMany(Dialog::class, 'user1_id', 'id');
+    }
+
+    public function dialogsAsUser2()
+    {
+        return $this->hasMany(Dialog::class, 'user2_id', 'id');
+    }
+
+    public function allDialogs()
+    {
+        $dialogs1 = $this->dialogsAsUser1;
+        $dialogs2 = $this->dialogsAsUser2;
+        $dialogs = $dialogs1->merge($dialogs2);
+        
+        return $dialogs;
+    }
 }

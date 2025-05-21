@@ -6,6 +6,7 @@ use App\Events\PusherBroadcast;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\User;
+use App\Models\Dialog;
 
 class MessageController extends Controller
 {
@@ -17,25 +18,61 @@ class MessageController extends Controller
 
     public function index(Request $request) {
         $user = auth()->user();
+        $dialogs = $user->allDialogs();
+        $contacts = [];
+
         $friendId = $request->session()->get('friend_id');
-    
-        if (!$friendId) {
-            return view('messages.empty');
+        $selectedDialogId = $request->input('dialog_id') ?? $request->session()->get('dialog_id');
+        $dialog = null;
+        $friend = null;
+
+        // Если есть friend_id в сессии и нет выбранного диалога — инициируем новый диалог
+        if ($friendId && !$selectedDialogId) {
+            $dialog = Dialog::where(function($q) use ($user, $friendId) {
+                $q->where('user1_id', $user->id)->where('user2_id', $friendId);
+            })->orWhere(function($q) use ($user, $friendId) {
+                $q->where('user1_id', $friendId)->where('user2_id', $user->id);
+            })->first();
+
+            if (!$dialog) {
+                $dialog = Dialog::create([
+                    'user1_id' => min($user->id, $friendId),
+                    'user2_id' => max($user->id, $friendId)
+                ]);
+            }
+            $selectedDialogId = $dialog->id;
+            $friend = User::findOrFail($friendId);
         }
-        $friend = User::findOrFail($friendId);
-        $messages = Message::with('sender')
-            ->where(function($query) use ($user, $friend) {
-                $query->where('sender_id', $user->id)
-                      ->where('receiver_id', $friend->id);
-            })
-            ->orWhere(function($query) use ($user, $friend) {
-                $query->where('sender_id', $friend->id)
-                      ->where('receiver_id', $user->id);
-            })
-            ->orderBy('created_at', 'asc')
-            ->get();
-    
-        return view('messages.index', compact('messages', 'user', 'friend'));
+
+        // Если выбран диалог — определяем собеседника через companion()
+        if ($selectedDialogId) {
+            $dialog = $dialogs->firstWhere('id', $selectedDialogId) ?? Dialog::find($selectedDialogId);
+            if ($dialog) {
+                $friend = $dialog->companion();
+            }
+        }
+
+        // Если вообще ничего не выбрано — показываем пустое представление
+        if (!$dialog || !$friend) {
+            return view('messages.index', compact('contacts', 'user'));
+        }
+
+        // Формируем список контактов (собеседников) для сайдбара
+        foreach ($dialogs as $dialogItem) {
+            $companion = $dialogItem->companion();
+            $lastMessage = $dialogItem->messages()->orderBy('created_at', 'desc')->first();
+            $contacts[] = [
+                'id' => $dialogItem->id,
+                'user_id' => $companion->id,
+                'name' => $companion->first_name . ' ' . $companion->last_name,
+                'avatar' => $companion->avatar_path,
+                'lastMessage' => $lastMessage
+            ];
+        }
+
+        $messages = $dialog->messages()->orderBy('created_at', 'asc')->get();
+
+        return view('messages.index', compact('contacts', 'messages', 'user', 'friend', 'dialog'));
     }
 
     public function broadcast(Request $request) {
@@ -44,15 +81,36 @@ class MessageController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'Not authenticated'], 401);
             }
-            $friendId = $user->id === (int)$request->get('receiver_id')
-                ? (int)$request->get('sender_id')
-                : (int)$request->get('receiver_id');
+
+            $dialogId = $request->get('dialog_id');
+            $dialog = Dialog::find($dialogId);
+
+            // Если диалог не найден — создаём новый
+            if (!$dialog) {
+                $friendId = (int)$request->get('receiver_id');
+                // Не позволяем создать диалог с самим собой
+                if ($friendId === $user->id) {
+                    return response()->json(['error' => 'Cannot create dialog with yourself'], 400);
+                }
+                $dialog = Dialog::create([
+                    'user1_id' => min($user->id, $friendId),
+                    'user2_id' => max($user->id, $friendId)
+                ]);
+                $dialogId = $dialog->id;
+            } else {
+                // Проверяем, что пользователь — участник диалога
+                if (!in_array($user->id, [$dialog->user1_id, $dialog->user2_id])) {
+                    return response()->json(['error' => 'Dialog not found or access denied'], 403);
+                }
+                $friendId = $dialog->user1_id == $user->id ? $dialog->user2_id : $dialog->user1_id;
+            }
 
             $message = Message::create([
                 'sender_id' => $user->id,
                 'receiver_id' => $friendId,
                 'content' => $request->get('message'),
                 'is_read' => false,
+                'dialog_id' => $dialogId
             ]);
 
             broadcast(new PusherBroadcast($message, $request->get('client_id')))->toOthers();
