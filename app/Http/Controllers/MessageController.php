@@ -26,7 +26,6 @@ class MessageController extends Controller
         $dialog = null;
         $friend = null;
 
-        // Если есть friend_id в сессии и нет выбранного диалога — инициируем новый диалог
         if ($friendId && !$selectedDialogId) {
             $dialog = Dialog::where(function($q) use ($user, $friendId) {
                 $q->where('user1_id', $user->id)->where('user2_id', $friendId);
@@ -44,7 +43,6 @@ class MessageController extends Controller
             $friend = User::findOrFail($friendId);
         }
 
-        // Если выбран диалог — определяем собеседника через companion()
         if ($selectedDialogId) {
             $dialog = $dialogs->firstWhere('id', $selectedDialogId) ?? Dialog::find($selectedDialogId);
             if ($dialog) {
@@ -52,12 +50,10 @@ class MessageController extends Controller
             }
         }
 
-        // Если вообще ничего не выбрано — показываем пустое представление
         if (!$dialog || !$friend) {
             return view('messages.index', compact('contacts', 'user'));
         }
 
-        // Формируем список контактов (собеседников) для сайдбара
         foreach ($dialogs as $dialogItem) {
             $companion = $dialogItem->companion();
             $lastMessage = $dialogItem->messages()->orderBy('created_at', 'desc')->first();
@@ -85,10 +81,8 @@ class MessageController extends Controller
             $dialogId = $request->get('dialog_id');
             $dialog = Dialog::find($dialogId);
 
-            // Если диалог не найден — создаём новый
             if (!$dialog) {
                 $friendId = (int)$request->get('receiver_id');
-                // Не позволяем создать диалог с самим собой
                 if ($friendId === $user->id) {
                     return response()->json(['error' => 'Cannot create dialog with yourself'], 400);
                 }
@@ -98,7 +92,6 @@ class MessageController extends Controller
                 ]);
                 $dialogId = $dialog->id;
             } else {
-                // Проверяем, что пользователь — участник диалога
                 if (!in_array($user->id, [$dialog->user1_id, $dialog->user2_id])) {
                     return response()->json(['error' => 'Dialog not found or access denied'], 403);
                 }
