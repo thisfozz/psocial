@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\Dialog;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use App\Models\MessageVideo;
+use Illuminate\Support\Facades\Log;
 
 class MessageController extends Controller
 {
-    public function setFriend(Request $request) {
-        $request->session()->put('friend_id', $request->input('friend_id'));
+        public function setFriend(Request $request) {
+            $request->session()->put('friend_id', $request->input('friend_id'));
         
         return redirect()->route('messages.index');
     }
@@ -98,13 +102,53 @@ class MessageController extends Controller
                 $friendId = $dialog->user1_id == $user->id ? $dialog->user2_id : $dialog->user1_id;
             }
 
-            $message = Message::create([
+            $validated = $request->validate([
+                'content' => 'nullable|string|required_without:images',
+                'images' => 'nullable|array|required_without:content',
+                'images.*' => 'image|max:8192',
+            ]);
+
+            $userAttachDir = 'attach/user_' . auth()->id();
+            if (!Storage::disk('s3')->exists($userAttachDir)) {
+                Storage::disk('s3')->makeDirectory($userAttachDir);
+            }
+
+            $content = $request->input('content') ?? '';
+
+            $message = $request->user()->messages()->create([
                 'sender_id' => $user->id,
                 'receiver_id' => $friendId,
-                'content' => $request->get('message'),
-                'is_read' => false,
-                'dialog_id' => $dialogId
+                'content' => $content,
+                'user_id' => auth()->id(),
+                'dialog_id' => $dialogId,
             ]);
+
+            $videoData = MessageVideo::extractVideoData($content);
+            if($videoData) {
+                Log::info('Message ID:', ['id' => $message->id]);
+                Log::info('Video data:', $videoData);
+                $message->videos()->create([
+                    'platform' => $videoData['platform'],
+                    'video_id' => $videoData['video_id'],
+                    'embed_code' => $videoData['embed_code'],
+                    'thumbnail_url' => $videoData['thumbnail_url'],
+                    'dialog_id' => $dialogId,
+                ]);
+                $message->update(['content' => '']);
+            }
+
+            if($request->hasFile('images')){
+                foreach ($request->file('images', []) as $image) {
+                    $extension = $image->getClientOriginalExtension();
+                    $filename = 'images_' . now()->format('YmdHis') . '_' . Str::random(8) . '.' . $extension;
+                    $path = $image->storeAs($userAttachDir, $filename, 's3');
+    
+                    $message->images()->create([
+                        'user_id' => auth()->id(),
+                        'image_path' => $path,
+                    ]);
+                }
+            }
 
             broadcast(new PusherBroadcast($message, $request->get('client_id')))->toOthers();
 

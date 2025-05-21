@@ -182,3 +182,20 @@ CREATE TABLE dialogs (
 
 ALTER TABLE messages ADD COLUMN dialog_id INT;
 ALTER TABLE messages ADD CONSTRAINT fk_messages_dialog FOREIGN KEY (dialog_id) REFERENCES dialogs(id) ON DELETE CASCADE;
+
+
+-- Таблица видео в сообщениях
+CREATE TABLE message_videos (
+    id SERIAL PRIMARY KEY,
+    message_id INT NOT NULL,
+    dialog_id INT NOT NULL,
+    platform VARCHAR(50) NOT NULL,
+    video_id VARCHAR(255) NOT NULL,
+    embed_code TEXT NOT NULL,
+    thumbnail_url VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_message_videos_message_id FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE,
+    CONSTRAINT fk_message_videos_dialog_id FOREIGN KEY (dialog_id) REFERENCES dialogs(id) ON DELETE CASCADE
+);

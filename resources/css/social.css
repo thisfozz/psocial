@@ -1033,7 +1033,6 @@ input[type="file"] {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    border: 1.5px solid var(--primary-social);
     margin-right: 8px;
     background: #181c1f;
 }

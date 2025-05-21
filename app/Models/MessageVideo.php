@@ -4,26 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PostVideo extends Model
+class MessageVideo extends Model
 {
+    protected $table = 'message_videos';
     protected $fillable = [
-        'post_id',
-        'platform',
-        'video_id',
-        'embed_code',
+        'message_id', 
+        'dialog_id', 
+        'platform', 
+        'video_id', 
+        'embed_code', 
         'thumbnail_url'
     ];
-
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    public function post()
+    public function message()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Message::class);
     }
-    
+
     public static function extractVideoData($url)
     {
         $platform = self::detectPlatform($url);
