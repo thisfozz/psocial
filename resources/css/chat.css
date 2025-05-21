@@ -563,3 +563,75 @@
 .attach-button:active {
     background-color: rgba(0, 230, 118, 0.2);
 }
+
+.terminal-sidebar-message {
+    width: 240px;
+    flex-shrink: 0;
+    margin-right: 20px;
+    background: var(--surface-medium);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 12px 0;
+    align-self: flex-start;
+    margin-right: 25px;
+}
+
+.terminal-nav-message {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nav-item-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: 'Fira Mono', monospace;
+    font-size: 15px;
+    transition: background 0.2s;
+    border-radius: 4px;
+    margin: 0 8px;
+}
+
+.nav-item-message:hover {
+    background: var(--surface-highlight);
+    color: var(--terminal-green);
+}
+
+.nav-item-message.active {
+    background: var(--surface-extra-light);
+    color: var(--terminal-green);
+    font-weight: bold;
+}
+
+.nav-icon-message {
+    width: 20px;
+    height: 20px;
+    fill: var(--terminal-green);
+    opacity: 0.8;
+}
+
+.nav-item-message:hover .nav-icon-message {
+    opacity: 1;
+}
+
+.nav-divider-message {
+    height: 1px;
+    background: var(--border-dark);
+    margin: 8px 0;
+} 
+
+.terminal-container-main-message{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    margin-right: 100px;
+    height: 100%;
+}
