@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!window.Echo || !window.chatConfig) return;
 
+    if (!window.chatConfig.authId || !window.chatConfig.friendId) {
+        console.log('No authId or friendId');
+        return;
+    }
+
     const ids = [window.chatConfig.authId, window.chatConfig.friendId].sort((a, b) => a - b);
     const channelName = 'chat.' + ids[0] + '.' + ids[1];
 
@@ -58,7 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 _token: window.chatConfig.csrfToken,
                 message: messageText,
                 receiver_id: window.chatConfig.friendId,
-                client_id: tempId
+                client_id: tempId,
+                dialog_id: window.chatConfig.dialogId
             }
         });
     });

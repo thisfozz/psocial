@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $table = 'messages';
-    protected $fillable = ['sender_id', 'receiver_id', 'content', 'is_read'];
+    protected $fillable = ['sender_id', 'receiver_id', 'content', 'is_read', 'dialog_id'];
     public $timestamps = true;
 
     protected $casts = [
@@ -21,5 +21,9 @@ class Message extends Model
 
     public function receiver() {
         return $this->belongsTo(User::class, 'receiver_id');
+    }
+
+    public function dialog() {
+        return $this->belongsTo(Dialog::class);
     }
 }
