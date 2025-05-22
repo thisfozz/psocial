@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="terminal-status-login">
-                [PSocial v1.3.3] [Connected] [Login] [EN] [UTF-8]
+                [PSocial v1.6.5] [Connected] [Login] [EN] [UTF-8]
             </div>
         </form>
     </div>

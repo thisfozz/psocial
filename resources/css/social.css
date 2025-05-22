@@ -140,7 +140,7 @@
     background: var(--surface-extra-light);
     border: 1px solid var(--border-light);
     width: 90%;
-    max-width: 220px;
+    max-width: 280px;
     border-radius: 6px;
     color: var(--text-primary);
     font-size: 1rem;
@@ -926,7 +926,6 @@ input[type="file"] {
     margin-right: 100px;
 }
 
-/* --- ЧАТ: Список контактов (сайдбар) --- */
 .chat-contacts-list {
     padding: 8px 0;
 }
@@ -987,7 +986,6 @@ input[type="file"] {
     align-self: flex-end;
 }
 
-/* --- ЧАТ: Сообщения --- */
 .messages {
     padding: 18px 0 8px 0;
     min-height: 300px;
@@ -1033,7 +1031,6 @@ input[type="file"] {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    border: 1.5px solid var(--primary-social);
     margin-right: 8px;
     background: #181c1f;
 }
@@ -1067,7 +1064,6 @@ input[type="file"] {
     color: #888;
 }
 
-/* --- ЧАТ: Ввод сообщения --- */
 .chat-input-container {
     display: flex;
     align-items: center;

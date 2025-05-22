@@ -8,15 +8,15 @@
             <nav class="terminal-nav-social">
                 <a href="{{ route('social.show', ['id' => auth()->id()]) }}" class="nav-item-social">
                     <svg class="nav-icon-social" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-                    <span>Моя страница</span>
+                    <span>Profile</span>
                 </a>
                 <a href="{{ route('messages.index') }}" class="nav-item-social">
                     <svg class="nav-icon-social" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-                    <span>Сообщения</span>
+                    <span>Messages</span>
                 </a>
                 <a href="#" class="nav-item-social">
                     <svg class="nav-icon-social" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                    <span>Друзья</span>
+                    <span>Friends</span>
                 </a>
             </nav>
         </div>
@@ -38,9 +38,8 @@
                     <div class="terminal-card-social">
                         <div class="terminal-search-form-social">
                             <form method="GET" action="{{ route('search-users') }}" style="display: flex; align-items: center; gap: 18px; flex: 1; position: relative;">
-                                <input type="text" class="terminal-search-input-social" name="search" placeholder="Search...">
+                                <input type="text" class="terminal-search-input-social" name="search" placeholder="Search..." id="search-input">
                                 <div id="search-results" class="terminal-search-dropdown-social" style="display: none;"></div>
-                                <button type="submit" class="terminal-search-btn-social">Search</button>
                             </form>
                             @auth
                             <form method="POST" action="{{ route('logout') }}" style="margin-left: 18px;">
@@ -228,7 +227,7 @@
                             </div>
                         </div>
                         <div class="terminal-status-social">
-                            [PSocial v1.3.3] [Connected] [{{ $user->username }}] [EN] [UTF-8]
+                            [PSocial v1.6.5] [Connected] [{{ $user->username }}] [EN] [UTF-8]
                         </div>
                     </div>
                 </div>

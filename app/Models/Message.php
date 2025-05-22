@@ -26,4 +26,15 @@ class Message extends Model
     public function dialog() {
         return $this->belongsTo(Dialog::class);
     }
+
+    public function images() {
+        return $this->hasMany(MessageImage::class);
+    }
+
+    public function videos() {
+        return $this->hasMany(MessageVideo::class);
+    }
+    public function video() {
+        return $this->hasOne(MessageVideo::class);
+    }
 }

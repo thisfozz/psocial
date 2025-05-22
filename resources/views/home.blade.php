@@ -36,7 +36,7 @@
         </div>
 
         <div class="terminal-status-home">
-            [PSocial v1.3.3] [Connected] [Home] [EN] [UTF-8]
+            [PSocial v1.6.5] [Connected] [Home] [EN] [UTF-8]
         </div>
     </div>
 </div>

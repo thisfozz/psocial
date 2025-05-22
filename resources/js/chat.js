@@ -38,20 +38,46 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
 
         const messageText = $('#chat-form #message').val();
-        if (!messageText.trim()) return;
+        const files = $('#chat-images')[0].files;
+
+        if (!messageText.trim() && (!files || files.length === 0)) return;
 
         const tempId = 'temp-' + Date.now();
 
-        $(".messages").append(`
-            <div class="message-row sent optimistic" data-temp-id="${tempId}">
-                <div class="message-content">
-                    <div class="message-text">${$('<div>').text(messageText).html()}</div>
-                    <div class="message-time">${new Date().toLocaleTimeString().slice(0,5)}</div>
+        if (messageText.trim() || (files && files.length > 0 || video)) {
+            let imagesHtml = '';
+            if (files && files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const url = URL.createObjectURL(files[i]);
+                    imagesHtml += `<img src="${url}" alt="attachment" class="message-image">`;
+                }
+            }
+
+            $(".messages").append(`
+                <div class="message-row sent optimistic" data-temp-id="${tempId}">
+                    <div class="message-content">
+                        ${messageText.trim() ? `<div class="message-text">${$('<div>').text(messageText).html()}</div>` : ''}
+                        <div class="message-time">${new Date().toLocaleTimeString().slice(0,5)}</div>
+                    </div>
                 </div>
-            </div>
-        `);
-        $('#chat-form #message').val('');
-        $('.messages').scrollTop($('.messages')[0].scrollHeight);
+            `);
+            $('#chat-form #message').val('');
+            $('.messages').scrollTop($('.messages')[0].scrollHeight);
+        }
+
+        const formData = new FormData();
+        formData.append('_token', window.chatConfig.csrfToken);
+        formData.append('content', messageText);
+        formData.append('receiver_id', window.chatConfig.friendId);
+        formData.append('client_id', tempId);
+        formData.append('dialog_id', window.chatConfig.dialogId);
+
+        if (files && files.length > 0) {
+            for (let i = 0; i < files.length; i++) {
+                formData.append('images[]', files[i]);
+            }
+            $('#chat-images').val('');
+        }
 
         $.ajax({
             url: '/broadcast',
@@ -59,14 +85,17 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {
                 'X-Socket-Id': window.Echo.socketId()
             },
-            data: {
-                _token: window.chatConfig.csrfToken,
-                message: messageText,
-                receiver_id: window.chatConfig.friendId,
-                client_id: tempId,
-                dialog_id: window.chatConfig.dialogId
-            }
+            data: formData,
+            processData: false,
+            contentType: false,
         });
+    });
+
+    $('#chat-images').on('change', function() {
+        const files = this.files;
+        if (files && files.length > 0) {
+            $('#chat-form').submit();
+        }
     });
 });
 
@@ -88,3 +117,13 @@ function renderAllMessageTimes() {
         });
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const chatMessages = document.getElementById("chat-messages");
+    if (chatMessages) {
+        chatMessages.scrollTo({
+            top: chatMessages.scrollHeight,
+            behavior: "smooth"
+        });
+    }
+});
