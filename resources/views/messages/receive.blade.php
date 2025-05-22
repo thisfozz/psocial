@@ -8,11 +8,6 @@
 <div class="message-row {{ $isSent ? 'sent' : 'received' }}">
     <div class="message-content{{ $hasOnlyImage ? ' no-border' : '' }}{{ $hasVideo ? ' no-border wide-video' : '' }}">
         <div class="message-body">
-            @if(!$isSent && $message->sender->avatar_path)
-                <div class="contact-message-avatar" onclick="window.location.href='{{ route('social.show', $message->sender->id) }}'">
-                    <img src="{{ $message->sender->avatar_path }}" alt="avatar" class="contact-message-avatar-img">
-                </div>
-            @endif
             <div class="message-main">
                 <div class="message-text">{{ $message['content'] ?? $message->content }}</div>
                 @if(count($images))

@@ -34,12 +34,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-    $("#chat-form").on('submit', function(event) {
+    $("#chat-form").submit(function(event) {
         event.preventDefault();
 
         const messageText = $('#chat-form #message').val();
         const files = $('#chat-images')[0].files;
-        const video = $('#chat-video')[0].files;
 
         if (!messageText.trim() && (!files || files.length === 0)) return;
 
@@ -58,8 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="message-row sent optimistic" data-temp-id="${tempId}">
                     <div class="message-content">
                         ${messageText.trim() ? `<div class="message-text">${$('<div>').text(messageText).html()}</div>` : ''}
-                        ${imagesHtml ? `<div class="message-images" style="margin-top:0.5rem;">${imagesHtml}</div>` : ''}
-                        ${video ? `<div class="message-video-embed-wrap" style="margin-top:0.5rem;">${video}</div>` : ''}
                         <div class="message-time">${new Date().toLocaleTimeString().slice(0,5)}</div>
                     </div>
                 </div>
@@ -120,3 +117,13 @@ function renderAllMessageTimes() {
         });
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const chatMessages = document.getElementById("chat-messages");
+    if (chatMessages) {
+        chatMessages.scrollTo({
+            top: chatMessages.scrollHeight,
+            behavior: "smooth"
+        });
+    }
+});

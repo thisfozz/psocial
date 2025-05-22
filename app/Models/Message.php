@@ -37,5 +37,4 @@ class Message extends Model
     public function video() {
         return $this->hasOne(MessageVideo::class);
     }
-
 }

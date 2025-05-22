@@ -47,17 +47,6 @@ class MessageController extends Controller
             $friend = User::findOrFail($friendId);
         }
 
-        if ($selectedDialogId) {
-            $dialog = $dialogs->firstWhere('id', $selectedDialogId) ?? Dialog::find($selectedDialogId);
-            if ($dialog) {
-                $friend = $dialog->companion();
-            }
-        }
-
-        if (!$dialog || !$friend) {
-            return view('messages.index', compact('contacts', 'user'));
-        }
-
         foreach ($dialogs as $dialogItem) {
             $companion = $dialogItem->companion();
             $lastMessage = $dialogItem->messages()->orderBy('created_at', 'desc')->first();
@@ -70,9 +59,32 @@ class MessageController extends Controller
             ];
         }
 
+        if ($selectedDialogId) {
+            $dialog = $dialogs->firstWhere('id', $selectedDialogId) ?? Dialog::find($selectedDialogId);
+            if ($dialog) {
+                $friend = $dialog->companion();
+            }
+        }
+
+        if (!$dialog || !$friend) {
+            return view('messages.index', [
+                'contacts' => $contacts,
+                'user' => $user,
+                'friend' => null,
+                'dialog' => null,
+                'messages' => [],
+            ]);
+        }
+
         $messages = $dialog->messages()->orderBy('created_at', 'asc')->get();
 
-        return view('messages.index', compact('contacts', 'messages', 'user', 'friend', 'dialog'));
+        return view('messages.index', [
+            'contacts' => $contacts,
+            'messages' => $messages,
+            'user' => $user,
+            'friend' => $friend,
+            'dialog' => $dialog,
+        ]);
     }
 
     public function broadcast(Request $request) {

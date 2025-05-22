@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="terminal-status-register">
-                [PSocial v1.3.3] [Connected] [Register] [EN] [UTF-8]
+                [PSocial v1.6.5] [Connected] [Register] [EN] [UTF-8]
             </div>
         </form>
     </div>
