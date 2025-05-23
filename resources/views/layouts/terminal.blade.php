@@ -6,8 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" href="{{ asset('images/logo.webp') }}" type="image/webp">
 
-    <!-- Preload critical fonts to prevent FOUT -->
     <link rel="preload" href="/fonts/webfonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])

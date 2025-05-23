@@ -1,5 +1,21 @@
 import $ from 'jquery';
 
+function scrollToBottom(smooth = false) {
+    const chatMessages = document.getElementById("chat-messages");
+    if (chatMessages) {
+        setTimeout(() => {
+            if (smooth) {
+                chatMessages.scrollTo({
+                    top: chatMessages.scrollHeight,
+                    behavior: "smooth"
+                });
+            } else {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }, 100);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('chat-form');
     if (form) {
@@ -29,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .done(function(res) {
                 $(".messages").append(res);
-                $('.messages').scrollTop($('.messages')[0].scrollHeight);
+                scrollToBottom();
                 renderAllMessageTimes();
             });
         });
@@ -62,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             `);
             $('#chat-form #message').val('');
-            $('.messages').scrollTop($('.messages')[0].scrollHeight);
+            scrollToBottom();
         }
 
         const formData = new FormData();
@@ -119,11 +135,5 @@ function renderAllMessageTimes() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const chatMessages = document.getElementById("chat-messages");
-    if (chatMessages) {
-        chatMessages.scrollTo({
-            top: chatMessages.scrollHeight,
-            behavior: "smooth"
-        });
-    }
+    scrollToBottom(true);
 });
