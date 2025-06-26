@@ -8,15 +8,15 @@
             <nav class="terminal-nav-social">
                 <a href="{{ route('social.show', ['id' => auth()->id()]) }}" class="nav-item-social">
                     <svg class="nav-icon-social" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-                    <span>Profile</span>
+                    <span>Профиль</span>
                 </a>
                 <a href="{{ route('messages.index') }}" class="nav-item-social">
                     <svg class="nav-icon-social" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-                    <span>Messages</span>
+                    <span>Сообщения</span>
                 </a>
                 <a href="#" class="nav-item-social">
                     <svg class="nav-icon-social" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                    <span>Friends</span>
+                    <span>Друзья</span>
                 </a>
             </nav>
         </div>
@@ -32,13 +32,13 @@
                     <div class="terminal-card-social">
                         <div class="terminal-search-form-social">
                             <form method="GET" action="{{ route('search-users') }}" style="display: flex; align-items: center; gap: 18px; flex: 1; position: relative;">
-                                <input type="text" class="terminal-search-input-social" name="search" placeholder="Search..." id="search-input">
+                                <input type="text" class="terminal-search-input-social" name="search" placeholder="Поиск..." id="search-input">
                                 <div id="search-results" class="terminal-search-dropdown-social" style="display: none;"></div>
                             </form>
                             @auth
                             <form method="POST" action="{{ route('logout') }}" style="margin-left: 18px;">
                                 @csrf
-                                <button type="submit" class="terminal-logout-btn-social">Logout</button>
+                                <button type="submit" class="terminal-logout-btn-social">Выйти</button>
                             </form>
                             @endauth
                         </div>
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="terminal-profile-status-social">
                                     <span class="profile-status-icon" title="Статус"></span>
-                                    <span>{{ $user->status ?? '[No status]' }}</span>
+                                    <span>{{ $user->status ?? '[Нет статуса]' }}</span>
                                 </div>
                                 <div class="terminal-learn-more-social">
                                     <a href="#" class="terminal-learn-more-link-social learn-more-btn" id="openModalBtn">
@@ -79,7 +79,7 @@
                                     <div class="terminal-modal-window">
                                         <span class="terminal-modal-close" id="closeModalBtn">&times;</span>
                                         <div class="terminal-modal-content">
-                                            <h3>Additional info</h3>
+                                            <h3>Подробнее</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -90,16 +90,16 @@
                                         <form method="POST" action="{{ route('messages.setFriend') }}" style="display:inline;">
                                             @csrf
                                             <input type="hidden" name="friend_id" value="{{ $user->id }}">
-                                            <button type="submit" class="profile-action-btn-top" title="Message">Message</button>
+                                            <button type="submit" class="profile-action-btn-top" title="Message">Сообщение</button>
                                         </form>
-                                        <button type="button" class="profile-action-btn-top" id="unfriendBtn" data-user-id="{{ $user->id }}" title="Unfriend">Unfriend</button>
+                                        <button type="button" class="profile-action-btn-top" id="unfriendBtn" data-user-id="{{ $user->id }}" title="Unfriend">Убрать из друзей</button>
                                     @elseif($hasIncomingRequest)
-                                        <button type="button" class="profile-action-btn-top" id="acceptFriendRequestBtn" data-request-id="{{ $incomingRequestId }}" title="Принять заявку">➕ Accept</button>
-                                        <button type="submit" class="profile-action-btn-top" id="declineFriendRequestBtn" data-request-id="{{ $incomingRequestId }}" title="Отклонить заявку">❌ Decline</button>
+                                        <button type="button" class="profile-action-btn-top" id="acceptFriendRequestBtn" data-request-id="{{ $incomingRequestId }}" title="Принять заявку">Принять</button>
+                                        <button type="submit" class="profile-action-btn-top" id="declineFriendRequestBtn" data-request-id="{{ $incomingRequestId }}" title="Отклонить заявку">Отклонить</button>
                                     @elseif($isRequested)
-                                        <button type="button" class="profile-action-btn-top" id="cancelRequestBtn" data-request-id="{{ $outgoingRequestId }}" data-user-id="{{ $user->id }}" title="Отменить заявку">❌ Cancel</button>
+                                        <button type="button" class="profile-action-btn-top" id="cancelRequestBtn" data-request-id="{{ $outgoingRequestId }}" data-user-id="{{ $user->id }}" title="Отменить заявку">❌ Отменить</button>
                                     @else
-                                        <button type="submit" class="profile-action-btn-top" id="followBtn" data-user-id="{{ $user->id }}" title="Добавить в друзья"> Follow</button>
+                                        <button type="submit" class="profile-action-btn-top" id="followBtn" data-user-id="{{ $user->id }}" title="Добавить в друзья"> Добавить в друзья</button>
                                     @endif
                                 @endif
                             </div>
@@ -146,7 +146,7 @@
                                 <form method="POST" action="{{ route('post-publish') }}" class="terminal-post-form-social" enctype="multipart/form-data" style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; gap: 10px;">
                                     @csrf
                                     <input type="hidden" name="wall_id" value="{{ $user->id }}">
-                                    <textarea name="content" class="terminal-post-input-social" placeholder="What's new?" rows="3" style="flex-grow: 1; min-width: 200px; max-width: 100%;"></textarea>
+                                    <textarea name="content" class="terminal-post-input-social" placeholder="Что нового?" rows="3" style="flex-grow: 1; min-width: 200px; max-width: 100%;"></textarea>
                                     <div style="display: flex; flex-direction: column; gap: 10px; margin-right: 10px;">
                                         <button type="submit" class="terminal-post-circle-btn-social" title="Отправить">
                                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -159,7 +159,7 @@
                                 </form>
                             @elseif(auth()->check())
                                 <div class="terminal-post-form-social">
-                                    <textarea name="content" class="terminal-post-input-social" placeholder="You must be friends to publish a post" rows="3" disabled></textarea>
+                                    <textarea name="content" class="terminal-post-input-social" placeholder="Вы должны быть друзьями, чтобы опубликовать пост" rows="3" disabled></textarea>
                                 </div>
                             @endif
 
@@ -224,7 +224,7 @@
                             </div>
                         </div>
                         <div class="terminal-status-social">
-                            [PSocial v1.6.5] [Connected] [{{ $user->username }}] [EN] [UTF-8]
+                            [PSocial v1.7.0] [Connected] [{{ $user->username }}] [EN] [UTF-8]
                         </div>
                     </div>
                 </div>

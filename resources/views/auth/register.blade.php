@@ -23,19 +23,19 @@
                     <p class="bash-text-register">
                         <span class="user">user</span><span class="vm">@psocial</span>:<span class="char">~$</span>
                     </p>
-                    <input type="text" name="first_name" required placeholder="First name" value="{{ old('first_name') }}" class="input-register @error('first_name') input-error-register @enderror" />
+                    <input type="text" name="first_name" required placeholder="Имя" value="{{ old('first_name') }}" class="input-register @error('first_name') input-error-register @enderror" />
                 </div>
                 <div class="input-container-register">
                     <p class="bash-text-register">
                         <span class="user">user</span><span class="vm">@psocial</span>:<span class="char">~$</span>
                     </p>
-                    <input type="text" name="last_name" required placeholder="Last name" value="{{ old('last_name') }}" class="input-register @error('last_name') input-error-register @enderror" />
+                    <input type="text" name="last_name" required placeholder="Фамилия" value="{{ old('last_name') }}" class="input-register @error('last_name') input-error-register @enderror" />
                 </div>
                 <div class="input-container-register">
                     <p class="bash-text-register">
                         <span class="user">user</span><span class="vm">@psocial</span>:<span class="char">~$</span>
                     </p>
-                    <input type="text" name="username" required placeholder="Username" value="{{ old('username') }}" class="input-register @error('username') input-error-register @enderror" />
+                    <input type="text" name="username" required placeholder="Имя пользователя" value="{{ old('username') }}" class="input-register @error('username') input-error-register @enderror" />
                     @error('username')
                         <div class="error-row-register">{{ $message }}</div>
                     @enderror
@@ -53,7 +53,7 @@
                     <p class="bash-text-register">
                         <span class="user">user</span><span class="vm">@psocial</span>:<span class="char">~$</span>
                     </p>
-                    <input type="tel" name="phone_number" required placeholder="Phone number" value="{{ old('phone_number') }}" class="input-register @error('phone_number') input-error-register @enderror" />
+                    <input type="tel" name="phone_number" required placeholder="Номер телефона" value="{{ old('phone_number') }}" class="input-register @error('phone_number') input-error-register @enderror" />
                     @error('phone_number')
                         <div class="error-row-register">{{ $message }}</div>
                     @enderror
@@ -62,27 +62,27 @@
                     <p class="bash-text-register">
                         <span class="user">user</span><span class="vm">@psocial</span>:<span class="char">~$</span>
                     </p>
-                    <input type="password" name="password" required placeholder="Password" class="input-register @error('password') input-error-register @enderror" />
+                    <input type="password" name="password" required placeholder="Пароль" class="input-register @error('password') input-error-register @enderror" />
                 </div>
                 <div class="input-container-register">
                     <p class="bash-text-register">
                         <span class="user">user</span><span class="vm">@psocial</span>:<span class="char">~$</span>
                     </p>
-                    <input type="password" name="password_confirmation" required placeholder="Confirm password" class="input-register @error('password') input-error-register @enderror" />
+                    <input type="password" name="password_confirmation" required placeholder="Подтверждение пароля" class="input-register @error('password') input-error-register @enderror" />
                     @error('password')
                         <div class="error-row-register">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="button-row-register">
-                    <button type="submit" class="terminal-submit-register">[ Register ]</button>
+                    <button type="submit" class="terminal-submit-register">[ Регистрация ]</button>
                 </div>
                 <div class="link-row-register">
-                    <span class="prompt">Already have an account?</span>
-                    <a href="{{ route('login') }}" class="terminal-link-register">Login</a>
+                    <span class="prompt">Уже есть аккаунт?</span>
+                    <a href="{{ route('login') }}" class="terminal-link-register">Вход</a>
                 </div>
             </div>
             <div class="terminal-status-register">
-                [PSocial v1.6.5] [Connected] [Register] [EN] [UTF-8]
+                [PSocial v1.7.0] [Connected] [Register] [EN] [UTF-8]
             </div>
         </form>
     </div>
