@@ -531,45 +531,6 @@
     background: var(--primary-chat);
 }
 
-@media (max-width: 900px) {
-    .terminal-chat-content {
-        flex-direction: column;
-        height: auto;
-    }
-    
-    .terminal-chat-sidebar {
-        border-bottom: 1px solid var(--border-primary);
-        width: 100%;
-        border-right: none;
-        max-height: 300px;
-    }
-    
-    .terminal-chat-main {
-        min-height: 50vh;
-    }
-}
-
-@media (max-width: 600px) {
-    .terminal-window-chat {
-        border-radius: 0;
-        margin-top: 0;
-    }
-    
-    .chat-input-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .terminal-button-chat {
-        width: 100%;
-        margin-top: 0.5rem;
-    }
-    
-    .message-row {
-        max-width: 90%;
-    }
-}
-
 .attach-button {
     background: none;
     border: none;

@@ -193,28 +193,3 @@
     text-align: right;
     user-select: none;
 }
-
-@media (max-width: 600px) {
-    .terminal-window-login {
-        max-width: 98vw;
-        border-radius: 10px;
-    }
-    .terminal-header-login {
-        padding: 0.75rem 1rem;
-    }
-    .terminal-body-login {
-        padding: 1rem 0.5rem 1rem 0.5rem;
-    }
-    .input-container-login {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 10px 8px;
-        gap: 0.4rem;
-    }
-    .bash-text-login {
-        font-size: 0.9rem;
-    }
-    .input-login {
-        font-size: 0.95rem;
-    }
-}
