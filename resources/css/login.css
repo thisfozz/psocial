@@ -130,6 +130,11 @@
     opacity: 0.6;
 }
 
+.input-login:valid {
+    background-color: rgba(110, 231, 183, 0.2);
+    border-bottom: 1px solid #6ee7b7;
+}
+
 .error-row-login {
     color: #ff5252;
     font-size: 0.95rem;
