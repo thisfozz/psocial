@@ -214,13 +214,6 @@ if (searchInput) {
     });
 }
 
-
-document.querySelector('.terminal-search-input-social').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-    }
-});
-
 const likeBtn = document.querySelectorAll('.terminal-like-btn-social');
 document.addEventListener('DOMContentLoaded', function() {
     likeBtn.forEach(button => {
