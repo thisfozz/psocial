@@ -20,10 +20,52 @@
 }
 
 :root {
+    /* Основные цвета */
     --primary: #00e676;
+    --primary-social: #00ff88;
+    --secondary-social: #00d173;
+    --accent-social: #00b25a;
+    --terminal-green: #00ff41;
+    --terminal-cyan: #00ffff;
+    
+    /* Фоны */
     --bg: #050a1a;
     --surface: #181c1f;
+    --surface-dark: #0a0e12;
+    --surface-medium: #121619;
+    --surface-light: #1a1f23;
+    --surface-highlight: #22282d;
+    --surface-extra-light: #2a3137;
+
+    /* Кнопки и интерактивные элементы */
+    --button-hover-bg: #3a3a3a;
+    
+    /* Границы */
     --border: rgba(0, 230, 118, 0.2);
+    --border-primary: rgba(0, 255, 110, 0.4);
+    --border-secondary: rgba(0, 209, 115, 0.3);
+    --border-dark: #06090c;
+    --border-light: rgba(0, 255, 136, 0.2);
+    --logout-border: #8b0000;
+    
+    /* Текст */
+    --text-primary: #f0f0f0;
+    --text-secondary: #b0b0b0;
+    --text-tertiary: #808080;
+    --text-accent: #00ff88;
+    --text-cyan: #00ffff;
+    --text-logout: #ff6b6b;
+    
+    /* Статусы */
+    --warning: #ffbb33;
+    --error: #ff5555;
+    --success: #00ff88;
+    --info: #00aaff;
+    
+    /* Дополнительные элементы */
+    --selection: rgba(0, 255, 136, 0.2);
+    --scrollbar: #00ff8833;
+    --shadow: rgba(0, 255, 110, 0.1);
 }
 
 html, body {
