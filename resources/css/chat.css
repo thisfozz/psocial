@@ -127,11 +127,13 @@
 
 .chat-search-container {
     border-bottom: 1px solid var(--border-primary);
-    padding: 1rem;
+    padding: 0 1.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.75rem;
+    min-height: 56px;
+    height: 56px;
 }
 
 .chat-search-input {
@@ -318,17 +320,66 @@
 }
 
 .chat-current-header {
-    padding: 0.8rem 1.2rem;
+    padding: 0 1.2rem;
     background: var(--surface-light);
     border-bottom: 1px solid var(--border-primary);
     display: flex;
     align-items: center;
+    min-height: 56px;
+    height: 56px;
 }
 
 .current-contact {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1.5rem;
+    min-height: 44px;
+    height: 100%;
+}
+
+.current-contact .contact-avatar {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 0;
+}
+
+.current-contact .contact-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.current-contact .status-dot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--surface-medium);
+    border-radius: 50%;
+    background: #757575;
+    z-index: 2;
+}
+
+.current-contact .status-dot[style*='#00e676'] {
+    background: #00e676 !important;
+}
+
+.current-contact .status-dot[style*='#757575'] {
+    background: #757575 !important;
+}
+
+.current-contact .contact-name {
+    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin: 0;
+    text-align: left;
+    align-self: center;
 }
 
 .contact-status {

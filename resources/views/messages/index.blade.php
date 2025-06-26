@@ -80,16 +80,13 @@
                         <div class="chat-current-header">
                             @if(isset($friend))
                                 <div class="current-contact" onclick="window.location.href='{{ route('social.show', $friend->id) }}'">
-                                    <div class="contact-avatar">
+                                    <div class="contact-avatar" style="position: relative;">
                                         @if($friend->avatar_path)
                                             <img src="{{ $friend->avatar_path }}" alt="avatar" class="contact-avatar-img">
                                         @endif
+                                        <span class="status-dot" style="position: absolute; bottom: 2px; right: 2px; width: 10px; height: 10px; border: 2px solid #121619; border-radius: 50%; background: {{ $friend->lastSeen() ? '#00e676' : '#757575' }};"></span>
                                     </div>
-                                    <span class="contact-name">{{ $friend->first_name }} {{ $friend->last_name }}</span>
-                                    <span class="contact-status {{ $friend->lastSeen() ? 'online' : 'offline' }}">
-                                        <span class="status-dot"></span>
-                                        {{ $friend->lastSeen() ? 'online' : 'offline' }}
-                                    </span>
+                                    <div class="contact-name">{{ $friend->first_name }} {{ $friend->last_name }}</div>
                                 </div>
                             @endif
                         </div>
