@@ -76,7 +76,7 @@
                                     </a>
                                 </div>
                                 <div id="modalOverlayMoreInfo" class="terminal-modal-overlay" style="display: none;">
-                                    <div class="terminal-modal-window">
+                                    <div class="terminal-modal-window"> 
                                         <span class="terminal-modal-close" id="closeModalBtn">&times;</span>
                                         <div class="terminal-modal-content">
                                             <h3>Подробнее</h3>
