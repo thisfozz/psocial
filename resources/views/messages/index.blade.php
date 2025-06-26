@@ -93,7 +93,24 @@
 
                         <div class="messages chat-messages" id="chat-messages">
                             @if(isset($messages) && count($messages))
+                            @php $prevDate = null; @endphp
                             @foreach($messages as $message)
+                                @php
+                                    $msgDate = $message->created_at->format('Y-m-d');
+                                @endphp
+                                @if($prevDate !== $msgDate)
+                                    <div class="date-divider">
+                                        <span class="date-divider-line"></span>
+                                        <span class="date-divider-text">
+                                            @if($msgDate === now()->format('Y-m-d')) Сегодня
+                                            @elseif($msgDate === now()->subDay()->format('Y-m-d')) Вчера
+                                            @else {{ \Carbon\Carbon::parse($msgDate)->translatedFormat('d F Y') }}
+                                            @endif
+                                        </span>
+                                        <span class="date-divider-line"></span>
+                                    </div>
+                                    @php $prevDate = $msgDate; @endphp
+                                @endif
                                 @include('messages.receive', [
                                     'message' => $message,
                                     'authId' => auth()->id()
