@@ -8,15 +8,15 @@
                 <nav class="terminal-nav-message">
                     <a href="{{ route('social.show', ['id' => auth()->id()]) }}" class="nav-item-message">
                         <svg class="nav-icon-message" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-                        <span>Profile</span>
+                        <span>Профиль</span>
                     </a>
                     <a href="{{ route('messages.index') }}" class="nav-item-message">
                         <svg class="nav-icon-message" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-                        <span>Messages</span>
+                        <span>Сообщения</span>
                     </a>
                     <a href="#" class="nav-item-message">
                         <svg class="nav-icon-message" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                        <span>Friends</span>
+                        <span>Друзья</span>
                     </a>
                 </nav>
             </div>
@@ -70,7 +70,7 @@
                                 @endforeach
                             @else
                                 <div style="display: flex; padding: 2rem; text-align: center; color: var(--text-tertiary); justify-content: center; align-items: center;">
-                                    No contacts
+                                    Нет чатов
                                 </div>
                             @endif
                         </div>
@@ -104,7 +104,7 @@
                             @endforeach
                             @else
                                 <div style="display: flex; padding: 2rem; text-align: center; color: var(--text-tertiary); justify-content: center; align-items: center;">
-                                    Select a chat
+                                    Выберите чат
                                 </div>
                             @endif
                         </div>
@@ -115,7 +115,7 @@
                                 <span class="host-chat">@psocial</span>
                                 <span class="path-chat">:~/chat$</span>
                             </div>
-                            <input type="text" class="terminal-input-chat" id="message" placeholder="Message" autocomplete="off">
+                            <input type="text" class="terminal-input-chat" id="message" placeholder="Сообщение" autocomplete="off">
                             <button type="button" class="attach-button" onclick="document.getElementById('chat-images').click()" title="Прикрепить изображение">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="12" cy="12" r="11" fill="none" stroke="#00e676" stroke-width="2"/>
@@ -130,9 +130,9 @@
                 
                 <div class="terminal-status-chat">
                     @if(isset($friend))
-                        [PSocial v1.6.5] [Connected] [Chat with {{ $friend->username }}] [EN] [UTF-8]
+                        [PSocial v1.7.0] [Connected] [Chat with {{ $friend->username }}] [EN] [UTF-8]
                     @else
-                        [PSocial v1.6.5] [Connected] [EN] [UTF-8]
+                        [PSocial v1.7.0] [Connected] [EN] [UTF-8]
                     @endif
                 </div>
             </div>

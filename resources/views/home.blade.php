@@ -31,12 +31,12 @@
         </div>
 
         <div class="terminal-links-home">
-            <a href="{{ route('login') }}" class="terminal-link-home">[ Login ]</a>
-            <a href="{{ route('register') }}" class="terminal-link-home">[ Register ]</a>
+            <a href="{{ route('login') }}" class="terminal-link-home">[ Вход ]</a>
+            <a href="{{ route('register') }}" class="terminal-link-home">[ Регистрация ]</a>
         </div>
 
         <div class="terminal-status-home">
-            [PSocial v1.6.5] [Connected] [Home] [EN] [UTF-8]
+            [PSocial v1.7.0] [Connected] [Home] [EN] [UTF-8]
         </div>
     </div>
 </div>
