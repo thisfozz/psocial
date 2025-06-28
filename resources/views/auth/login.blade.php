@@ -9,12 +9,6 @@
                 <span class="control-login minimize-login"></span>
                 <span class="control-login zoom-login"></span>
             </div>
-            <div class="terminal-title-login">
-                <svg class="terminal-icon-login" viewBox="0 0 24 24">
-                    <path d="M4 17l6-6-6-6M12 19h8"/>
-                </svg>
-                PSocial@login:~$
-            </div>
         </div>
         <form method="POST" action="{{ route('login') }}" class="terminal-form-login">
             @csrf
@@ -38,9 +32,6 @@
                     <span class="prompt-login">Нет аккаунта?</span>
                     <a href="{{ route('register') }}" class="terminal-link-login">Регистрация</a>
                 </div>
-            </div>
-            <div class="terminal-status-login">
-                [PSocial v1.7.0] [Connected] [Login] [EN] [UTF-8]
             </div>
         </form>
     </div>

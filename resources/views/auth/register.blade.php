@@ -9,12 +9,6 @@
                 <span class="control-register minimize"></span>
                 <span class="control-register zoom"></span>
             </div>
-            <div class="terminal-title-register">
-                <svg class="terminal-icon-register" viewBox="0 0 24 24">
-                    <path d="M4 17l6-6-6-6M12 19h8"/>
-                </svg>
-                PSocial@register:~$
-            </div>
         </div>
         <form method="POST" action="{{ route('register') }}" class="terminal-form-register">
             @csrf
@@ -80,9 +74,6 @@
                     <span class="prompt">Уже есть аккаунт?</span>
                     <a href="{{ route('login') }}" class="terminal-link-register">Вход</a>
                 </div>
-            </div>
-            <div class="terminal-status-register">
-                [PSocial v1.7.0] [Connected] [Register] [EN] [UTF-8]
             </div>
         </form>
     </div>

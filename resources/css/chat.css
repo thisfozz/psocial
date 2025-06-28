@@ -94,16 +94,6 @@
 .control-chat.zoom-chat { background: var(--success); }
 .control-chat:hover { opacity: 1; }
 
-.terminal-title-chat {
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-    color: var(--primary-chat);
-    font-weight: 600;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .terminal-icon-chat {
     stroke: var(--primary-chat);
     width: 16px;

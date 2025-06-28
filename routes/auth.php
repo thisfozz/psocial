@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Middleware\UpdateLastSeen;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\Social\FriendsController;
 
 
 Route::middleware('guest')->group(function () {
@@ -38,5 +39,6 @@ Route::middleware(['auth', UpdateLastSeen::class])->group(function () {
     Route::post('/receive', [MessageController::class, 'receive'])->name('receive');
     Route::post('/messages/set-friend', [MessageController::class, 'setFriend'])->name('messages.setFriend');
 
+    Route::get('/social/friends', [FriendsController::class, 'index'])->name('social.friends');
     Route::get('/social/{id}', [SocialController::class, 'show'])->name('social.show');
 });

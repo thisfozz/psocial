@@ -9,12 +9,6 @@
                 <span class="control-home minimize-home"></span>
                 <span class="control-home zoom-home"></span>
             </div>
-            <div class="terminal-title-home">
-                <svg class="terminal-icon-home" viewBox="0 0 24 24">
-                    <path d="M4 17l6-6-6-6M12 19h8"/>
-                </svg>
-                PSocial@home:~$
-            </div>
         </div>
 
         <div class="terminal-output-home" id="terminal-output">
@@ -36,7 +30,7 @@
         </div>
 
         <div class="terminal-status-home">
-            [PSocial v1.7.0] [Connected] [Home] [EN] [UTF-8]
+            [PSocial v1.8.0] [Connected] [Home] [EN] [UTF-8]
         </div>
     </div>
 </div>
