@@ -54,16 +54,6 @@
 .control-register.zoom { background: #27c93f; }
 .control-register:hover { opacity: 1; }
 
-.terminal-title-register {
-    font-family: 'Fira Mono', monospace;
-    color: var(--primary-register);
-    font-weight: 600;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .terminal-icon-register {
     stroke: var(--primary-register);
     width: 16px;

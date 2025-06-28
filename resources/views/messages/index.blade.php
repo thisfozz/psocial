@@ -14,24 +14,18 @@
                         <svg class="nav-icon-message" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
                         <span>Сообщения</span>
                     </a>
-                    <a href="#" class="nav-item-message">
+                    <a href="{{ route('social.friends') }}" class="nav-item-message">
                         <svg class="nav-icon-message" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                         <span>Друзья</span>
                     </a>
                 </nav>
             </div>
                 <div class="terminal-window-chat">
-                <div class="terminal-header-chat">
-                    <div class="window-controls-chat">
-                        <span class="control-chat close-chat"></span>
-                        <span class="control-chat minimize-chat"></span>
-                        <span class="control-chat zoom-chat"></span>
-                    </div>
-                    <div class="terminal-title-chat">
-                        <svg class="terminal-icon-chat" viewBox="0 0 24 24">
-                            <path d="M4 17l6-6-6-6M12 19h8"/>
-                        </svg>
-                        PSocial@chat:~$
+                <div class="terminal-header">
+                    <div class="window-controls">
+                        <span class="control close"></span>
+                        <span class="control minimize"></span>
+                        <span class="control zoom"></span>
                     </div>
                 </div>
 
@@ -140,14 +134,6 @@
                             <input type="file" name="images[]" id="chat-images" multiple accept="image/*" style="display: none;">
                         </form>
                     </div>
-                </div>
-                
-                <div class="terminal-status-chat">
-                    @if(isset($friend))
-                        [PSocial v1.7.0] [Connected] [Chat with {{ $friend->username }}] [EN] [UTF-8]
-                    @else
-                        [PSocial v1.7.0] [Connected] [EN] [UTF-8]
-                    @endif
                 </div>
             </div>
         </div>

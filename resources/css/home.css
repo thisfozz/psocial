@@ -48,17 +48,6 @@
 .control-home.zoom-home { background: #27c93f; }
 .control-home:hover { opacity: 1; }
 
-.terminal-title-home {
-    font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', 'Menlo', 'Consolas', monospace;
-    color: var(--primary-home);
-    font-weight: 600;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-left: 1rem;
-}
-
 .terminal-icon-home {
     stroke: var(--primary-home);
     width: 16px;

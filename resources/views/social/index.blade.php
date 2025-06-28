@@ -14,18 +14,18 @@
                     <svg class="nav-icon-social" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
                     <span>Сообщения</span>
                 </a>
-                <a href="#" class="nav-item-social">
+                <a href="{{ route('social.friends') }}" class="nav-item-social {{ request()->routeIs('social.friends') ? 'active' : '' }}">
                     <svg class="nav-icon-social" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                     <span>Друзья</span>
                 </a>
             </nav>
         </div>
         <div class="terminal-window-social">
-                <div class="terminal-header-social">
-                    <div class="window-controls-social">
-                        <span class="control-social close-social"></span>
-                        <span class="control-social minimize-social"></span>
-                        <span class="control-social zoom-social"></span>
+                <div class="terminal-header">
+                    <div class="window-controls">
+                        <span class="control close"></span>
+                        <span class="control minimize"></span>
+                        <span class="control zoom"></span>
                     </div>
                 </div>
                 <div class="terminal-center-social">
@@ -222,9 +222,6 @@
                                     <div class="terminal-posts-empty-social">It's still quiet here...</div>
                                 @endforelse
                             </div>
-                        </div>
-                        <div class="terminal-status-social">
-                            [PSocial v1.7.0] [Connected] [{{ $user->username }}] [EN] [UTF-8]
                         </div>
                     </div>
                 </div>
