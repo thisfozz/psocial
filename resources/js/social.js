@@ -100,23 +100,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: {
                     'X-CSRF-TOKEN': csrfToken,
                     'Accept': 'application/json',
-                    'Content-Typpe': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             })
             .then(response => {
-                if (!response.ok) throw new Error('Ошибка при отмене запроса');
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || 'Ошибка при отмене запроса');
+                    });
+                }
                 return response.json();
             })
             .then(data => {
-                const parent = document.getElementById('requsetActions');
-                parent.innerHTML = `
-                <form method="POST" action="/friend/request/send/${userId}">
-                    <input type="hidden" name="_token" value="${csrfToken}">
-                    <button type="submit" class="terminal-profile-follow-btn-social">Follow</button>
-                </form>`;
+                location.reload();
             })
             .catch(error => {
-                alert('Ошибка при отмене запроса');
+                alert('Ошибка при отмене запроса: ' + error.message);
             });
         });
     }
@@ -165,15 +164,18 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => {
                 if (!response.ok) {
-                    alert('Ошибка при удалении из друзей');
+                    return response.json().then(err => {
+                        throw new Error(err.error || 'Ошибка при удалении из друзей');
+                    });
                 }
                 return response.json();
             })
             .then(data => {
+                document.getElementById('unfriendModal').style.display = 'none';
                 location.reload();
             })
             .catch(error => {
-                alert('Ошибка при удалении из друзей');
+                alert('Ошибка при удалении из друзей: ' + error.message);
             });
         });
     }
