@@ -41,10 +41,15 @@ class PostVideo extends Model
         ];
     }
 
+    // https://www.twitch.tv/evikey
+    //https://www.twitch.tv/macdal_/clip/BloodyWanderingMageDerp-KYeNRpGe1J1xrqJS?filter=clips&range=7d&sort=time
+
     protected static function detectPlatform($url){
         $patterns = [
             'youtube' => '/^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/',
             'rutube' => '/^(https?:\/\/)?(www\.)?(rutube\.ru\/video\/)([a-zA-Z0-9_-]{11})/',
+            'twitch_clip' => '/^(https?:\/\/)?(www\.)?(twitch\.tv\/[^\/]+\/clip\/[^\/\?]+)/',
+            'twitch_stream' => '/^(https?:\/\/)?(www\.)?(twitch\.tv\/[^\/]+)(?:\/|$)/',
         ];
 
         foreach ($patterns as $platform => $pattern) {
@@ -68,17 +73,34 @@ class PostVideo extends Model
                     return $matches[1];
                 }
                 return null;
+            case 'twitch_stream':
+                if(preg_match('/twitch\.tv\/([a-zA-Z0-9_-]+)/', $url, $matches)){
+                    return $matches[1];
+                }
+                return null;
+            case 'twitch_clip':
+                if(preg_match('/twitch\.tv\/[^\/]+\/clip\/([^\/\?]+)/', $url, $matches)){
+                    return $matches[1];
+                }
+                return null;
             default:
                 return null;
         }
     }
 
+    // https://www.twitch.tv/evikey
+    // https://www.twitch.tv/recrent/clip/TsundereHeartlessSlothTheThing-9EesUHflAaIu9Xaz?filter=clips&range=7d&sort=time
+    //https://www.twitch.tv/macdal_/clip/BloodyWanderingMageDerp-KYeNRpGe1J1xrqJS?filter=clips&range=7d&sort=time
     protected static function getEmbedCode($url, $platform, $videoId){
         switch ($platform) {
             case 'youtube':
                 return "https://www.youtube.com/embed/{$videoId}?rel=0&showinfo=0&autoplay=0";
             case 'rutube':
                 return "https://rutube.ru/play/embed/{$videoId}?rel=0&showinfo=0&autoplay=0";
+            case 'twitch_stream':
+                return "https://player.twitch.tv/?channel={$videoId}&parent=".request()->getHost();
+            case 'twitch_clip':
+                return "https://clips.twitch.tv/embed?clip={$videoId}&parent=".request()->getHost();
             default:
                 return null;
         }
@@ -90,6 +112,10 @@ class PostVideo extends Model
                 return "https://img.youtube.com/vi/{$videoId}/0.jpg";
             case 'rutube':
                 return "https://rutube.ru/video/{$videoId}/embed/img/poster.jpg";
+            case 'twitch_stream':
+                return "https://static-cdn.jtvnw.net/previews-ttv/live_user_{$videoId}.jpg";
+            case 'twitch_clip':
+                return "https://clips-media-assets2.twitch.tv/{$videoId}/thumbnail-480x272.jpg";
             default:
                 return null;
         }
