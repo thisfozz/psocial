@@ -41,9 +41,6 @@ class PostVideo extends Model
         ];
     }
 
-    // https://www.twitch.tv/evikey
-    //https://www.twitch.tv/macdal_/clip/BloodyWanderingMageDerp-KYeNRpGe1J1xrqJS?filter=clips&range=7d&sort=time
-
     protected static function detectPlatform($url){
         $patterns = [
             'youtube' => '/^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/',
@@ -88,9 +85,6 @@ class PostVideo extends Model
         }
     }
 
-    // https://www.twitch.tv/evikey
-    // https://www.twitch.tv/recrent/clip/TsundereHeartlessSlothTheThing-9EesUHflAaIu9Xaz?filter=clips&range=7d&sort=time
-    //https://www.twitch.tv/macdal_/clip/BloodyWanderingMageDerp-KYeNRpGe1J1xrqJS?filter=clips&range=7d&sort=time
     protected static function getEmbedCode($url, $platform, $videoId){
         switch ($platform) {
             case 'youtube':
