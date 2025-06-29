@@ -64,9 +64,15 @@ class FriendRequestController extends Controller
     public function cancelRequest(Request $request, $requestId){
         $friendRequest = FriendRequest::find($requestId);
         if(!$friendRequest){
-            abort(404);
+            return response()->json(['error' => 'Request not found'], 404);
         }
-        $request->user()->sentFriendRequests()->where('id', $requestId)->delete();
+        
+        // Проверяем, что текущий пользователь является отправителем заявки
+        if($request->user()->id != $friendRequest->from_user_id){
+            return response()->json(['error' => 'You are not the owner of this request'], 403);
+        }
+        
+        $friendRequest->delete();
         return response()->json(['message' => 'Request canceled successfully']);
     }
     public function removeFriend(Request $request, $friendId){

@@ -228,4 +228,19 @@
         </div>
     </div>
 </div>
+
+<div id="unfriendModal" class="terminal-modal-overlay" style="display: none;">
+    <div class="terminal-modal-window">
+        <span class="terminal-modal-close" id="closeUnfriendModalBtn">&times;</span>
+        <div class="terminal-modal-content">
+            <h3>Удалить из друзей</h3>
+            <p>Вы уверены, что хотите удалить {{ $user->first_name }} {{ $user->last_name }} из друзей?</p>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button type="button" class="profile-action-btn-top" id="cancelUnfriendBtn">Отмена</button>
+                <button type="button" class="profile-action-btn-top" id="confirmUnfriendBtn" style="background-color: #ff5252; color: white;">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

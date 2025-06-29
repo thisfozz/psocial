@@ -54,7 +54,7 @@
                                     <a href="#" class="friend-actions-friends" style="color: #888; text-decoration: none; font-size: 1.5rem; margin-left: 8px; cursor: pointer;">&#8942;</a>
                                     <div class="friend-dropdown-friends" style="display: none; position: absolute; right: 0; top: 28px; background: #23282c; border: 1px solid #333; border-radius: 8px; min-width: 160px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 10;">
                                         <a href="{{ route('social.show', ['id' => $friend->id]) }}" style="display: block; padding: 10px 18px; color: #fff; text-decoration: none; font-size: 1rem;">Посмотреть профиль</a>
-                                        <a href="#" style="display: block; padding: 10px 18px; color: #ff5252; text-decoration: none; font-size: 1rem;">Удалить из друзей</a>
+                                        <a href="{{ route('friends.remove', ['id' => $friend->id]) }}" style="display: block; padding: 10px 18px; color: #ff5252; text-decoration: none; font-size: 1rem;">Удалить из друзей</a>
                                     </div>
                                 </div>
                             </div>
