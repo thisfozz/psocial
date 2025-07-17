@@ -41,4 +41,7 @@ Route::middleware(['auth', UpdateLastSeen::class])->group(function () {
 
     Route::get('/social/friends', [FriendsController::class, 'index'])->name('social.friends');
     Route::get('/social/{id}', [SocialController::class, 'show'])->name('social.show');
+
+    Route::post('/messages/edit', [MessageController::class, 'edit'])->name('messages.edit');
+    Route::post('/messages/delete', [MessageController::class, 'delete'])->name('messages.delete');
 });

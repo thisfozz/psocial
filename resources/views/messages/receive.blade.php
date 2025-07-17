@@ -5,7 +5,7 @@
     $hasOnlyImage = count($images) && empty(trim($message['content'] ?? $message->content));
     $hasVideo = $message->video;
 @endphp
-<div class="message-row {{ $isSent ? 'sent' : 'received' }}">
+<div class="message-row {{ $isSent ? 'sent' : 'received' }}" data-message-id="{{ $message->id }}">
     <div class="message-content{{ $hasOnlyImage ? ' no-border' : '' }}{{ $hasVideo ? ' no-border wide-video' : '' }}">
         <div class="message-body">
             <div class="message-main">
@@ -30,8 +30,15 @@
                         ></iframe>
                     </div>
                 @endif
-                <div class="message-time" data-time="{{ $message->created_at->toIso8601String() }}"></div>
+                <div class="message-time" 
+                     data-time="{{ $message->created_at->toIso8601String() }}"
+                     data-edited="{{ $message->created_at != $message->updated_at ? '1' : '0' }}">
+                    {{ $message->created_at->format('H:i') }}
+                    @if($message->created_at != $message->updated_at)
+                        <span class="edited-mark">(изменено)</span>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
-</div>  
+</div>
