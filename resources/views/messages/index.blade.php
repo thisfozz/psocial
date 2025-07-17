@@ -123,6 +123,10 @@
                                 <span class="host-chat">@psocial</span>
                                 <span class="path-chat">:~/chat$</span>
                             </div>
+                            <div id="edit-indicator" style="display:none; color: #00e676; margin-bottom: 4px;">
+                                Редактирование сообщения
+                                <span id="cancel-edit" style="cursor:pointer; color:#ff5252; margin-left:10px;">[отмена]</span>
+                            </div>
                             <input type="text" class="terminal-input-chat" id="message" placeholder="Сообщение" autocomplete="off">
                             <button type="button" class="attach-button" onclick="document.getElementById('chat-images').click()" title="Прикрепить изображение">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -137,6 +141,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="message-context-menu" style="display:none; position:absolute; z-index:1000; background:#222; color:#fff; border-radius:6px; min-width:120px; box-shadow:0 2px 8px #0008;">
+        <button type="button" class="menu-item" data-action="reply">Ответить</button>
+        <button type="button" class="menu-item" data-action="edit">Редактировать</button>
+        <button type="button" class="menu-item" data-action="delete">Удалить</button>
     </div>
 <script>
     window.chatConfig = {

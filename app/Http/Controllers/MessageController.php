@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PusherBroadcast;
-use Illuminate\Http\Request;
-use App\Models\Message;
 use App\Models\User;
 use App\Models\Dialog;
+
+use App\Models\Message;
+use App\Events\PusherBroadcast;
+use App\Models\MessageVideo;
+use App\Events\MessageDeleted;
+use App\Events\MessageEdited;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use App\Models\MessageVideo;
-use Illuminate\Support\Facades\Log;
 
 class MessageController extends Controller
 {
@@ -137,8 +140,6 @@ class MessageController extends Controller
 
             $videoData = MessageVideo::extractVideoData($content);
             if($videoData) {
-                Log::info('Message ID:', ['id' => $message->id]);
-                Log::info('Video data:', $videoData);
                 $message->videos()->create([
                     'platform' => $videoData['platform'],
                     'video_id' => $videoData['video_id'],
@@ -189,5 +190,47 @@ class MessageController extends Controller
             $message = Message::with('sender')->find($message['id']);
         }
         return view('messages.receive', ['message' => $message, 'authId' => $request->get('authId')]);
+    }
+
+    public function edit(Request $request) {
+        $message = Message::find($request->get('message_id'));
+        if (!$message) {
+            return response()->json(['error' => 'Message not found'], 404);
+        }
+        $message->content = $request->get('content');
+        $message->save(); // Это автоматически обновит updated_at
+        
+        broadcast(new MessageEdited(
+            $message->id, 
+            $message->sender_id, 
+            $message->receiver_id, 
+            $message->content,
+            $message->created_at,
+            $message->updated_at
+        ))->toOthers();
+        
+        return response()->json(['status' => 'ok']);
+    }
+
+    public function delete(Request $request) {
+        $message = Message::find($request->get('message_id'));
+        if (!$message) {
+            return response()->json(['error' => 'Message not found'], 404);
+        }
+        $messageData = [
+            'id' => $message->id,
+            'dialog_id' => $message->dialog_id,
+            'sender_id' => $message->sender_id,
+            'receiver_id' => $message->receiver_id,
+            'content' => $message->content,
+            'is_read' => $message->is_read,
+            'created_at' => $message->created_at->toIso8601String(),
+            'updated_at' => $message->updated_at->toIso8601String(),
+        ];
+
+        $message->delete();
+
+        broadcast(new MessageDeleted($message->id, $message->sender_id, $message->receiver_id))->toOthers();
+        return response()->json(['status' => 'ok']);
     }
 }
