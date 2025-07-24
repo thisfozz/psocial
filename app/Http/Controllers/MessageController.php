@@ -130,12 +130,24 @@ class MessageController extends Controller
 
             $content = $request->input('content') ?? '';
 
+            $replyToId = $request->input('reply_to_id');
+            $replyMessage = null;
+            if ($replyToId) {
+                $replyMessage = Message::where('id', $replyToId)
+                    ->where('dialog_id', $dialogId)
+                    ->first();
+                if (!$replyMessage) {
+                    return response()->json(['error' => 'Reply message not found or not in this dialog'], 400);
+                }
+            }
+
             $message = $request->user()->messages()->create([
                 'sender_id' => $user->id,
                 'receiver_id' => $friendId,
                 'content' => $content,
                 'user_id' => auth()->id(),
                 'dialog_id' => $dialogId,
+                'reply_to_id' => $replyToId,
             ]);
 
             $videoData = MessageVideo::extractVideoData($content);
@@ -176,6 +188,11 @@ class MessageController extends Controller
                     'is_read' => $message->is_read,
                     'created_at' => $message->created_at->toIso8601String(),
                     'updated_at' => $message->updated_at->toIso8601String(),
+                    'reply' => $replyMessage ? [
+                        'id' => $replyMessage->id,
+                        'sender_id' => $replyMessage->sender_id,
+                        'content' => $replyMessage->content,
+                    ] : null,
                 ],
                 'temp_id' => $request->get('client_id')
             ]);
@@ -198,7 +215,7 @@ class MessageController extends Controller
             return response()->json(['error' => 'Message not found'], 404);
         }
         $message->content = $request->get('content');
-        $message->save(); // Это автоматически обновит updated_at
+        $message->save();
         
         broadcast(new MessageEdited(
             $message->id, 
@@ -217,16 +234,6 @@ class MessageController extends Controller
         if (!$message) {
             return response()->json(['error' => 'Message not found'], 404);
         }
-        $messageData = [
-            'id' => $message->id,
-            'dialog_id' => $message->dialog_id,
-            'sender_id' => $message->sender_id,
-            'receiver_id' => $message->receiver_id,
-            'content' => $message->content,
-            'is_read' => $message->is_read,
-            'created_at' => $message->created_at->toIso8601String(),
-            'updated_at' => $message->updated_at->toIso8601String(),
-        ];
 
         $message->delete();
 

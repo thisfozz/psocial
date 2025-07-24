@@ -127,6 +127,7 @@
                                 Редактирование сообщения
                                 <span id="cancel-edit" style="cursor:pointer; color:#ff5252; margin-left:10px;">[отмена]</span>
                             </div>
+                            <div id="reply-preview" style="display:none; margin-bottom: 6px;"></div>
                             <input type="text" class="terminal-input-chat" id="message" placeholder="Сообщение" autocomplete="off">
                             <button type="button" class="attach-button" onclick="document.getElementById('chat-images').click()" title="Прикрепить изображение">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
