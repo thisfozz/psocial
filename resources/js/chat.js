@@ -1,6 +1,8 @@
 import $ from 'jquery';
 
 let editingMessageId = null;
+let replyingToMessageId = null;
+let replyingToMessagePreview = null;
 
 function scrollToBottom(smooth = false) {
     const chatMessages = document.getElementById("chat-messages");
@@ -83,6 +85,8 @@ function setupContextMenu() {
                 handleDeleteMessage(currentMessageId);
             } else if (action === 'edit') {
                 handleEditMessage(currentMessageId);
+            } else if (action === 'reply') {
+                handleReplyMessage(currentMessageId);
             } else {
                 console.log(`Action: ${action} for message ${currentMessageId}`);
             }
@@ -122,6 +126,39 @@ function handleEditMessage(messageId) {
         editingMessageId = messageId;
         $('#edit-indicator').show();
     }
+}
+
+function handleReplyMessage(messageId) {
+    if (!messageId) return;
+    const messageRow = document.querySelector(`[data-message-id="${messageId}"]`);
+    if (!messageRow) return;
+
+    const author = messageRow.querySelector('.reply-author')?.textContent || messageRow.querySelector('.message-main .message-text')?.textContent || '...';
+    const content = messageRow.querySelector('.message-text')?.textContent || '';
+
+    replyingToMessageId = messageId;
+    replyingToMessagePreview = { author, content };
+
+    showReplyPreview();
+}
+
+function showReplyPreview() {
+    if (!replyingToMessagePreview) return;
+    const replyDiv = document.getElementById('reply-preview');
+    replyDiv.innerHTML = `
+        <div class="message-reply-preview" style="margin-bottom:0;">
+            <div class="reply-author">${$('<div>').text(replyingToMessagePreview.author).html()}</div>
+            <div class="reply-content">${$('<div>').text(replyingToMessagePreview.content).html()}</div>
+            <span id="cancel-reply" style="cursor:pointer; color:#ff5252; float:right; font-size:1.1em;">&times;</span>
+        </div>
+    `;
+    replyDiv.style.display = 'block';
+    $('#cancel-reply').on('click', cancelReply);
+}
+function cancelReply() {
+    replyingToMessageId = null;
+    replyingToMessagePreview = null;
+    document.getElementById('reply-preview').style.display = 'none';
 }
 
 function setupChatForm() {
@@ -231,10 +268,22 @@ function sendNewMessage(content, files) {
             }
         }
 
+        let replyHtml = '';
+        if (replyingToMessagePreview) {
+            replyHtml = `
+                <div class="message-reply-preview" style="margin-bottom:0;">
+                    <div class="reply-author">${$('<div>').text(replyingToMessagePreview.author).html()}</div>
+                    <div class="reply-content">${$('<div>').text(replyingToMessagePreview.content).html()}</div>
+                </div>
+            `;
+        }
+
         $(".messages").append(`
             <div class="message-row sent optimistic" data-temp-id="${tempId}">
                 <div class="message-content">
+                    ${replyHtml}
                     ${content ? `<div class="message-text">${$('<div>').text(content).html()}</div>` : ''}
+                    ${imagesHtml}
                     <div class="message-time">${new Date().toLocaleTimeString().slice(0,5)}</div>
                 </div>
             </div>
@@ -249,6 +298,10 @@ function sendNewMessage(content, files) {
     formData.append('receiver_id', window.chatConfig.friendId);
     formData.append('client_id', tempId);
     formData.append('dialog_id', window.chatConfig.dialogId);
+
+    if (replyingToMessageId) {
+        formData.append('reply_to_id', replyingToMessageId);
+    }
 
     if (files && files.length > 0) {
         for (let i = 0; i < files.length; i++) {
@@ -266,6 +319,12 @@ function sendNewMessage(content, files) {
         data: formData,
         processData: false,
         contentType: false,
+        success: function(res) {
+            $(".messages").append(res);
+            scrollToBottom();
+            renderAllMessageTimes();
+            cancelReply();
+        },
         error: function(xhr) {
             console.error('Send error:', xhr.responseText);
         }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $table = 'messages';
-    protected $fillable = ['sender_id', 'receiver_id', 'content', 'is_read', 'dialog_id'];
+    protected $fillable = ['sender_id', 'receiver_id', 'content', 'is_read', 'dialog_id', 'reply_to_id'];
     public $timestamps = true;
 
     protected $casts = [
@@ -36,5 +36,13 @@ class Message extends Model
     }
     public function video() {
         return $this->hasOne(MessageVideo::class);
+    }
+
+    public function replyTo() {
+        return $this->belongsTo(Message::class, 'reply_to_id');
+    }
+
+    public function replies() {
+        return $this->hasMany(Message::class, 'reply_to_id');
     }
 }

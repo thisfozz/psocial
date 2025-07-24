@@ -9,6 +9,16 @@
     <div class="message-content{{ $hasOnlyImage ? ' no-border' : '' }}{{ $hasVideo ? ' no-border wide-video' : '' }}">
         <div class="message-body">
             <div class="message-main">
+                @if($message->replyTo)
+                    <div class="message-reply-preview" style="border-left: 3px solid #00e676; padding-left: 8px; margin-bottom: 4px; color: #888;">
+                        <div class="reply-author" style="font-weight: bold;">
+                            {{ $message->replyTo->sender->first_name ?? '...' }}
+                        </div>
+                        <div class="reply-content" style="font-size: 0.95em;">
+                            {{ \Illuminate\Support\Str::limit($message->replyTo->content, 100) }}
+                        </div>
+                    </div>
+                @endif
                 <div class="message-text">{{ $message['content'] ?? $message->content }}</div>
                 @if(count($images))
                     <div class="message-images" style="margin-top: 0.5rem;">
