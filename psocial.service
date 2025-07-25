@@ -1,0 +1,21 @@
+[Unit]
+Description=PSocial Laravel Application
+After=network.target
+Wants=network.target
+
+[Service]
+Type=exec
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/psocial
+Environment=NODE_ENV=production
+ExecStartPre=/usr/bin/npm run build
+ExecStart=/usr/bin/npm run start:prod
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=psocial
+
+[Install]
+WantedBy=multi-user.target 
