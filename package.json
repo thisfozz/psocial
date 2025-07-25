@@ -4,7 +4,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "start": "concurrently \"npm run build\" \"node resources/js/translate-proxy.js\" \"node resources/js/password_gen.js\" \"php artisan serve --host=0.0.0.0 --port=8000\"",
+        "start": "npm run build && concurrently \"node resources/js/translate-proxy.js\" \"node resources/js/password_gen.js\" \"php artisan serve --host=0.0.0.0 --port=8000\"",
         "start:prod": "concurrently \"npm run build\" \"node resources/js/translate-proxy.js\" \"node resources/js/password_gen.js\" \"php artisan serve --host=0.0.0.0 --port=8000\""
     },
     "devDependencies": {
